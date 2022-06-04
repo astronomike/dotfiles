@@ -80,8 +80,10 @@ keys = [
     Key([mod], "b", lazy.spawn(browser), desc="Launch default browser"),
 ]
 
-all_groups = "12345"
-groups = [Group(i) for i in all_groups]
+group_list = "123456"
+label_list = ["", "", "", "", "", ""]
+#label_list="12345"
+groups = [Group(g,label=label_list[i]) for i,g in enumerate(group_list)]
 
 for i in groups:
     keys.extend(
@@ -147,7 +149,8 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="sans",
+    font="Ubuntu Bold",
+    #font="sans",
     fontsize=12,
     padding=3,
 )
@@ -157,7 +160,12 @@ screens = [
     Screen(
         top=bar.Bar(
             [
-                widget.GroupBox(visible_groups=all_groups,
+                widget.GroupBox(font="Nerd",
+				fontsize=15,
+				markup=True,
+				visible_groups=group_list,
+				background=colors_frappe["crust"],
+				rounded=True,
                                 this_current_screen_border=colors_frappe["sky"],
                                 this_screen_border=colors_frappe["red"],
                                 active=colors_frappe["sky"],
