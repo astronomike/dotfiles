@@ -1,0 +1,7 @@
+configuration {
+    modi: "window,run";
+    window-format: "{w}  {c}    {t}";
+    
+}
+
+@theme "/themes/catpuccin.rasi"
