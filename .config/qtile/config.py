@@ -72,12 +72,12 @@ keys = [
     ),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     # Toggle between different layouts as defined below
-    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+    Key(["mod4"],"Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    Key([mod], "b", lazy.spawn(browser), desc="Launch default browser"),
+    Key([mod], "b", lazy.spawn(browser), lazy.group["2"].toscreen(), desc="Launch default browser, move to browser group"),
 ]
 
 group_list = "123456"
@@ -120,7 +120,7 @@ for i in groups:
                 [mod],
                 "Right",
                 lazy.screen.next_group(),
-                desc="Switch to previous group",
+                desc="Switch to next group",
             ),
 	    Key(
 		[mod],
@@ -135,6 +135,19 @@ for i in groups:
 		lazy.window.toggle_fullscreen(),
 		desc="Toggle Zen mode (no bar + fullscreen window)",
 	    ),
+		Key(
+		[mod],
+		"a",
+		lazy.spawn("rofi -show run"),
+		desc="Spawn rofi with run menu",
+		),
+		Key(
+		[mod],
+		"Tab",
+		lazy.spawn("rofi -show window"),
+		desc="Spawn rofi with window menu",
+		),
+
             # Or, use below if you prefer not to switch to that group.
             # # mod1 + shift + letter of group = move focused window to group
             # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
@@ -206,13 +219,16 @@ screens = [
                 widget.Clock(format="%Y-%m-%d %a %I:%M %p",foreground=colors_frappe["text"],),
                 #widget.CurrentLayoutIcon(scale=0.75,foreground=colors_frappe["text"],),
                 widget.MemoryGraph(type="linefill",
+									samples=50,
                                     width=50,
+									border_width=2,
                                     graph_color=colors_latte["teal"],
                                     fill_color=colors_latte["sky"],
                                     border_color=colors_latte["teal"],
                                     ),
                 widget.CPUGraph(type="box",
-                                width=50,
+                                samples=20,
+								width=50,
                                 graph_color=colors_latte["sky"],
                                 border_color=colors_latte["teal"],
                                 ),
@@ -223,7 +239,7 @@ screens = [
 				 ),
             	widget.Sep(foreground=colors_frappe["crust"]),
 	    ],
-            size=36,
+            size=32,
             background=colors_frappe["crust"],
 	    margin=[bar_margin,bar_margin,0,bar_margin], #[N E S W]
             opacity=0.9,

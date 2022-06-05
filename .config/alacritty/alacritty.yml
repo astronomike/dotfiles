@@ -500,7 +500,7 @@ color_schemes:
       white:   '#BAC2DE' # subtext1
 
 # setcolor
-colors: *mocha
+colors: *frappe
 
 
 # Colors (Tomorrow Night)
