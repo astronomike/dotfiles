@@ -81,9 +81,17 @@ keys = [
 ]
 
 group_list = "123456"
-label_list = ["", "", "", "", "", ""]
+#label_list = ["", "", "", "", "", ""]
 #label_list="12345"
-groups = [Group(g,label=label_list[i]) for i,g in enumerate(group_list)]
+#groups = [Group(g,label=label_list[i]) for i,g in enumerate(group_list)]
+
+groups = [Group("1",label=""),#,matches=[Match(title="")]),
+          Group("2",label="",matches=[Match(wm_class="firefox")]),
+          Group("3",label="",matches=[Match(wm_class="code-oss")]),
+          Group("4",label=""),#,matches=[Match(title="")])
+          Group("5",label=""),#,matches=[Match(title="")])
+          Group("6",label=""),#,matches=[Match(title="")])
+]
 
 for i in groups:
     keys.extend(
@@ -119,6 +127,13 @@ for i in groups:
 		"t",
 		lazy.window.toggle_floating(),
 		desc="Toggle Tiled/Floating",
+	    ),
+	    Key(
+		[mod],
+		"z",
+		lazy.hide_show_bar(),
+		lazy.window.toggle_fullscreen(),
+		desc="Toggle Zen mode (no bar + fullscreen window)",
 	    ),
             # Or, use below if you prefer not to switch to that group.
             # # mod1 + shift + letter of group = move focused window to group
@@ -161,7 +176,7 @@ screens = [
         top=bar.Bar(
             [
                 widget.GroupBox(font="Nerd",
-				fontsize=15,
+				fontsize=18,
 				markup=True,
 				visible_groups=group_list,
 				background=colors_frappe["crust"],
@@ -201,13 +216,14 @@ screens = [
                                 graph_color=colors_latte["sky"],
                                 border_color=colors_latte["teal"],
                                 ),
-                widget.QuickExit(foreground=colors_frappe["red"],
+                widget.QuickExit(fontsize="16",
+				 foreground=colors_frappe["red"],
 				 default_text="",
 				 countdown_format="[{}]",
 				 ),
             	widget.Sep(foreground=colors_frappe["crust"]),
 	    ],
-            size=30,
+            size=36,
             background=colors_frappe["crust"],
 	    margin=[bar_margin,bar_margin,0,bar_margin], #[N E S W]
             opacity=0.9,
