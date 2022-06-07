@@ -24,24 +24,50 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from libqtile import bar, layout, widget
+from libqtile import bar, layout#, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
-mod = "mod1"  #alt for mod key
+#qtile extras for widget decorations
+from qtile_extras import widget
+from qtile_extras.widget.decorations import RectDecoration
+
+# General/default settings
+mod = "mod1"  #mod1 -> Alt key
 terminal = "alacritty"
 browser = "firefox"
 default_margin = 20
 bar_margin = int(default_margin/2)
 
-colors_latte = {"sky":"#04a5e5","teal":"#179299"}
-colors_frappe = {"sky":"#91dbd1","red":"#e78284","crust":"#1E1E2E","overlay":"#6e778d","text":"#c6d0f5"}
+# Color definitions
+colors_latte = {"sky":      "#04a5e5",
+                "teal":     "#179299"
+                }
 
+colors_frappe = {"crust":       "#232634",
+                 "base":        "#303446",
+                 "overlay":     "#6e778d",
+                 "alttext":     "#b5bfe2",
+                 "text":        "#c6d0f5",
+                 "yellow":      "#e5c890",
+	             "rosewater":   "#f2d5cf",
+	             "flamingo":    "#eebebe",
+                 "pink":        "#f4b8e4",
+                 "peach":       "#ef9f76",
+                 "maroon":      "#ea999c",
+                 "red":         "#e78284",
+                 "mauve":       "#ca9ee6",
+                 "blue":        "#8caaee",
+	             "sapphire":    "#85c1dc",
+	             "teal":        "#81c8be",
+                 "sky":         "#91dbd1",
+                 "green":       "#a6d189",
+                 }
+
+# Keybindings
 keys = [
-    # A list of available commands that can be bound to keys can be found
-    # at https://docs.qtile.org/en/latest/manual/config/lazy.html
-    # Switch between windows
+    # Focus windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
@@ -60,108 +86,54 @@ keys = [
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+    # Switch groups/applications
+    Key([mod], "Left", lazy.screen.prev_group(), desc="Switch to previous group"),
+    Key([mod], "Right", lazy.screen.next_group(), desc="Switch to next group"),
+    Key([mod], "Tab", lazy.spawn("rofi -show window"), desc="Spawn rofi with window menu"),
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
-    Key(
-        [mod, "shift"],
-        "Return",
-        lazy.layout.toggle_split(),
-        desc="Toggle between split and unsplit sides of stack",
-    ),
-    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
-    # Toggle between different layouts as defined below
+    Key([mod, "shift"], "Return", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
+    # Layout management
     Key(["mod4"],"Tab", lazy.next_layout(), desc="Toggle between layouts"),
+    Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle Tiled/Floating"),
+    Key([mod], "z", lazy.hide_show_bar(), lazy.window.toggle_fullscreen(), desc="Toggle Zen mode (no bar + fullscreen window)"),
+    # General operations
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
-    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
+    # Spawn commands
+    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "b", lazy.spawn(browser), lazy.group["2"].toscreen(), desc="Launch default browser, move to browser group"),
+    Key([mod], "a", lazy.spawn("rofi -show run"), desc="Spawn rofi with run menu"),
+
 ]
 
+# Group definitions
 group_list = "123456"
-#label_list = ["", "", "", "", "", ""]
-#label_list="12345"
-#groups = [Group(g,label=label_list[i]) for i,g in enumerate(group_list)]
-
 groups = [Group("1",label=""),#,matches=[Match(title="")]),
           Group("2",label="",matches=[Match(wm_class="firefox")]),
           Group("3",label="",matches=[Match(wm_class="code-oss")]),
-          Group("4",label=""),#,matches=[Match(title="")])
+          Group("4",label=""),  #""),#,matches=[Match(title="")])
           Group("5",label=""),#,matches=[Match(title="")])
           Group("6",label=""),#,matches=[Match(title="")])
 ]
 
 for i in groups:
-    keys.extend(
-        [
-            # mod1 + letter of group = switch to group
-            Key(
-                [mod],
-                i.name,
-                lazy.group[i.name].toscreen(),
-                desc="Switch to group {}".format(i.name),
-            ),
-            # mod1 + shift + letter of group = switch to & move focused window to group
-            Key(
-                [mod, "shift"],
-                i.name,
-                lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
-            ),
-            Key(
-                [mod],
-                "Left",
-                lazy.screen.prev_group(),
-                desc="Switch to previous group",
-            ),
-            Key(
-                [mod],
-                "Right",
-                lazy.screen.next_group(),
-                desc="Switch to next group",
-            ),
-	    Key(
-		[mod],
-		"t",
-		lazy.window.toggle_floating(),
-		desc="Toggle Tiled/Floating",
-	    ),
-	    Key(
-		[mod],
-		"z",
-		lazy.hide_show_bar(),
-		lazy.window.toggle_fullscreen(),
-		desc="Toggle Zen mode (no bar + fullscreen window)",
-	    ),
-		Key(
-		[mod],
-		"a",
-		lazy.spawn("rofi -show run"),
-		desc="Spawn rofi with run menu",
-		),
-		Key(
-		[mod],
-		"Tab",
-		lazy.spawn("rofi -show window"),
-		desc="Spawn rofi with window menu",
-		),
+    keys.extend([Key([mod], i.name, lazy.group[i.name].toscreen(), desc="Switch to group {}".format(i.name),),
+                 Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True), desc="Switch to & move focused window to group {}".format(i.name),),
+                ])
 
-            # Or, use below if you prefer not to switch to that group.
-            # # mod1 + shift + letter of group = move focused window to group
-            # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-            #     desc="move focused window to group {}".format(i.name)),
-        ]
-    )
-
+# Layout configs
 layouts = [
     layout.Columns(margin=default_margin,
-		border_focus_stack=["#d75f5f", "#8f3d3d"],
-		border_normal=colors_latte["teal"],
-		border_focus=colors_latte["sky"],
-		border_width=0,	
-		border_on_single=True),
+		           border_width=0,	#border doesn't work too nicely with rounded corners at the moment
+		           border_focus_stack=["#d75f5f", "#8f3d3d"],
+		           border_normal=colors_latte["teal"],
+		           border_focus=colors_latte["sky"],
+		           border_on_single=True),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -177,78 +149,95 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="Ubuntu Bold",
+    font="Ubuntu",
     #font="sans",
-    fontsize=12,
+    fontsize=14,
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
 
-screens = [
-    Screen(
-        top=bar.Bar(
-            [
-                widget.GroupBox(font="Nerd",
-				fontsize=18,
-				markup=True,
-				visible_groups=group_list,
-				background=colors_frappe["crust"],
-				rounded=True,
-                                this_current_screen_border=colors_frappe["sky"],
-                                this_screen_border=colors_frappe["red"],
-                                active=colors_frappe["sky"],
-                                inactive=colors_frappe["red"],
-                                highlight_method="border",
-                                highlight_color=[colors_frappe["crust"],colors_frappe["overlay"]],
-                                borderwidth=1,
-                                # padding_x=6,
-                                margin_x=8,
-                                ),
-                widget.Prompt(),
+decor = {
+    "decorations": [
+        RectDecoration(colour=colors_frappe["crust"], radius=10, filled=True, padding_y=0)
+    ],
+    "padding": 3,
+}
+
+widget_list = [widget.GroupBox(font="Nerd",
+				               fontsize=18,
+                               margin_x=8,
+				               markup=True,
+				               visible_groups=group_list,
+				               rounded=True,
+                               highlight_method="border",
+                               borderwidth=1,
+				               background="#00000000",
+                               this_current_screen_border=colors_frappe["sapphire"],
+                               active=colors_frappe["sapphire"],
+                               this_screen_border=colors_frappe["red"],
+                               inactive=colors_frappe["maroon"],
+                               # highlight_color=[colors_frappe["crust"],colors_frappe["overlay"]],
+                               # padding_x=6,
+                               **decor,
+                               ),
+                widget.Prompt(background=colors_frappe["crust"],),
                 widget.WindowName(foreground=colors_frappe["text"],),
-                # widget.Chord(
-                #     chords_colors={
-                #         "launch": ("#ff0000", "#ffffff"),
-                #     },
-                #     name_transform=lambda name: name.upper(),
-                # ),
-                widget.TextBox("mike's config",foreground=colors_frappe["text"],),
-                #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
-                # widget.Memory(measure_mem="G"),
+                widget.Spacer(),
+                # widget.TextBox("mike's config",foreground=colors_frappe["text"],),
                 widget.Systray(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p",foreground=colors_frappe["text"],),
-                #widget.CurrentLayoutIcon(scale=0.75,foreground=colors_frappe["text"],),
-                widget.MemoryGraph(type="linefill",
-									samples=50,
-                                    width=50,
-									border_width=2,
-                                    graph_color=colors_latte["teal"],
-                                    fill_color=colors_latte["sky"],
-                                    border_color=colors_latte["teal"],
-                                    ),
-                widget.CPUGraph(type="box",
-                                samples=20,
-								width=50,
-                                graph_color=colors_latte["sky"],
-                                border_color=colors_latte["teal"],
-                                ),
-                widget.QuickExit(fontsize="16",
-				 foreground=colors_frappe["red"],
-				 default_text="",
-				 countdown_format="[{}]",
-				 ),
-            	widget.Sep(foreground=colors_frappe["crust"]),
-	    ],
-            size=32,
-            background=colors_frappe["crust"],
-	    margin=[bar_margin,bar_margin,0,bar_margin], #[N E S W]
-            opacity=0.9,
-	    # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
-        ),
-	wallpaper="/home/michael/Pictures/Wallpapers/apple.png",  
-	wallpaper_mode="stretch",
-    ),
+                widget.Clock(format="  %a, %-d %b  %H:%M  ",    #shows eg. Tue, 7 Jun  11:17
+                             foreground=colors_frappe["text"],
+                             #background=colors_frappe["crust"],
+                            #  padding=10,
+                             **decor,),
+                # widget.CurrentLayoutIcon(scale=0.6,
+                                        #  foreground=colors_frappe["text"],
+                                        #  background="#00000000",
+                                        #  **decor,),
+                # widget.MemoryGraph(type="linefill",
+				# 				   samples=50,
+                #                    width=50,
+				# 				   border_width=2,
+                #                    graph_color=colors_frappe["sky"],
+                #                    fill_color=colors_frappe["sky"],
+                #                    border_color=colors_frappe["sky"],
+                #                    background=colors_frappe["crust"],
+                #                    ),
+                # widget.CPUGraph(type="box",
+                #                 samples=20,
+				# 				width=50,
+                #                 graph_color=colors_frappe["green"],
+                #                 border_color=colors_frappe["green"],
+                #                 background=colors_frappe["crust"],
+                #                 ),
+				widget.Sep(),
+                widget.QuickExit(fontsize="15",
+				                 foreground=colors_frappe["red"],
+				                 # background=colors_frappe["crust"],
+				                 default_text="    ",
+				                 countdown_format="[{}]",
+                                 # padding=10,
+								 
+								 **decor,
+				                 ),
+            	# widget.Sep(foreground=colors_frappe["crust"]),
+
+]
+
+
+screens = [
+    Screen(top=bar.Bar(widget_list,
+                       size=32,
+                       background="#00000000",
+                    #    background=colors_frappe["crust"],
+                       margin=[bar_margin,bar_margin,0,bar_margin], #[N E S W]
+                    #    opacity=0.9,
+                       # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+                       # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+                       ),
+           wallpaper="/home/michael/Pictures/Wallpapers/dt/0197.jpg",  
+           wallpaper_mode="stretch",
+          ),
 ]
 
 # Drag floating layouts.
