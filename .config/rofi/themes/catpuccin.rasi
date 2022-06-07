@@ -8,19 +8,27 @@
     base:       #303446;
     text:       #c6d0f5;
     alttext:    #b5bfe2;
-    blue:       #7287fd;
+    blue:       #8caaee;
     green:      #a6d189;
+	red: 		#e78284;
 	teal:		#81c8be;
     mauve:      #ca9ee6;
     pink:       #f4b8e4;
     peach:      #ef9f76;
+	flamingo: 	#eebebe;
+	rosewater:	#f2d5cf;
+	beachsand:	#E9D1AE;
+	sky: 	 	#74B7D2;
+    maroon: 	#ea999c;
+	sapphire: 	#85c1dc;
+	
 
     //defaults for elements from base colors
     background-color:   @crust;
     text-color:         @text;
 
     //set accent color for selected items
-    accent-color:       @teal;
+    accent-color:       @beachsand;
     bg-color:           @background-color;    
     alttext-color:      @alttext;
 
@@ -33,7 +41,7 @@
 window {
     location:           center;
     width:              33%;
-    height:             25%;
+    height:             218;
     y-offset:           -15%;
     padding:            10;
     border:             0;
@@ -60,7 +68,7 @@ mode-switcher {
 
 //searched content area
 listview {
-    lines:          8;
+    lines:          6;
     fixed-height:   false;
     padding:        0 0 0 0;
     border:         5 5 5 5;
@@ -92,6 +100,6 @@ element.alternate.normal {
 //for active window in window mode
 element.selected.active {
     text-color:  @bg-color;
-    background-color: @peach;
+    background-color: @teal;
 }
 
