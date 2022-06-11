@@ -22,8 +22,8 @@
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
   #TERM: alacritty
-#env:
-#  TERM: xterm-256color
+env:
+  TERM: xterm-256color
 
 window:
   # Window dimensions (changes require restart)
@@ -1060,7 +1060,14 @@ cursor:
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-#key_bindings:
+# key_bindings:
+#   - { key: Down,        mods: Alt,                      chars: "\x1b[;3B"        }
+#   - { key: Up,          mods: Alt,                      chars: "\x1b[;3A"        }
+  # - { key: J,        mods: Alt,     chars: "\x1bj"                       }
+  # - { key: K,        mods: Alt,     chars: "\x1bk"                       }
+  # - { key: H,        mods: Alt,     chars: "\x1bh"                       }
+  # - { key: L,        mods: Alt,     chars: "\x1bl"                       }
+  # - { key: I,        mods: Alt,     chars: "\x1bi"                       }
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
