@@ -15,6 +15,7 @@ alias setdisplay="xrandr -s 1920x1080"
 alias qconfig="$EDITOR $HOME/.config/qtile/config.py"
 alias qxephyr="SCREEN_SIZE=1080x720 $HOME/Packages/qtile/scripts/xephyr "
 alias quitxephyr="qtile cmd-obj -o cmd -f shutdown"
+alias feh="feh --scale-down"
 
 #alias for find
 function findfile(){
