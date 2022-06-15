@@ -17,10 +17,10 @@ Very much a work in progress, may or may not be updated.
 ---
 ### Preview of current setup
 
-Mostly based off of catpuccin colours, lots of r\unixporn inspiration.
+Mostly based off of pastel/catpuccin colours, lots of r\unixporn inspiration.
 
-![current](https://github.com/astronomike/dotfiles/blob/main/.screenshots/Screenshot%20from%202022-06-13%2022-34-39.png)
+![fetch](https://github.com/astronomike/dotfiles/blob/main/.screenshots/fetch.png)
 
-![current](https://github.com/astronomike/dotfiles/blob/main/.screenshots/Screenshot%20from%202022-06-13%2022-21-19.png)
+![rofi](https://github.com/astronomike/dotfiles/blob/main/.screenshots/rofi.png)
 
-![current](https://github.com/astronomike/dotfiles/blob/main/.screenshots/Screenshot%20from%202022-06-13%2022-33-09.png)
+![tiled](https://github.com/astronomike/dotfiles/blob/main/.screenshots/tiled.png)
