@@ -113,13 +113,14 @@ keys = [
 ]
 
 # Group definitions
-group_list = "123456"
+group_list = "1234567"
 groups = [Group("1",label=""),
-          Group("2",label="",matches=[Match(wm_class="firefox")]),
-          Group("3",label="",matches=[Match(wm_class="code-oss")]),
-          Group("4",label=""),  #""),  #""),
-          Group("5",label=""),
-          Group("6",label=""),
+          Group("2",label="\ufa9e",matches=[Match(wm_class="firefox")]),
+		  Group("3",label="",matches=[Match(wm_class="Thunderbird")]),
+          Group("4",label="",matches=[Match(wm_class="code-oss")]),
+          Group("5",label=""),  #""),  #""),
+          Group("6",label=""),
+          Group("7",label=""),
 ]
 
 for i in groups:
@@ -242,7 +243,7 @@ screens = [
                        #border_width=[2, 2, 2, 2], 
                        #border_color=["ff00ff", "000000", "ff00ff", "000000"],
                        ),
-           wallpaper="/home/michael/Pictures/Wallpapers/dt/0197.jpg",  
+           wallpaper="/home/michael/Pictures/Wallpapers/dt/0134.jpg",  
            wallpaper_mode="stretch",
           ),
 ]
