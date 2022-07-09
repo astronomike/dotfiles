@@ -34,12 +34,14 @@ from qtile_extras import widget
 from qtile_extras.widget.decorations import RectDecoration
 
 # General/default settings
-mod = "mod1"  #mod1 -> Alt key
+mod = "mod4"  #mod1 -> Alt key
 terminal = "alacritty"
 browser = "firefox"
 
-bar_size = 32
-default_margin = 20
+volume_mod = 5
+brightness_mod = 5
+bar_size = 28
+default_margin = 8
 bar_margin = int(default_margin/2)
 
 # Color definitions
@@ -110,6 +112,15 @@ keys = [
         Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
         Key([mod], "b", lazy.spawn(browser), lazy.group["2"].toscreen(), desc="Launch default browser, move to browser group"),
         Key([mod], "a", lazy.spawn("rofi -show run"), desc="Spawn rofi with run menu"),
+        # Audio control 
+        Key([],"XF86AudioLowerVolume", lazy.spawn(f"pamixer -d {volume_mod}"),desc=f"Lower volume by {volume_mod}%"),
+        Key([],"XF86AudioRaiseVolume", lazy.spawn(f"pamixer -i {volume_mod}"),desc=f"Raise volume by {volume_mod}%"),
+        Key([],"XF86AudioPlay", lazy.spawn("playerctl play-pause"),desc=f"Pause/Play audio"),
+        Key([],"XF86AudioNext", lazy.spawn("playerctl next"), desc="Skip to next"),
+        Key([],"XF86AudioPrev", lazy.spawn("playerctl previous"), desc="Skip to previous"),
+        # Brightness control
+        Key([],"XF86MonBrightnessDown", lazy.spawn(f"xbacklight -dec {brightness_mod}"),desc=f"Lower monitor brightness by {brightness_mod}"),
+        Key([],"XF86MonBrightnessUp", lazy.spawn(f"xbacklight -inc {brightness_mod}"),desc=f"Lower monitor brightness by {brightness_mod}"),
 ]
 
 # Group definitions
@@ -131,10 +142,10 @@ for i in groups:
 # Layout configs
 layouts = [
     layout.Columns(margin=default_margin,
-		           border_width=0,	#border doesn't work too nicely with rounded corners at the moment
+		           border_width=3,	#border doesn't work too nicely with rounded corners at the moment
 		           border_focus_stack=["#d75f5f", "#8f3d3d"],
-		           border_normal=colors_latte["teal"],
-		           border_focus=colors_latte["sky"],
+		           border_normal=colors_frappe["overlay"],
+		           border_focus=colors_frappe["sky"],
 		           border_on_single=True),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
@@ -152,7 +163,7 @@ layouts = [
 
 widget_defaults = dict(
     font="Ubuntu",
-    fontsize=15,
+    fontsize=13,
     foreground=colors_frappe["text"],
     padding=0,
 )
@@ -188,9 +199,8 @@ widget_list = [widget.GroupBox(font="Nerd",
 				default_sep_widget,
                 widget.Prompt(**decor),
 				default_sep_widget,
-                widget.WindowName(foreground=colors_frappe["text"],format="{class} {name}"),
-                widget.Spacer(),
-                widget.Systray(),
+                widget.WindowName(foreground=colors_frappe["crust"],format="{class} {name}",width=400),
+				widget.Spacer(width="stretch"),
 				# widget.TextBox("◖",font='monospace',width=16,fontsize=bar_size+40,padding=0,foreground=colors_frappe["crust"],background="00000000"),
                 widget.Clock(format="  %a, %-d %b  %H:%M  ",    #shows eg. Tue, 7 Jun  11:17
                              foreground=colors_frappe["text"],
@@ -198,10 +208,16 @@ widget_list = [widget.GroupBox(font="Nerd",
                              # padding=10,
                              **decor,
                             ),
+				default_sep_widget,
+                widget.Spacer(),
+                widget.Systray(),
                 # widget.CurrentLayoutIcon(scale=0.6,
                 #                          foreground=colors_frappe["text"],
                 #                          background="#00000000",
                 #                          **decor,),
+				default_sep_widget,
+                #for Wlan, to see ssid include {essid} in format string
+                widget.Wlan(format='  \uf1eb  {percent:2.0%}  ', disconnected_message='  \ufaa9  ', **decor,),
 				default_sep_widget,
                 widget.CPU(format='  \ue266 {load_percent}%  ',**decor),    
 				default_sep_widget,
@@ -223,7 +239,14 @@ widget_list = [widget.GroupBox(font="Nerd",
                 #                 background=colors_frappe["crust"],
                 #                 ),
 				default_sep_widget,
+                # widget.Net(prefix="M",format='  {down} ↓↑ {up}  ',**decor,),
+				# default_sep_widget,
 				# widget.TextBox("❰",fontsize=47,padding=-1,foreground=colors_frappe["crust"],background=colors_frappe["sky"]),
+                widget.Battery(format='  \uf57d  {char} {percent:2.0%}  ', #%{hour:d}h{min:02d}m {watt:.2f} W  ',
+                               discharge_char='v',
+                               **decor,
+                                ),
+				default_sep_widget,
                 widget.QuickExit(fontsize="15",
 				                 foreground=colors_frappe["red"],
 				                 background="#00000000",
@@ -238,12 +261,15 @@ screens = [
     Screen(top=bar.Bar(widget_list,
                        size=bar_size,
                        background="#00000000",
-                       margin=[bar_margin,bar_margin,0,bar_margin], #[N E S W]
+                       margin=[bar_margin,bar_margin,bar_margin,bar_margin], #[N E S W]
                        #opacity=0.95,
                        #border_width=[2, 2, 2, 2], 
                        #border_color=["ff00ff", "000000", "ff00ff", "000000"],
                        ),
-           wallpaper="/home/michael/Pictures/Wallpapers/dt/0134.jpg",  
+           bottom=bar.Gap(default_margin),
+           left=bar.Gap(default_margin),
+           right=bar.Gap(default_margin),
+           wallpaper="/home/michael/Pictures/Wallpapers/wallpapers-master/0230.jpg",  
            wallpaper_mode="stretch",
           ),
 ]
