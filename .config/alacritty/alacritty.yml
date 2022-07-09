@@ -69,7 +69,7 @@ window:
   #
   # Window opacity as a floating point number from `0.0` to `1.0`.
   # The value `0.0` is completely transparent and `1.0` is opaque.
-  opacity: 0.9
+  opacity: 0.95
 
   # Startup Mode (changes require restart)
   #
@@ -112,17 +112,17 @@ window:
 # Font configuration
 font:
   # Normal (roman) font face
-  #normal:
+  normal:
     # Font family
     #
     # Default:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    #family: monospace
+    family: Ubuntu Mono
 
     # The `style` can be specified to pick a specific face.
-    #style: Regular
+    style: Regular
 
   # Bold font face
   #bold:
@@ -158,7 +158,7 @@ font:
     #style: Bold Italic
 
   # Point size
-  size: 8.0
+  size: 12.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -273,7 +273,8 @@ color_schemes:
 
     # Default colors
     primary:
-      background: '#303446' # base
+      # background: '#303446' # base
+      background: '#232634' # crust
       foreground: '#C6D0F5' # text
       # Bright and dim foreground colors
       dim_foreground: '#C6D0F5' # text
@@ -729,7 +730,7 @@ cursor:
 
   # If this is `true`, the cursor will be rendered as a hollow box when the
   # window is not focused.
-  unfocused_hollow: true
+  unfocused_hollow: false
 
   # Thickness of the cursor relative to the cell width as floating point number
   # from `0.0` to `1.0`.

@@ -28,7 +28,7 @@
     text-color:         @text;
 
     //set accent color for selected items
-    accent-color:       @beachsand;
+    accent-color:       @sapphire;
     bg-color:           @background-color;    
     alttext-color:      @alttext;
 
@@ -41,10 +41,11 @@
 window {
     location:           center;
     width:              33%;
-    height:             218;
+    height:             204;
     y-offset:           -15%;
     padding:            10;
     border:             0;
+    border-radius:      0;
     text-color:         @text-color;
     background-color:   @bg-color;
     border-color:       @base;
