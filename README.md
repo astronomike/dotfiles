@@ -14,6 +14,10 @@ Very much a work in progress, may or may not be updated.
 - Picom
 - Powerline
 
+#### newm 
+
+Has a config for newm, but still uses most defaults.
+
 ---
 ### Basic functions
 
@@ -34,13 +38,14 @@ Multimedia/function keys:
   
   Brightness control with `acpilight` (replacement for `xbacklight` - couldn't get that to work) 
 
+
 ---
 ### Preview of current setup
 
 Mostly based off of pastel/catpuccin colours, lots of r\unixporn inspiration.
 
-![fetch](https://github.com/astronomike/dotfiles/blob/main/.screenshots/fetch.png)
-
 ![rofi](https://github.com/astronomike/dotfiles/blob/main/.screenshots/rofi.png)
 
 ![tiled](https://github.com/astronomike/dotfiles/blob/main/.screenshots/tiled.png)
+
+![fetch](https://github.com/astronomike/dotfiles/blob/main/.screenshots/code.png)
