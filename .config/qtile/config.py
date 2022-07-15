@@ -24,7 +24,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from libqtile import bar, layout#, widget
+from libqtile import bar, layout, hook#, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
@@ -33,41 +33,18 @@ from libqtile.utils import guess_terminal
 from qtile_extras import widget
 from qtile_extras.widget.decorations import RectDecoration
 
-# General/default settings
-mod = "mod4"  #mod1 -> Alt key
+from colors import Colors
+
+# General/quick access settings
+mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
-
-volume_mod = 5
-brightness_mod = 5
+wallpaper = "/home/michael/Pictures/Wallpapers/0001.jpg"
 bar_size = 28
 default_margin = 8
 bar_margin = int(default_margin/2)
-
-# Color definitions
-colors_latte = {"sky":      "#04a5e5",
-                "teal":     "#179299"
-                }
-
-colors_frappe = {"crust":       "#232634",
-                 "base":        "#303446",
-                 "overlay":     "#6e778d",
-                 "alttext":     "#b5bfe2",
-                 "text":        "#c6d0f5",
-                 "yellow":      "#e5c890",
-	             "rosewater":   "#f2d5cf",
-	             "flamingo":    "#eebebe",
-                 "pink":        "#f4b8e4",
-                 "peach":       "#ef9f76",
-                 "maroon":      "#ea999c",
-                 "red":         "#e78284",
-                 "mauve":       "#ca9ee6",
-                 "blue":        "#8caaee",
-	             "sapphire":    "#85c1dc",
-	             "teal":        "#81c8be",
-                 "sky":         "#91dbd1",
-                 "green":       "#a6d189",
-                 }
+volume_mod = 5
+brightness_mod = 5
 
 # Keybindings
 keys = [
@@ -129,7 +106,7 @@ groups = [Group("1",label=""),
           Group("2",label="\ufa9e",matches=[Match(wm_class="firefox")]),
 		  Group("3",label="",matches=[Match(wm_class="Thunderbird")]),
           Group("4",label="",matches=[Match(wm_class="code-oss")]),
-          Group("5",label=""),  #""),  #""),
+          Group("5",label=""),
           Group("6",label=""),
           Group("7",label=""),
 ]
@@ -144,8 +121,8 @@ layouts = [
     layout.Columns(margin=default_margin,
 		           border_width=3,	#border doesn't work too nicely with rounded corners at the moment
 		           border_focus_stack=["#d75f5f", "#8f3d3d"],
-		           border_normal=colors_frappe["overlay"],
-		           border_focus=colors_frappe["sky"],
+		           border_normal=Colors.latte["Overlay0"],
+		           border_focus=Colors.latte["Sapphire"],
 		           border_on_single=True),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
@@ -164,7 +141,7 @@ layouts = [
 widget_defaults = dict(
     font="Ubuntu",
     fontsize=13,
-    foreground=colors_frappe["text"],
+    foreground=Colors.frappe["Text"],
     padding=0,
 )
 extension_defaults = widget_defaults.copy()
@@ -172,7 +149,7 @@ extension_defaults = widget_defaults.copy()
 #widget decorations - background box
 decor = {
     "decorations": [
-        RectDecoration(colour=colors_frappe["crust"], radius=10, filled=True, padding_y=0)
+        RectDecoration(colour=Colors.macchiato["Crust"], radius=10, filled=True, padding_y=0)
     ],
     "padding": 3,
 }
@@ -188,22 +165,22 @@ widget_list = [widget.GroupBox(font="Nerd",
                                highlight_method="border",
                                borderwidth=1,
 				               background="#00000000",
-                               this_current_screen_border=colors_frappe["sky"],
-                               active=colors_frappe["sky"],
-                               this_screen_border=colors_frappe["red"],
-                               inactive=colors_frappe["red"],
-                               # highlight_color=[colors_frappe["crust"],colors_frappe["overlay"]],
+                               this_current_screen_border=Colors.frappe["Blue"],
+                               active=Colors.frappe["Blue"],
+                               this_screen_border=Colors.frappe["Red"],
+                               inactive=Colors.latte["Flamingo"],
+                               # highlight_color=[Colors.frappe["Crust"],Colors.frappe["Sky"]],
                                # padding_x=6,
                                **decor,
                                ),
 				default_sep_widget,
                 widget.Prompt(**decor),
 				default_sep_widget,
-                widget.WindowName(foreground=colors_frappe["crust"],format="{class} {name}",width=400),
+                widget.WindowName(foreground=Colors.macchiato["Crust"],format="{class} {name}",width=300),
 				widget.Spacer(width="stretch"),
-				# widget.TextBox("◖",font='monospace',width=16,fontsize=bar_size+40,padding=0,foreground=colors_frappe["crust"],background="00000000"),
+				# widget.TextBox("◖",font='monospace',width=16,fontsize=bar_size+40,padding=0,foreground=Colors.frappe["Crust"],background="00000000"),
                 widget.Clock(format="  %a, %-d %b  %H:%M  ",    #shows eg. Tue, 7 Jun  11:17
-                             foreground=colors_frappe["text"],
+                             foreground=Colors.frappe["Text"],
                              background="#00000000",
                              # padding=10,
                              **decor,
@@ -212,7 +189,7 @@ widget_list = [widget.GroupBox(font="Nerd",
                 widget.Spacer(),
                 widget.Systray(),
                 # widget.CurrentLayoutIcon(scale=0.6,
-                #                          foreground=colors_frappe["text"],
+                #                          foreground=Colors.frappe["Text"],
                 #                          background="#00000000",
                 #                          **decor,),
 				default_sep_widget,
@@ -226,29 +203,29 @@ widget_list = [widget.GroupBox(font="Nerd",
 				# 				     samples=50,
                 #                    width=50,
 				# 				     border_width=2,
-                #                    graph_color=colors_frappe["sky"],
-                #                    fill_color=colors_frappe["sky"],
-                #                    border_color=colors_frappe["sky"],
-                #                    background=colors_frappe["crust"],
+                #                    graph_color=Colors.frappe["Sky"],
+                #                    fill_color=Colors.frappe["Sky"],
+                #                    border_color=Colors.frappe["Sky"],
+                #                    background=Colors.frappe["Crust"],
                 #                    ),
                 # widget.CPUGraph(type="box",
                 #                 samples=20,
 				# 				  width=50,
-                #                 graph_color=colors_frappe["green"],
-                #                 border_color=colors_frappe["green"],
-                #                 background=colors_frappe["crust"],
+                #                 graph_color=Colors.frappe["Green"],
+                #                 border_color=Colors.frappe["Green"],
+                #                 background=Colors.frappe["Crust"],
                 #                 ),
 				default_sep_widget,
                 # widget.Net(prefix="M",format='  {down} ↓↑ {up}  ',**decor,),
 				# default_sep_widget,
-				# widget.TextBox("❰",fontsize=47,padding=-1,foreground=colors_frappe["crust"],background=colors_frappe["sky"]),
+				# widget.TextBox("❰",fontsize=47,padding=-1,foreground=Colors.frappe["Crust"],background=Colors.frappe["Sky"]),
                 widget.Battery(format='  \uf57d  {char} {percent:2.0%}  ', #%{hour:d}h{min:02d}m {watt:.2f} W  ',
                                discharge_char='v',
                                **decor,
                                 ),
 				default_sep_widget,
                 widget.QuickExit(fontsize="15",
-				                 foreground=colors_frappe["red"],
+				                 foreground=Colors.latte["Maroon"],
 				                 background="#00000000",
 				                 default_text="    ",
 				                 countdown_format="  [{}]  ",
@@ -269,7 +246,7 @@ screens = [
            bottom=bar.Gap(default_margin),
            left=bar.Gap(default_margin),
            right=bar.Gap(default_margin),
-           wallpaper="/home/michael/Pictures/Wallpapers/wallpapers-master/0230.jpg",  
+           wallpaper=wallpaper,
            wallpaper_mode="stretch",
           ),
 ]
@@ -302,6 +279,13 @@ floating_layout = layout.Floating(
 auto_fullscreen = False
 focus_on_window_activation = "smart"
 reconfigure_screens = True
+
+import os, subprocess
+@hook.subscribe.startup_once
+def autostart():
+    home = os.path.expanduser('~/.config/qtile/autostart.sh')
+    subprocess.Popen([home])
+
 
 # If things like steam games want to auto-minimize themselves when losing
 # focus, should we respect this or not?
