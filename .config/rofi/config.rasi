@@ -1,7 +1,9 @@
 configuration {
     modi: "window,run";
     window-format: "{w}  {c}    {t}";
-    
+    kb-accept-entry: "!Alt+Tab,!Super+Tab";
+    kb-row-down: "Alt+Tab,Super+Tab";
+    kb-row-up: "Alt+Shift+Tab,Super+Shift+Tab";
 }
 
 @theme "/themes/catpuccin.rasi"
