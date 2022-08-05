@@ -25,7 +25,7 @@
 # SOFTWARE.
 
 from libqtile import bar, layout, hook  # , widget
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
+from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
@@ -39,7 +39,7 @@ from colors import Colors
 mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
-wallpaper = "/home/michael/Pictures/Wallpapers/wallpapers-master/0259.jpg"
+wallpaper = "/home/michael/Pictures/Wallpapers/wallpapers-master/0197.jpg"
 bar_size = 30
 default_margin = 8
 bar_margin = int(default_margin / 2)
@@ -193,7 +193,39 @@ for i in groups:
         ]
     )
 
-# Layout configs
+# ScratchPads (invisible groups)
+# defaults
+sp_width = 0.6  # as a fraction of screen width
+sp_height = 0.6  # as a fraction of screen height
+sp_x = (1 - sp_width) / 2  # y position of window
+sp_y = (1 - sp_height) / 2  # x position of window
+sp_defaults = {
+    "opacity": 1.0,
+    "width": sp_width,
+    "height": sp_height,
+    "x": sp_x,
+    "y": sp_y,
+}
+groups.extend(
+    [
+        ScratchPad(
+            name="scratchpad",
+            dropdowns=[
+                DropDown("term", "alacritty", **sp_defaults),
+                DropDown("gotop", "alacritty -e gotop", **sp_defaults),
+            ],
+        )
+    ]
+)
+
+keys.extend(
+    [
+        Key(["control"], "1", lazy.group["scratchpad"].dropdown_toggle("term")),
+        Key(["control"], "2", lazy.group["scratchpad"].dropdown_toggle("gotop")),
+    ]
+)
+
+# Layout configs1
 layouts = [
     layout.Columns(
         margin=default_margin,
@@ -257,9 +289,9 @@ widget_list = [
     widget.Prompt(**decor),
     default_sep_widget,
     widget.WindowName(
-        foreground=Colors.macchiato["Crust"],
+        foreground=Colors.frappe["Text"],
         background="#00000000",
-        format="{class} {name}",
+        format="{class}",
         width=300,
     ),
     widget.Spacer(width="stretch"),
@@ -281,6 +313,25 @@ widget_list = [
     ),
     default_sep_widget,
     widget.Spacer(),
+    widget.WidgetBox(
+        text_closed="\uf6d7",
+        text_open="\ufc96",
+        widgets=[
+            default_sep_widget,
+            widget.PulseVolume(
+                font="Nerd",
+                fmt="  \ufa7d  {}  ",
+                limit_max_volume=True,
+                # emoji=True,
+                **decor,
+            ),
+            default_sep_widget,
+            widget.Backlight(
+                backlight_name="intel_backlight", fmt="  \uf5dd  {}  ", **decor
+            ),
+        ],
+    ),
+    default_sep_widget,
     widget.Systray(),
     # widget.CurrentLayoutIcon(
     #     scale=0.6, foreground=Colors.frappe["Text"], background="#00000000", **decor,
@@ -291,9 +342,13 @@ widget_list = [
         format="  \uf1eb  {percent:2.0%}  ", disconnected_message="  \ufaa9  ", **decor,
     ),
     default_sep_widget,
-    widget.CPU(format="  \ue266 {load_percent}%  ", **decor),
+    widget.CPU(format="  \ue266  {load_percent}%  ", **decor),
     default_sep_widget,
-    widget.Memory(format="  \ue240  {MemPercent} ({SwapPercent})%  ", **decor),
+    widget.Memory(
+        format="  \ue240  {MemPercent} ({SwapPercent})%  ",
+        mouse_callbacks={"Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")},
+        **decor,
+    ),
     # widget.MemoryGraph(
     #     type="linefill",
     #     samples=50,
@@ -312,7 +367,6 @@ widget_list = [
     #     border_color=Colors.frappe["Green"],
     #     background=Colors.frappe["Crust"],
     # ),
-    default_sep_widget,
     # widget.Net(prefix="M", format="  {down} ↓↑ {up}  ", **decor,),
     # default_sep_widget,
     # widget.TextBox(
@@ -322,6 +376,7 @@ widget_list = [
     #     foreground=Colors.frappe["Crust"],
     #     background=Colors.frappe["Sky"],
     # ),
+    default_sep_widget,
     widget.Battery(
         format="  \uf57d  {char} {percent:2.0%}  ",  #%{hour:d}h{min:02d}m {watt:.2f} W  ',
         discharge_char="v",
@@ -394,6 +449,9 @@ floating_layout = layout.Floating(
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
+
+# Mouse Callbacks
+
 
 # Popups
 import popups
