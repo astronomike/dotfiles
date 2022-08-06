@@ -213,6 +213,11 @@ groups.extend(
             dropdowns=[
                 DropDown("term", "alacritty", **sp_defaults),
                 DropDown("gotop", "alacritty -e gotop", **sp_defaults),
+                DropDown(
+                    "speedometer",
+                    "alacritty -e speedometer -r wlan0 -t wlan0",
+                    **sp_defaults,
+                ),
             ],
         )
     ]
@@ -222,6 +227,7 @@ keys.extend(
     [
         Key(["control"], "1", lazy.group["scratchpad"].dropdown_toggle("term")),
         Key(["control"], "2", lazy.group["scratchpad"].dropdown_toggle("gotop")),
+        Key(["control"], "3", lazy.group["scratchpad"].dropdown_toggle("speedometer")),
     ]
 )
 
@@ -295,15 +301,6 @@ widget_list = [
         width=300,
     ),
     widget.Spacer(width="stretch"),
-    # widget.TextBox(
-    #     "◖",
-    #     font="monospace",
-    #     width=16,
-    #     fontsize=bar_size + 40,
-    #     padding=0,
-    #     foreground=Colors.frappe["Crust"],
-    #     background="00000000",
-    # ),
     widget.Clock(
         format="  %a, %-d %b  %H:%M  ",  # shows eg. Tue, 7 Jun  11:17
         foreground=Colors.frappe["Text"],
@@ -313,13 +310,13 @@ widget_list = [
     ),
     default_sep_widget,
     widget.Spacer(),
+    default_sep_widget,
     widget.WidgetBox(
-        text_closed="\uf6d7",
+        text_closed="\ufc95",
         text_open="\ufc96",
         widgets=[
             default_sep_widget,
             widget.PulseVolume(
-                font="Nerd",
                 fmt="  \ufa7d  {}  ",
                 limit_max_volume=True,
                 # emoji=True,
@@ -329,20 +326,31 @@ widget_list = [
             widget.Backlight(
                 backlight_name="intel_backlight", fmt="  \uf5dd  {}  ", **decor
             ),
+            default_sep_widget,
+            widget.Battery(
+                format="  \uf57d  {char} {percent:2.0%}  {hour:d}h{min:02d}m  ",
+                discharge_char="v",
+                **decor,
+            ),
         ],
     ),
-    default_sep_widget,
     widget.Systray(),
-    # widget.CurrentLayoutIcon(
-    #     scale=0.6, foreground=Colors.frappe["Text"], background="#00000000", **decor,
-    # ),
     default_sep_widget,
     # for Wlan, to see ssid include {essid} in format string
     widget.Wlan(
-        format="  \uf1eb  {percent:2.0%}  ", disconnected_message="  \ufaa9  ", **decor,
+        format="  \uf1eb  {percent:2.0%}  ",
+        disconnected_message="  \ufaa9  ",
+        mouse_callbacks={
+            "Button1": lazy.group["scratchpad"].dropdown_toggle("speedometer")
+        },
+        **decor,
     ),
     default_sep_widget,
-    widget.CPU(format="  \ue266  {load_percent}%  ", **decor),
+    widget.CPU(
+        format="  \ue266  {load_percent}%  ",
+        mouse_callbacks={"Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")},
+        **decor,
+    ),
     default_sep_widget,
     widget.Memory(
         format="  \ue240  {MemPercent} ({SwapPercent})%  ",
@@ -368,21 +376,8 @@ widget_list = [
     #     background=Colors.frappe["Crust"],
     # ),
     # widget.Net(prefix="M", format="  {down} ↓↑ {up}  ", **decor,),
-    # default_sep_widget,
-    # widget.TextBox(
-    #     "❰",
-    #     fontsize=47,
-    #     padding=-1,
-    #     foreground=Colors.frappe["Crust"],
-    #     background=Colors.frappe["Sky"],
-    # ),
     default_sep_widget,
-    widget.Battery(
-        format="  \uf57d  {char} {percent:2.0%}  ",  #%{hour:d}h{min:02d}m {watt:.2f} W  ',
-        discharge_char="v",
-        **decor,
-    ),
-    default_sep_widget,
+    # widget.BatteryIcon(**decor),
     widget.QuickExit(
         fontsize="15",
         foreground=Colors.latte["Maroon"],
@@ -393,6 +388,9 @@ widget_list = [
     ),
 ]
 
+keys.extend(
+    [Key([mod], "i", lazy.widget["widgetbox"].toggle(), "Toggle WidgetBox state",),]
+)
 
 screens = [
     Screen(
@@ -412,7 +410,6 @@ screens = [
         wallpaper_mode="stretch",
     ),
 ]
-
 
 # Drag floating layouts.
 mouse = [
