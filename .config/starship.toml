@@ -1,48 +1,32 @@
+add_newline = true
+
 format = """
-[|](green)$directory$rust$package
-[ ➜  ](green) """
+[| $username](green)$directory$package$conda$git_status$git_branch$status
+[  ➜  ](green) """
 
-[aws]
-symbol = "  "
+[status]
+disabled = false
 
-[buf]
-symbol = " "
+[username]
+show_always = true
+style_user = "blue"
 
 [c]
 symbol = " "
 
 [conda]
 symbol = " "
-
-[dart]
-symbol = " "
+format = "[$symbol$environment](blue)"
+ignore_base = false
 
 [directory]
 read_only = " "
 
-[docker_context]
-symbol = " "
-
-[elixir]
-symbol = " "
-
-[elm]
-symbol = " "
-
 [git_branch]
 symbol = " "
 
-[golang]
-symbol = " "
-
-[haskell]
-symbol = " "
-
 [hg_branch]
 symbol = " "
-
-[java]
-symbol = " "
 
 [julia]
 symbol = " "
@@ -50,23 +34,9 @@ symbol = " "
 [memory_usage]
 symbol = " "
 
-[nim]
-symbol = " "
-
-[nix_shell]
-symbol = " "
-
-[nodejs]
-symbol = " "
-
 [package]
 symbol = " "
 
 [python]
-symbol = " "
-
-[spack]
-symbol = "🅢 "
-
-[rust]
-symbol = " "
+symbol = " "
+style = "yellow"
