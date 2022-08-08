@@ -1,5 +1,7 @@
 # Color definitions
 class Colors:
+    transparent = "#00000000"
+
     latte = {
         "Rosewater": "#dc8a78",
         "Flamingo": "#dd7878",

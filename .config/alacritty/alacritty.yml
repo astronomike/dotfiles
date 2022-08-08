@@ -69,7 +69,7 @@ window:
   #
   # Window opacity as a floating point number from `0.0` to `1.0`.
   # The value `0.0` is completely transparent and `1.0` is opaque.
-  opacity: 0.95
+  opacity: 1.0
 
   # Startup Mode (changes require restart)
   #
@@ -351,7 +351,8 @@ color_schemes:
 
     # Default colors
     primary:
-      background: '#24273A' # base
+      background: '#181926' # crust
+      # background: '#24273A' # base
       foreground: '#CAD3F5' # text
       # Bright and dim foreground colors
       dim_foreground: '#CAD3F5' # text
@@ -427,7 +428,8 @@ color_schemes:
   mocha: &mocha
     # Default colors
     primary:
-      background: '#1E1E2E' # base
+      # background: '#1E1E2E' # base
+      background: '#11111b'
       foreground: '#CDD6F4' # text
       # Bright and dim foreground colors
       dim_foreground: '#CDD6F4' # text
@@ -501,7 +503,7 @@ color_schemes:
       white:   '#BAC2DE' # subtext1
 
 # setcolor
-colors: *frappe
+colors: *mocha
 
 
 # Colors (Tomorrow Night)
