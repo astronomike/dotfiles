@@ -1,4 +1,3 @@
 #!/bin/bash
 
-picom -b --experimental-backends
-libinput-gestures-setup desktop start
+picom -b

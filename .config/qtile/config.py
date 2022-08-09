@@ -42,7 +42,7 @@ mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
 home = Path.home()
-wallpaper = home / "Pictures/Wallpapers/catpuccin/landscapes/tropic_island_day.jpg"
+wallpaper = home / "Pictures/Wallpapers/default.png"
 default_margin = 10  # window gaps
 bar_size = 30
 bar_fontsize = 14
@@ -304,7 +304,7 @@ widget_defaults = dict(
     font="Ubuntu", fontsize=bar_fontsize, foreground=Colors.mocha["Text"], padding=0,
 )
 extension_defaults = widget_defaults.copy()
-default_sep_widget = widget.Sep(foreground=Colors.transparent, linewidth=5)
+default_sep_widget = widget.Sep(foreground=Colors.transparent,linewidth=5)
 
 # Widgets
 widget_list = [
@@ -359,29 +359,29 @@ widget_list = [
                 # emoji=True,
                 **leftdecor,
             ),
-            widget.Backlight(
-                foreground=Colors.mocha["Teal"],
-                backlight_name="intel_backlight",
-                fmt="  \uf5dd  {}  ",
-                **middledecor,
-            ),
-            widget.Wlan(
-                format="  \uf1eb  {percent:2.0%}  ",
-                disconnected_message="  \ufaa9  ",
-                foreground=Colors.mocha["Green"],
-                mouse_callbacks={
-                    "Button1": lazy.group["scratchpad"].dropdown_toggle("speedometer")
-                },
-                **middledecor,
-            ),
-            # widget.CPU(
-            #     format="  \ue266  {load_percent}%  ",
-            #     mouse_callbacks={
-            #         "Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")
-            #     },
-            #     foreground=Colors.mocha["Yellow"],
+            # widget.Backlight(
+            #     foreground=Colors.mocha["Teal"],
+            #     backlight_name="intel_backlight",
+            #     fmt="  \uf5dd  {}  ",
             #     **middledecor,
             # ),
+            # widget.Wlan(
+            #     format="  \uf1eb  {percent:2.0%}  ",
+            #     disconnected_message="  \ufaa9  ",
+            #     foreground=Colors.mocha["Green"],
+            #     mouse_callbacks={
+            #         "Button1": lazy.group["scratchpad"].dropdown_toggle("speedometer")
+            #     },
+            #     **middledecor,
+            # ),
+            widget.CPU(
+                format="  \ue266  {load_percent}%  ",
+                mouse_callbacks={
+                    "Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")
+                },
+                foreground=Colors.mocha["Yellow"],
+                **middledecor,
+            ),
             widget.Memory(
                 format="  \ue240  {MemPercent} ({SwapPercent})%  ",
                 mouse_callbacks={
@@ -390,25 +390,25 @@ widget_list = [
                 foreground=Colors.mocha["Yellow"],
                 **middledecor,
             ),
-            widget.Battery(
-                format="  \uf57d  {char} {percent:2.0%}  {hour:d}h{min:02d}m  ",
-                discharge_char="\uf175",
-                charge_char="\uf176",
-                foreground=Colors.mocha["Peach"],
-                **rightdecor,
-            ),
+            # widget.Battery(
+            #     format="  \uf57d  {char} {percent:2.0%}  {hour:d}h{min:02d}m  ",
+            #     discharge_char="\uf175",
+            #     charge_char="\uf176",
+            #     foreground=Colors.mocha["Peach"],
+            #     **rightdecor,
+            # ),
         ],
     ),
     default_sep_widget,
     widget.Systray(),
     widget.Sep(**leftdecor, linewidth=8, foreground=Colors.transparent),
-    widget.BatteryIcon(
-        theme_path=home / ".config/qtile/battery-icons/", scale=1.05, **middledecor,
-    ),
+    # widget.BatteryIcon(
+    #     theme_path=home / ".config/qtile/battery-icons/", scale=1.05, **middledecor,
+    # ),
     widget.QuickExit(
         fontsize="16",
         foreground=Colors.latte["Maroon"],
-        background=Colors.transparent,
+        # background=Colors.transparent,
         default_text="    ",
         countdown_format="  [{}]  ",
         **rightdecor,
