@@ -42,7 +42,7 @@ mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
 home = Path.home()
-wallpaper = home / "Pictures/Wallpapers/default.png"
+wallpaper = home / "Pictures/Wallpapers/sunset.jpeg"
 default_margin = 10  # window gaps
 bar_size = 30
 bar_fontsize = 14
@@ -219,7 +219,7 @@ groups.extend(
                 DropDown("gotop", "alacritty -e gotop", **sp_defaults),
                 DropDown(
                     "speedometer",
-                    "alacritty -e speedometer -r wlan0 -t wlan0",
+                    "alacritty -e speedometer -r enp1s0 -t enp1s0",
                     **sp_defaults,
                 ),
                 DropDown("calcurse", "alacritty -e calcurse", **sp_defaults),
@@ -265,7 +265,12 @@ layouts = [
 # left, right, middle (none) decor determines rounded edges
 decor = {
     "decorations": [
-        RectDecoration(colour=Colors.mocha["Crust"], radius=10, filled=True, padding=0,)
+        RectDecoration(
+            colour=Colors.mocha["Crust"],
+            radius=10,
+            filled=True,
+            padding=0,
+        )
     ],
     "padding": 3,
 }
@@ -294,17 +299,23 @@ rightdecor = {
 middledecor = {
     "decorations": [
         RectDecoration(
-            colour=Colors.macchiato["Crust"], radius=0, filled=True, padding=0,
+            colour=Colors.macchiato["Crust"],
+            radius=0,
+            filled=True,
+            padding=0,
         )
     ],
     "padding": 3,
 }
 
 widget_defaults = dict(
-    font="Ubuntu", fontsize=bar_fontsize, foreground=Colors.mocha["Text"], padding=0,
+    font="Ubuntu",
+    fontsize=bar_fontsize,
+    foreground=Colors.mocha["Text"],
+    padding=0,
 )
 extension_defaults = widget_defaults.copy()
-default_sep_widget = widget.Sep(foreground=Colors.transparent,linewidth=5)
+default_sep_widget = widget.Sep(foreground=Colors.transparent, linewidth=5)
 
 # Widgets
 widget_list = [
@@ -374,6 +385,7 @@ widget_list = [
             #     },
             #     **middledecor,
             # ),
+            widget.Net(foreground=Colors.mocha["Green"], **middledecor),
             widget.CPU(
                 format="  \ue266  {load_percent}%  ",
                 mouse_callbacks={
@@ -421,7 +433,7 @@ keys.extend(
             [mod],
             "i",
             lazy.widget["widgetbox"].toggle(),
-            "Toggle WidgetBox open/closed",
+            desc="Toggle WidgetBox open/closed",
         ),
     ]
 )
