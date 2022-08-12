@@ -421,7 +421,7 @@ keys.extend(
             [mod],
             "i",
             lazy.widget["widgetbox"].toggle(),
-            "Toggle WidgetBox open/closed",
+            desc="Toggle WidgetBox open/closed",
         ),
     ]
 )
