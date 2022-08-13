@@ -58,8 +58,7 @@ keys = [
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
-    # Move windows between left/right columns or move up/down in current stack.
-    # Moving out of range in Columns layout will create new column.
+    # Move windows in layouts
     Key(
         [mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"
     ),
@@ -71,8 +70,7 @@ keys = [
     ),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
-    # Grow windows. If current window is on the edge of screen and direction
-    # will be to screen edge - window would shrink.
+    # Grow windows
     Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
     Key(
         [mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"
@@ -83,6 +81,12 @@ keys = [
     # Switch groups/applications
     Key([mod], "Left", lazy.screen.prev_group(), desc="Switch to previous group"),
     Key([mod], "Right", lazy.screen.next_group(), desc="Switch to next group"),
+    Key(
+        [mod],
+        "grave",
+        lazy.screen.toggle_group(),
+        desc="Switch to the last visited group",
+    ),
     Key(
         ["mod1"],
         "Tab",
@@ -102,11 +106,11 @@ keys = [
     # Layout management
     Key([mod, "shift"], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle Tiled/Floating"),
+    Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
     Key(
         [mod],
         "z",
         lazy.hide_show_bar("top"),
-        # lazy.window.toggle_fullscreen(),
         desc="Toggle 'Zen' mode (no bar + fullscreen window)",
     ),
     # General operations
@@ -173,10 +177,10 @@ groups = [
     Group("1", label=""),
     Group("2", label="\ufa9e", matches=[Match(wm_class="firefox")]),
     Group("3", label="", matches=[Match(wm_class="Thunderbird")]),
-    Group("4", label="", matches=[Match(wm_class="code-oss")]),
+    Group("4", label="", matches=[Match(wm_class="code")]),
     Group("5", label=""),
-    Group("6", label=""),
-    Group("7", label=""),
+    Group("6", label="\uf11b", matches=[Match(wm_class="Steam")]),
+    Group("7", label="", matches=[Match(wm_class="Spotify")]),
 ]
 
 for i in groups:
@@ -196,6 +200,40 @@ for i in groups:
             ),
         ]
     )
+
+
+@lazy.window.function
+def window_to_next_group(window):
+    index = window.qtile.groups.index(window.group)
+    index = (index + 1) % len(window.qtile.groups)
+    window.cmd_togroup(window.qtile.groups[index].name)
+
+
+@lazy.window.function
+def window_to_prev_group(window):
+    index = window.qtile.groups.index(window.group)
+    index = (index - 1) % len(window.qtile.groups)
+    window.cmd_togroup(window.qtile.groups[index].name)
+
+
+keys.extend(
+    [
+        Key(
+            [mod, "shift"],
+            "Left",
+            window_to_prev_group,
+            lazy.screen.prev_group(),
+            desc="Switch to & move focused window to prev group",
+        ),
+        Key(
+            [mod, "shift"],
+            "Right",
+            window_to_next_group,
+            lazy.screen.next_group(),
+            desc="Switch to & move focused window to next group",
+        ),
+    ]
+)
 
 # ScratchPads (invisible groups)
 # defaults
@@ -332,7 +370,8 @@ widget_list = [
         font="Ubuntu",
         fontsize=bar_fontsize + 2,
         format="  \uf2d0  {name}  ",
-        width=350,
+        width=300,
+        scroll=True,
     ),
     widget.Spacer(width="stretch"),
     widget.Clock(
