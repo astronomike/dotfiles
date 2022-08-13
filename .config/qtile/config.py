@@ -42,7 +42,7 @@ mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
 home = Path.home()
-wallpaper = home / "Pictures/Wallpapers/sunset.jpeg"
+wallpaper = home / "Pictures/Wallpapers/catpuccin/misc/feet-on-the-dashboard.png"
 default_margin = 10  # window gaps
 bar_size = 30
 bar_fontsize = 14
@@ -58,8 +58,7 @@ keys = [
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
-    # Move windows between left/right columns or move up/down in current stack.
-    # Moving out of range in Columns layout will create new column.
+    # Move windows in layout
     Key(
         [mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"
     ),
@@ -71,8 +70,7 @@ keys = [
     ),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
-    # Grow windows. If current window is on the edge of screen and direction
-    # will be to screen edge - window would shrink.
+    # Grow windows
     Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
     Key(
         [mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"
@@ -83,6 +81,12 @@ keys = [
     # Switch groups/applications
     Key([mod], "Left", lazy.screen.prev_group(), desc="Switch to previous group"),
     Key([mod], "Right", lazy.screen.next_group(), desc="Switch to next group"),
+    Key(
+        [mod],
+        "grave",
+        lazy.screen.toggle_group(),
+        desc="Switch to the last visited group",
+    ),
     Key(
         ["mod1"],
         "Tab",
@@ -101,12 +105,12 @@ keys = [
     ),
     # Layout management
     Key([mod, "shift"], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle Tiled/Floating"),
+    Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle tiled/floating"),
+    Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
     Key(
         [mod],
         "z",
         lazy.hide_show_bar("top"),
-        # lazy.window.toggle_fullscreen(),
         desc="Toggle 'Zen' mode (no bar + fullscreen window)",
     ),
     # General operations
@@ -196,6 +200,41 @@ for i in groups:
             ),
         ]
     )
+
+
+@lazy.window.function
+def window_to_next_group(window):
+    index = window.qtile.groups.index(window.group)
+    index = (index + 1) % len(window.qtile.groups)
+    window.cmd_togroup(window.qtile.groups[index].name)
+
+
+@lazy.window.function
+def window_to_prev_group(window):
+    index = window.qtile.groups.index(window.group)
+    index = (index - 1) % len(window.qtile.groups)
+    window.cmd_togroup(window.qtile.groups[index].name)
+
+
+keys.extend(
+    [
+        Key(
+            [mod, "shift"],
+            "Left",
+            window_to_prev_group,
+            lazy.screen.prev_group(),
+            desc="Switch to & move focused window to prev group",
+        ),
+        Key(
+            [mod, "shift"],
+            "Right",
+            window_to_next_group,
+            lazy.screen.next_group(),
+            desc="Switch to & move focused window to next group",
+        ),
+    ]
+)
+
 
 # ScratchPads (invisible groups)
 # defaults
@@ -400,7 +439,7 @@ widget_list = [
                     "Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")
                 },
                 foreground=Colors.mocha["Yellow"],
-                **middledecor,
+                **rightdecor,
             ),
             # widget.Battery(
             #     format="  \uf57d  {char} {percent:2.0%}  {hour:d}h{min:02d}m  ",
@@ -413,7 +452,7 @@ widget_list = [
     ),
     default_sep_widget,
     widget.Systray(),
-    widget.Sep(**leftdecor, linewidth=8, foreground=Colors.transparent),
+    # widget.Sep(**leftdecor, linewidth=1, foreground=Colors.transparent),
     # widget.BatteryIcon(
     #     theme_path=home / ".config/qtile/battery-icons/", scale=1.05, **middledecor,
     # ),
@@ -423,7 +462,7 @@ widget_list = [
         # background=Colors.transparent,
         default_text="    ",
         countdown_format="  [{}]  ",
-        **rightdecor,
+        **decor,
     ),
 ]
 
