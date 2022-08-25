@@ -29,13 +29,13 @@ from pathlib import Path
 from libqtile import bar, layout, hook  # , widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
-from libqtile.utils import guess_terminal
 
 # qtile extras for widget decorations
 from qtile_extras import widget
 from qtile_extras.widget.decorations import RectDecoration
 
 from colors import Colors
+import subprocess  # for hooks
 
 # General/quick access settings
 mod = "mod4"
@@ -49,6 +49,20 @@ bar_fontsize = 14
 bar_margin = int(default_margin / 2)  # smaller gap for bar
 volume_mod = 5
 brightness_mod = 5
+
+# rofi scripts
+rofi = {
+    "apps": str(home / ".config/rofi/apps/apps.sh"),
+    "powermenu": str(home / ".config/rofi/powermenu/powermenu.sh"),
+    "window": str(home / ".config/rofi/window/window.sh"),
+}
+
+# Hooks
+@hook.subscribe.startup_once
+def autostart():
+    autostart_path = home / ".config/qtile/autostart.sh"
+    subprocess.Popen([autostart_path])
+
 
 # Keybindings
 keys = [
@@ -88,10 +102,7 @@ keys = [
         desc="Switch to the last visited group",
     ),
     Key(
-        ["mod1"],
-        "Tab",
-        lazy.spawn('rofi -show window -icon-theme "Papirus" -show-icons'),
-        desc="Spawn rofi with window menu",
+        ["mod1"], "Tab", lazy.spawn(rofi["window"]), desc="Spawn rofi with window menu",
     ),
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
@@ -104,7 +115,7 @@ keys = [
         desc="Toggle between split and unsplit sides of stack",
     ),
     # Layout management
-    Key([mod, "shift"], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle Tiled/Floating"),
     Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
     Key(
@@ -116,15 +127,10 @@ keys = [
     # General operations
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key(
-        [mod],
-        "p",
-        lazy.spawn("rofi -show p -modi p:~/Packages/rofi-power-menu/rofi-power-menu"),
-        desc="Spawn rofi power menu",
-    ),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     # Spawn commands
+    Key([mod], "p", lazy.spawn(rofi["powermenu"]), desc="Spawn rofi power menu",),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key(
         [mod],
@@ -133,8 +139,7 @@ keys = [
         lazy.group["2"].toscreen(),
         desc="Launch default browser, move to browser group",
     ),
-    Key([mod], "a", lazy.spawn("rofi -show run"), desc="Spawn rofi with run menu"),
-    Key([mod], "Tab", lazy.spawn("rofi -show run"), desc="Spawn rofi with run menu"),
+    Key([mod], "a", lazy.spawn(rofi["apps"]), desc="Spawn rofi with apps (drun) menu"),
     # Audio control
     Key(
         [],
@@ -180,7 +185,7 @@ groups = [
     Group("4", label="", matches=[Match(wm_class="code")]),
     Group("5", label=""),
     Group("6", label="\uf11b", matches=[Match(wm_class="Steam")]),
-    Group("7", label="", matches=[Match(wm_class="Spotify")]),
+    Group("7", label="\ue006", matches=[Match(wm_class="Spotify")]),
 ]
 
 for i in groups:
@@ -285,7 +290,7 @@ layouts = [
         border_focus=Colors.frappe["Sapphire"],
         border_on_single=True,
     ),
-    layout.Max(),
+    layout.Max(margin=0,),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -301,66 +306,65 @@ layouts = [
 
 # Widget decorations - background boxes
 # left, right, middle (none) decor determines rounded edges
+default_padding = 3
 decor = {
     "decorations": [
         RectDecoration(colour=Colors.mocha["Crust"], radius=10, filled=True, padding=0,)
     ],
-    "padding": 3,
+    "padding": default_padding,
 }
 leftdecor = {
     "decorations": [
         RectDecoration(
-            colour=Colors.macchiato["Crust"],
-            radius=[10, 0, 0, 10],
-            filled=True,
-            padding=0,
+            colour=Colors.mocha["Crust"], radius=[10, 0, 0, 10], filled=True, padding=0,
         )
     ],
-    "padding": 3,
+    "padding": default_padding,
 }
 rightdecor = {
     "decorations": [
         RectDecoration(
-            colour=Colors.macchiato["Crust"],
-            radius=[0, 10, 10, 0],
-            filled=True,
-            padding=0,
+            colour=Colors.mocha["Crust"], radius=[0, 10, 10, 0], filled=True, padding=0,
         )
     ],
-    "padding": 3,
+    "padding": default_padding,
 }
 middledecor = {
     "decorations": [
-        RectDecoration(
-            colour=Colors.macchiato["Crust"], radius=0, filled=True, padding=0,
-        )
+        RectDecoration(colour=Colors.mocha["Crust"], radius=0, filled=True, padding=0,)
     ],
-    "padding": 3,
+    "padding": default_padding,
 }
 
 widget_defaults = dict(
-    font="Ubuntu", fontsize=bar_fontsize, foreground=Colors.mocha["Text"], padding=0,
+    font="Ubuntu",
+    fontsize=bar_fontsize,
+    # foreground=Colors.mocha["Text"],
+    # background=Colors.transparent,
+    padding=0,
 )
 extension_defaults = widget_defaults.copy()
-default_sep_widget = widget.Sep(foreground=Colors.transparent, linewidth=5)
+default_sep_widget = widget.Sep(
+    foreground=Colors.transparent, background=Colors.transparent, linewidth=5
+)
 
 # Widgets
 widget_list = [
     widget.GroupBox(
         font="Nerd",
         fontsize=18,
-        margin_x=8,
+        margin_x=10,
         markup=True,
         visible_groups=group_list,
         rounded=True,
         highlight_method="border",
         borderwidth=1,
-        this_current_screen_border=Colors.mocha["Blue"],
-        active=Colors.mocha["Blue"],
-        # this_screen_border=Colors.["Red"],
+        padding_y=1,
+        this_current_screen_border=Colors.mocha["Sapphire"],
+        active=Colors.mocha["Sapphire"],
+        this_screen_border=Colors.mocha["Red"],
         inactive=Colors.mocha["Red"],
-        # highlight_color=[Colors.frappe["Crust"], Colors.frappe["Sky"]],
-        # padding_x=6,
+        disable_drag=True,
         **decor,
     ),
     default_sep_widget,
@@ -369,8 +373,8 @@ widget_list = [
         foreground=Colors.mocha["Crust"],
         font="Ubuntu",
         fontsize=bar_fontsize + 2,
-        format="  \uf2d0  {name}  ",
-        width=300,
+        format=" \uf2d0 {name}",
+        width=350,
         scroll=True,
     ),
     widget.Spacer(width="stretch"),
@@ -391,8 +395,10 @@ widget_list = [
         foreground=Colors.mocha["Crust"],
         widgets=[
             default_sep_widget,
+            widget.Systray(),
+            default_sep_widget,
             widget.PulseVolume(
-                fmt="  \ufa7d  {}  ",
+                fmt=" \ufa7d {}",
                 limit_max_volume=True,
                 foreground=Colors.mocha["Lavender"],
                 # emoji=True,
@@ -401,12 +407,12 @@ widget_list = [
             widget.Backlight(
                 foreground=Colors.mocha["Teal"],
                 backlight_name="intel_backlight",
-                fmt="  \uf5dd  {}  ",
+                fmt=" \uf5dd {}",
                 **middledecor,
             ),
             widget.Wlan(
-                format="  \uf1eb  {percent:2.0%}  ",
-                disconnected_message="  \ufaa9  ",
+                format=" \uf1eb {percent:2.0%}",
+                disconnected_message=" \ufaa9",
                 foreground=Colors.mocha["Green"],
                 mouse_callbacks={
                     "Button1": lazy.group["scratchpad"].dropdown_toggle("speedometer")
@@ -422,7 +428,7 @@ widget_list = [
             #     **middledecor,
             # ),
             widget.Memory(
-                format="  \ue240  {MemPercent} ({SwapPercent})%  ",
+                format=" \ue240 {MemPercent} ({SwapPercent})%",
                 mouse_callbacks={
                     "Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")
                 },
@@ -430,7 +436,7 @@ widget_list = [
                 **middledecor,
             ),
             widget.Battery(
-                format="  \uf57d  {char} {percent:2.0%}  {hour:d}h{min:02d}m  ",
+                format=" \uf57d {char} {hour:d}h{min:02d}m ({percent:2.0%})  ",
                 discharge_char="\uf175",
                 charge_char="\uf176",
                 foreground=Colors.mocha["Peach"],
@@ -439,26 +445,33 @@ widget_list = [
         ],
     ),
     default_sep_widget,
-    widget.Systray(),
     widget.Sep(**leftdecor, linewidth=8, foreground=Colors.transparent),
     widget.BatteryIcon(
-        theme_path=home / ".config/qtile/battery-icons/", scale=1.05, **middledecor,
+        theme_path=home / ".config/qtile/battery-icons/", scale=1.00, **middledecor,
     ),
-    widget.QuickExit(
-        fontsize="16",
-        foreground=Colors.latte["Maroon"],
-        background=Colors.transparent,
-        default_text="    ",
-        countdown_format="  [{}]  ",
+    widget.TextBox(
+        font="Nerd Bold",
+        fmt=" \uf924 ",
+        fontsize=bar_fontsize + 4,
+        foreground=Colors.latte["Flamingo"],
+        mouse_callbacks={"Button1": lazy.spawn(rofi["powermenu"])},
         **rightdecor,
     ),
+    # widget.QuickExit(
+    #     fontsize="16",
+    #     foreground=Colors.latte["Maroon"],
+    #     background=Colors.transparent,
+    #     default_text="    ",
+    #     countdown_format="  [{}]  ",
+    #     **rightdecor,
+    # ),
 ]
 
 keys.extend(
     [
         Key(
             [mod],
-            "i",
+            "x",
             lazy.widget["widgetbox"].toggle(),
             desc="Toggle WidgetBox open/closed",
         ),
@@ -471,7 +484,9 @@ screens = [
             widget_list,
             size=bar_size,
             background=Colors.transparent,
+            # background=Colors.latte["Crust"],
             margin=[bar_margin, bar_margin, bar_margin, bar_margin],  # [N E S W]
+            # margin=0,
         ),
         bottom=bar.Gap(default_margin),
         left=bar.Gap(default_margin),
@@ -503,7 +518,6 @@ cursor_warp = False
 floating_layout = layout.Floating(
     border_width=0,
     float_rules=[
-        # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
         Match(wm_class="confirmreset"),  # gitk
         Match(wm_class="makebranch"),  # gitk
@@ -517,19 +531,6 @@ floating_layout = layout.Floating(
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
-
-# Mouse Callbacks
-
-
-# Hooks
-import subprocess
-
-
-@hook.subscribe.startup_once
-def autostart():
-    autostart_path = home / ".config/qtile/autostart.sh"
-    subprocess.Popen([autostart_path])
-
 
 # If things like steam games want to auto-minimize themselves when losing
 # focus, should we respect this or not?
