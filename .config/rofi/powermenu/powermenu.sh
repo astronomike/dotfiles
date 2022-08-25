@@ -16,6 +16,7 @@ theme='powermenu'
 # CMDs
 uptime="`uptime -p | sed -e 's/up //g'`"
 host=`hostname`
+user=`whoami`
 
 # Options
 shutdown=' Shutdown'
@@ -29,7 +30,7 @@ no=' No'
 # Rofi CMD
 rofi_cmd() {
 	rofi -dmenu \
-		-p "$host" \
+		-p "$user" \
 		-mesg "Uptime: $uptime" \
 		-theme ${dir}/${theme}.rasi
 }
