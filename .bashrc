@@ -11,26 +11,14 @@ export EDITOR=vim
 
 #aliases
 alias ls='ls --color=auto'
-alias setdisplay="xrandr -s 1920x1080"
 alias qconfig="$EDITOR $HOME/.config/qtile/config.py"
 alias qxephyr="SCREEN_SIZE=1080x720 $HOME/Packages/qtile/scripts/xephyr "
 alias qlog="cat $HOME/.local/share/qtile/qtile.log"
 alias quitxephyr="qtile cmd-obj -o cmd -f shutdown"
+alias kill-picom="pkill -e picom"
+alias start-picom="picom -b --experimental-backends"
+alias pconfig="$EDITOR $HOME/.config/picom/picom.conf"
 alias feh="feh --scale-down"
-
-#alias for find
-function findfile(){
-    if [ $# -eq 1 ]
-    then 
-	    dir="."
-	    file=$1
-    else 
-	    dir=$1
-	    file=$2
-    fi
-    echo result: 
-    find $dir -type f -iname "$file" ;
-}
 
 #git alias for dotfiles management
 alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"

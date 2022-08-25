@@ -21,6 +21,7 @@ runtime! archlinux.vim
 set number        " display linenumbers 
 set tabstop=4 	  " tabs
 set shiftwidth=4  " indenting>
+set relativenumber " relative numbers
  
 syntax enable     " syntax highlighting if available
 
@@ -28,8 +29,6 @@ syntax enable     " syntax highlighting if available
 :inoremap ii <Esc> 
 
 " rebind line movements in alacritty
-" nnoremap <A-Up> :m-2==<CR>
-" noremap <A-Down> :m+==<CR>
 :nnoremap <A-Up> :m-2==<CR>
 :nnoremap <A-Down> :m+==<CR>
 
