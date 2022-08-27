@@ -42,7 +42,7 @@ mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
 home = Path.home()
-wallpaper = home / "Pictures/Wallpapers/catpuccin/landscapes/tropic_island_day.jpg"
+wallpaper = home / "Pictures/Wallpapers/catpuccin/waves/Waves Dark 6016x6016.jpg"
 default_margin = 10  # window gaps
 bar_size = 30
 bar_fontsize = 14
@@ -181,9 +181,9 @@ group_list = "1234567"
 groups = [
     Group("1", label=""),
     Group("2", label="\ufa9e", matches=[Match(wm_class="firefox")]),
-    Group("3", label="", matches=[Match(wm_class="Thunderbird")]),
-    Group("4", label="", matches=[Match(wm_class="code")]),
-    Group("5", label=""),
+    Group("3", label="", matches=[Match(wm_class="code")]),
+    Group("4", label=""),
+    Group("5", label="", matches=[Match(wm_class="Thunderbird")]),
     Group("6", label="\uf11b", matches=[Match(wm_class="Steam")]),
     Group("7", label="\ue006", matches=[Match(wm_class="Spotify")]),
 ]
@@ -244,8 +244,8 @@ keys.extend(
 # defaults
 sp_width = 0.6  # as a fraction of screen width
 sp_height = 0.6  # as a fraction of screen height
-sp_x = (1 - sp_width) / 2  # y position of window
-sp_y = (1 - sp_height) / 2  # x position of window
+sp_x = (1 - sp_width) / 2  # x position of window
+sp_y = (1 - sp_height) / 2  # y position of window
 sp_defaults = {
     "opacity": 1.0,
     "width": sp_width,
@@ -350,9 +350,18 @@ default_sep_widget = widget.Sep(
 
 # Widgets
 widget_list = [
+    widget.TextBox(
+        font="Nerd",
+        fontsize=bar_fontsize + 4,
+        foreground=Colors.mocha["Sapphire"],
+        fmt=" \uf303 ",
+        mouse_callbacks={"Button1": lazy.spawn(rofi["apps"])},
+        **decor,
+    ),
+    default_sep_widget,
     widget.GroupBox(
         font="Nerd",
-        fontsize=18,
+        fontsize=bar_fontsize + 4,
         margin_x=10,
         markup=True,
         visible_groups=group_list,
@@ -374,7 +383,7 @@ widget_list = [
         font="Ubuntu",
         fontsize=bar_fontsize + 2,
         format=" \uf2d0 {name}",
-        width=350,
+        width=310,
         scroll=True,
     ),
     widget.Spacer(width="stretch"),
@@ -516,7 +525,8 @@ follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
 floating_layout = layout.Floating(
-    border_width=0,
+    border_width=2,
+    border_focus=Colors.frappe["Mauve"],
     float_rules=[
         *layout.Floating.default_float_rules,
         Match(wm_class="confirmreset"),  # gitk
