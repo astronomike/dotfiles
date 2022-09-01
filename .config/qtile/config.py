@@ -29,6 +29,7 @@ from pathlib import Path
 from libqtile import bar, layout, hook  # , widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
+from libqtile import extension
 
 # qtile extras for widget decorations
 from qtile_extras import widget
@@ -42,10 +43,10 @@ mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
 home = Path.home()
-wallpaper = home / "Pictures/Wallpapers/catpuccin/landscapes/tropic_island_day.jpg"
+wallpaper = home / "Pictures/Wallpapers/catpuccin/waves/cat-waves.png"
 default_margin = 10  # window gaps
-bar_size = 30
-bar_fontsize = 14
+bar_size = 35
+bar_fontsize = 16
 bar_margin = int(default_margin / 2)  # smaller gap for bar
 volume_mod = 5
 brightness_mod = 5
@@ -94,15 +95,36 @@ keys = [
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
     # Switch groups/applications
     Key([mod], "Left", lazy.screen.prev_group(), desc="Switch to previous group"),
+    Key(
+        [mod, "control"],
+        "Left",
+        lazy.screen.prev_group(skip_empty=True, skip_managed=True),
+        desc="Switch to previous group",
+    ),
     Key([mod], "Right", lazy.screen.next_group(), desc="Switch to next group"),
     Key(
+        [mod, "control"],
+        "Right",
+        lazy.screen.next_group(skip_empty=True, skip_managed=True),
+        desc="Switch to next group, skip empty",
+    ),
+    Key(
         [mod],
-        "grave",
+        "Tab",
         lazy.screen.toggle_group(),
         desc="Switch to the last visited group",
     ),
     Key(
-        ["mod1"], "Tab", lazy.spawn(rofi["window"]), desc="Spawn rofi with window menu",
+        ["mod1"],
+        "Tab",
+        lazy.spawn(rofi["window"]),
+        desc="Spawn rofi with window menu",
+    ),
+    Key(
+        [mod],
+        "d",
+        lazy.run_extension(extension.WindowList()),
+        desc="Spawn WindowList extension",
     ),
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
@@ -115,7 +137,7 @@ keys = [
         desc="Toggle between split and unsplit sides of stack",
     ),
     # Layout management
-    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+    Key([mod], "grave", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle Tiled/Floating"),
     Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
     Key(
@@ -130,7 +152,12 @@ keys = [
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     # Spawn commands
-    Key([mod], "p", lazy.spawn(rofi["powermenu"]), desc="Spawn rofi power menu",),
+    Key(
+        [mod],
+        "p",
+        lazy.spawn(rofi["powermenu"]),
+        desc="Spawn rofi power menu",
+    ),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key(
         [mod],
@@ -181,8 +208,8 @@ group_list = "1234567"
 groups = [
     Group("1", label=""),
     Group("2", label="\ufa9e", matches=[Match(wm_class="firefox")]),
-    Group("3", label="", matches=[Match(wm_class="Thunderbird")]),
-    Group("4", label="", matches=[Match(wm_class="code")]),
+    Group("3", label="", matches=[Match(wm_class="code"), Match(wm_class="code-oss")]),
+    Group("4", label="", matches=[Match(wm_class="Thunderbird")]),
     Group("5", label=""),
     Group("6", label="\uf11b", matches=[Match(wm_class="Steam")]),
     Group("7", label="\ue006", matches=[Match(wm_class="Spotify")]),
@@ -290,7 +317,9 @@ layouts = [
         border_focus=Colors.frappe["Sapphire"],
         border_on_single=True,
     ),
-    layout.Max(margin=0,),
+    layout.Max(
+        margin=0,
+    ),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -309,14 +338,22 @@ layouts = [
 default_padding = 3
 decor = {
     "decorations": [
-        RectDecoration(colour=Colors.mocha["Crust"], radius=10, filled=True, padding=0,)
+        RectDecoration(
+            colour=Colors.mocha["Crust"],
+            radius=10,
+            filled=True,
+            padding=0,
+        )
     ],
     "padding": default_padding,
 }
 leftdecor = {
     "decorations": [
         RectDecoration(
-            colour=Colors.mocha["Crust"], radius=[10, 0, 0, 10], filled=True, padding=0,
+            colour=Colors.mocha["Crust"],
+            radius=[10, 0, 0, 10],
+            filled=True,
+            padding=0,
         )
     ],
     "padding": default_padding,
@@ -324,14 +361,22 @@ leftdecor = {
 rightdecor = {
     "decorations": [
         RectDecoration(
-            colour=Colors.mocha["Crust"], radius=[0, 10, 10, 0], filled=True, padding=0,
+            colour=Colors.mocha["Crust"],
+            radius=[0, 10, 10, 0],
+            filled=True,
+            padding=0,
         )
     ],
     "padding": default_padding,
 }
 middledecor = {
     "decorations": [
-        RectDecoration(colour=Colors.mocha["Crust"], radius=0, filled=True, padding=0,)
+        RectDecoration(
+            colour=Colors.mocha["Crust"],
+            radius=0,
+            filled=True,
+            padding=0,
+        )
     ],
     "padding": default_padding,
 }
@@ -345,21 +390,29 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 default_sep_widget = widget.Sep(
-    foreground=Colors.transparent, background=Colors.transparent, linewidth=5
+    foreground=Colors.mocha["Crust"], background=Colors.mocha["Crust"], linewidth=5
 )
 
 # Widgets
 widget_list = [
+    widget.TextBox(
+        font="Nerd",
+        fmt="  \uf303  ",
+        background=Colors.mocha["Surface0"],
+        foreground=Colors.mocha["Sapphire"],
+        fontsize=bar_fontsize + 4,
+        mouse_callbacks={"Button1": lazy.spawn(rofi["apps"])},
+    ),
     widget.GroupBox(
         font="Nerd",
-        fontsize=18,
+        fontsize=bar_fontsize + 4,
         margin_x=10,
         markup=True,
         visible_groups=group_list,
         rounded=True,
         highlight_method="border",
         borderwidth=1,
-        padding_y=1,
+        padding_y=3,
         this_current_screen_border=Colors.mocha["Sapphire"],
         active=Colors.mocha["Sapphire"],
         this_screen_border=Colors.mocha["Red"],
@@ -370,7 +423,7 @@ widget_list = [
     default_sep_widget,
     widget.Prompt(**decor),
     widget.WindowName(
-        foreground=Colors.mocha["Crust"],
+        foreground=Colors.mocha["Text"],
         font="Ubuntu",
         fontsize=bar_fontsize + 2,
         format=" \uf2d0 {name}",
@@ -392,7 +445,7 @@ widget_list = [
         text_closed="\ufc95",
         text_open="\ufc96",
         font="Bold",
-        foreground=Colors.mocha["Crust"],
+        foreground=Colors.mocha["Text"],
         widgets=[
             default_sep_widget,
             widget.PulseVolume(
@@ -475,10 +528,11 @@ screens = [
         top=bar.Bar(
             widget_list,
             size=bar_size,
-            background=Colors.transparent,
-            # background=Colors.latte["Crust"],
-            margin=[bar_margin, bar_margin, bar_margin, bar_margin],  # [N E S W]
-            # margin=0,
+            # background=Colors.transparent,
+            background=Colors.mocha["Crust"],
+            # foreground=Colors.latte["Crust"],
+            # margin=[bar_margin, bar_margin, bar_margin, bar_margin],  # [N E S W]
+            margin=0,
         ),
         bottom=bar.Gap(default_margin),
         left=bar.Gap(default_margin),

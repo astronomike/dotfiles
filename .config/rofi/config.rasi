@@ -62,7 +62,7 @@ configuration {
 	window-format: "{c}";
 	window-thumbnail: false;
 	window {
-		hide-active-window: true;
+		hide-active-window: false;
 	}
 	
 	/*---------- Combi settings ----------*/

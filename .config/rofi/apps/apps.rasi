@@ -21,12 +21,12 @@ configuration {
 /*****----- Main Window -----*****/
 window {
     transparency:                "real";
-    location:                    center;
-    anchor:                      center;
+    location:                    north west;
+    anchor:                      north west;
     fullscreen:                  false;
     width:                       500px;
-    x-offset:                    0px;
-    y-offset:                    0px;
+    x-offset:                    10px;
+    y-offset:                    40px;
 
     enabled:                     true;
     margin:                      2px;
