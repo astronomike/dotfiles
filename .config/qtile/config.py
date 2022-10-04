@@ -42,8 +42,9 @@ mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
 home = Path.home()
-wallpaper = home / "Pictures/Wallpapers/catpuccin/waves/Waves Dark 6016x6016.jpg"
-default_margin = 10  # window gaps
+# wallpaper = home / "Pictures/Wallpapers/catpuccin/waves/Waves Dark Alt 6016x6016.jpg"
+wallpaper = home / "Pictures/Wallpapers/catpuccin/landscapes/Clearday.jpg"
+default_margin = 6  # window gaps
 bar_size = 30
 bar_fontsize = 14
 bar_margin = int(default_margin / 2)  # smaller gap for bar
@@ -96,8 +97,20 @@ keys = [
     Key([mod], "Left", lazy.screen.prev_group(), desc="Switch to previous group"),
     Key([mod], "Right", lazy.screen.next_group(), desc="Switch to next group"),
     Key(
+        [mod, "control"],
+        "Left",
+        lazy.screen.prev_group(skip_empty=True, skip_managed=True),
+        desc="Switch to previous group, skip empty",
+    ),
+    Key(
+        [mod, "control"],
+        "Right",
+        lazy.screen.next_group(skip_empty=True, skip_managed=True),
+        desc="Switch to next group, skip empty",
+    ),
+    Key(
         [mod],
-        "grave",
+        "Tab",
         lazy.screen.toggle_group(),
         desc="Switch to the last visited group",
     ),
@@ -115,7 +128,7 @@ keys = [
         desc="Toggle between split and unsplit sides of stack",
     ),
     # Layout management
-    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+    Key([mod], "grave", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle Tiled/Floating"),
     Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
     Key(
@@ -351,7 +364,7 @@ default_sep_widget = widget.Sep(
 # Widgets
 widget_list = [
     widget.TextBox(
-        font="Nerd",
+        font="Symbols Nerd Font",
         fontsize=bar_fontsize + 4,
         foreground=Colors.mocha["Sapphire"],
         fmt=" \uf303 ",
@@ -360,7 +373,7 @@ widget_list = [
     ),
     default_sep_widget,
     widget.GroupBox(
-        font="Nerd",
+        font="Symbols Nerd Font",
         fontsize=bar_fontsize + 4,
         margin_x=10,
         markup=True,
@@ -459,8 +472,8 @@ widget_list = [
         theme_path=home / ".config/qtile/battery-icons/", scale=1.00, **middledecor,
     ),
     widget.TextBox(
-        font="Nerd Bold",
-        fmt=" \uf924 ",
+        font="Symbols Nerd Font",
+        fmt="  \uf011  ",
         fontsize=bar_fontsize + 4,
         foreground=Colors.latte["Flamingo"],
         mouse_callbacks={"Button1": lazy.spawn(rofi["powermenu"])},

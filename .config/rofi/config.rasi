@@ -19,6 +19,10 @@ configuration {
 /*	cache-dir: ;*/
 	steal-focus: false;
 /*	dpi: -1;*/
+/*  single click vs double click */
+	hover-select: true;
+	me-select-entry: "";
+	me-accept-entry: "!MousePrimary";
 
 	/*---------- Matching setting ----------*/
 	matching: "normal";
@@ -178,7 +182,7 @@ configuration {
 	ml-row-right: "ScrollRight";
 	ml-row-up: "ScrollUp";
 	ml-row-down: "ScrollDown";
-	me-select-entry: "MousePrimary";
-	me-accept-entry: "MouseDPrimary";
+/*	me-select-entry: "MousePrimary";*/
+/*	me-accept-entry: "MouseDPrimary";*/
 	me-accept-custom: "Control+MouseDPrimary";
 }

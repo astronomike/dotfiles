@@ -4,10 +4,6 @@
 ## Github : @adi1090x
 #
 ## Rofi   : Power Menu
-#
-## Available Styles
-#
-## style-1   style-2   style-3   style-4   style-5
 
 # Current Theme
 dir="$HOME/.config/rofi/powermenu/"
@@ -31,15 +27,14 @@ no=' No'
 rofi_cmd() {
 	rofi -dmenu \
 		-p "$user" \
-		-mesg "Uptime: $uptime" \
+		-mesg "Up: $uptime" \
 		-theme ${dir}/${theme}.rasi
 }
 
 # Confirmation CMD
 confirm_cmd() {
-	rofi -theme-str 'window {location: center; anchor: center; fullscreen: false; width: 250px;}' \
-		-theme-str 'mainbox {children: [ "message", "listview" ];}' \
-		-theme-str 'listview {columns: 2; lines: 1;}' \
+	rofi -theme-str 'mainbox {children: [ "message", "listview" ];}' \
+		-theme-str 'listview {columns: 1; lines: 2;}' \
 		-theme-str 'element-text {horizontal-align: 0.5;}' \
 		-theme-str 'textbox {horizontal-align: 0.5;}' \
 		-dmenu \
@@ -100,6 +95,8 @@ case ${chosen} in
 			betterlockscreen -l
 		elif [[ -x '/usr/bin/i3lock' ]]; then
 			i3lock
+		elif [[ -x '/usr/bin/slock' ]]; then
+			slock
 		fi
         ;;
     $suspend)
