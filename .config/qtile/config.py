@@ -42,8 +42,8 @@ mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
 home = Path.home()
-# wallpaper = home / "Pictures/Wallpapers/catpuccin/waves/Waves Dark Alt 6016x6016.jpg"
 wallpaper = home / "Pictures/Wallpapers/catpuccin/landscapes/Clearday.jpg"
+# wallpaper = home / "Pictures/Wallpapers/catpuccin/waves/cat-waves.png"
 default_margin = 6  # window gaps
 bar_size = 30
 bar_fontsize = 14
@@ -137,6 +137,12 @@ keys = [
         lazy.hide_show_bar("top"),
         desc="Toggle 'Zen' mode (no bar + fullscreen window)",
     ),
+    Key(
+        [mod],
+        "x",
+        lazy.widget["widgetbox"].toggle(),
+        desc="Toggle WidgetBox open/closed",
+    ),
     # General operations
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
@@ -190,15 +196,20 @@ keys = [
 ]
 
 # Group definitions
-group_list = "1234567"
+group_list = "12345678"
 groups = [
     Group("1", label=""),
-    Group("2", label="\ufa9e", matches=[Match(wm_class="firefox")]),
-    Group("3", label="", matches=[Match(wm_class="code")]),
-    Group("4", label=""),
-    Group("5", label="", matches=[Match(wm_class="Thunderbird")]),
-    Group("6", label="\uf11b", matches=[Match(wm_class="Steam")]),
-    Group("7", label="\ue006", matches=[Match(wm_class="Spotify")]),
+    Group("2", label="\uf752",),
+    Group("3", label="\ufa9e", matches=[Match(wm_class="firefox")]),
+    Group("4", label="", matches=[Match(wm_class="code")]),
+    Group("5", label=""),
+    Group(
+        "6",
+        label="",
+        matches=[Match(wm_class="Thunderbird"), Match(wm_class="Ferdium")],
+    ),
+    Group("7", label="\uf11b", matches=[Match(wm_class="Steam")]),
+    Group("8", label="\ue006", matches=[Match(wm_class="Spotify")]),
 ]
 
 for i in groups:
@@ -303,7 +314,13 @@ layouts = [
         border_focus=Colors.frappe["Sapphire"],
         border_on_single=True,
     ),
-    layout.Max(margin=0,),
+    layout.Max(
+        margin=0,
+        border_width=3,
+        border_on_single=True,
+        border_normal=Colors.frappe["Overlay0"],
+        border_focus=Colors.frappe["Sapphire"],
+    ),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -317,45 +334,23 @@ layouts = [
     # layout.Zoomy(),
 ]
 
-# Widget decorations - background boxes
-# left, right, middle (none) decor determines rounded edges
-default_padding = 3
-decor = {
-    "decorations": [
-        RectDecoration(colour=Colors.mocha["Crust"], radius=10, filled=True, padding=0,)
-    ],
-    "padding": default_padding,
-}
-leftdecor = {
+# Widget decorations - background boxes from qtile-extras
+default_widget_padding = 3
+decor_group = {
     "decorations": [
         RectDecoration(
-            colour=Colors.mocha["Crust"], radius=[10, 0, 0, 10], filled=True, padding=0,
+            colour=Colors.mocha["Crust"],
+            radius=10,
+            filled=True,
+            padding=0,
+            group=True,
+            clip=True,
         )
     ],
-    "padding": default_padding,
-}
-rightdecor = {
-    "decorations": [
-        RectDecoration(
-            colour=Colors.mocha["Crust"], radius=[0, 10, 10, 0], filled=True, padding=0,
-        )
-    ],
-    "padding": default_padding,
-}
-middledecor = {
-    "decorations": [
-        RectDecoration(colour=Colors.mocha["Crust"], radius=0, filled=True, padding=0,)
-    ],
-    "padding": default_padding,
+    "padding": default_widget_padding,
 }
 
-widget_defaults = dict(
-    font="Ubuntu",
-    fontsize=bar_fontsize,
-    # foreground=Colors.mocha["Text"],
-    # background=Colors.transparent,
-    padding=0,
-)
+widget_defaults = dict(font="Ubuntu Regular", fontsize=bar_fontsize, padding=0,)
 extension_defaults = widget_defaults.copy()
 default_sep_widget = widget.Sep(
     foreground=Colors.transparent, background=Colors.transparent, linewidth=5
@@ -369,7 +364,7 @@ widget_list = [
         foreground=Colors.mocha["Sapphire"],
         fmt=" \uf303 ",
         mouse_callbacks={"Button1": lazy.spawn(rofi["apps"])},
-        **decor,
+        **decor_group,
     ),
     default_sep_widget,
     widget.GroupBox(
@@ -387,29 +382,22 @@ widget_list = [
         this_screen_border=Colors.mocha["Red"],
         inactive=Colors.mocha["Red"],
         disable_drag=True,
-        **decor,
+        **decor_group,
     ),
     default_sep_widget,
-    widget.Prompt(**decor),
+    widget.Prompt(**decor_group),
     widget.WindowName(
         foreground=Colors.mocha["Crust"],
-        font="Ubuntu",
-        fontsize=bar_fontsize + 2,
-        format=" \uf2d0 {name}",
-        width=310,
+        font="Ubuntu Bold",
+        fontsize=bar_fontsize,
+        format="  {name}  ",
+        width=250,
         scroll=True,
     ),
     widget.Spacer(width="stretch"),
-    widget.Clock(
-        format="  %H:%M  %a, %-d %b  ",  # shows eg. Tue, 7 Jun  11:17
-        foreground=Colors.mocha["Text"],
-        mouse_callbacks={
-            "Button1": lazy.group["scratchpad"].dropdown_toggle("calcurse")
-        },
-        **decor,
-    ),
-    widget.Spacer(),
     default_sep_widget,
+    widget.Spacer(),
+    # default_sep_widget,
     widget.WidgetBox(
         text_closed="\ufc95",
         text_open="\ufc96",
@@ -420,85 +408,83 @@ widget_list = [
             widget.Systray(),
             default_sep_widget,
             widget.PulseVolume(
-                fmt=" \ufa7d {}",
+                fmt=" \ufa7d {} ",
+                width=55,
                 limit_max_volume=True,
                 foreground=Colors.mocha["Lavender"],
                 # emoji=True,
-                **leftdecor,
+                **decor_group,
             ),
             widget.Backlight(
-                foreground=Colors.mocha["Teal"],
+                fmt=" \uf5dd {} ",
+                width=55,
+                foreground=Colors.mocha["Sapphire"],
                 backlight_name="intel_backlight",
-                fmt=" \uf5dd {}",
-                **middledecor,
+                **decor_group,
             ),
             widget.Wlan(
-                format=" \uf1eb {percent:2.0%}",
+                format=" \uf1eb {percent:2.0%} ",
+                width=65,
                 disconnected_message=" \ufaa9",
-                foreground=Colors.mocha["Green"],
+                foreground=Colors.mocha["Teal"],
                 mouse_callbacks={
                     "Button1": lazy.group["scratchpad"].dropdown_toggle("speedometer")
                 },
-                **middledecor,
+                **decor_group,
             ),
-            # widget.CPU(
-            #     format="  \ue266  {load_percent}%  ",
-            #     mouse_callbacks={
-            #         "Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")
-            #     },
-            #     foreground=Colors.mocha["Yellow"],
-            #     **middledecor,
-            # ),
+            widget.CPU(
+                format=" \ue266  {load_percent}% ",
+                width=70,
+                mouse_callbacks={
+                    "Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")
+                },
+                foreground=Colors.mocha["Green"],
+                **decor_group,
+            ),
             widget.Memory(
-                format=" \ue240 {MemPercent} ({SwapPercent})%",
+                format=" \ue240 {MemPercent} ({SwapPercent})% ",
+                width=100,
                 mouse_callbacks={
                     "Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")
                 },
                 foreground=Colors.mocha["Yellow"],
-                **middledecor,
+                **decor_group,
             ),
             widget.Battery(
-                format=" \uf57d {char} {hour:d}h{min:02d}m ({percent:2.0%})  ",
+                format=" \uf57d{char} {hour:d}h{min:02d}m ({percent:2.0%})  ",
                 discharge_char="\uf175",
                 charge_char="\uf176",
                 foreground=Colors.mocha["Peach"],
-                **rightdecor,
+                update_interval=5,
+                notification_below=0.1,
+                notification_timeout=0,
+                **decor_group,
             ),
         ],
     ),
     default_sep_widget,
-    widget.Sep(**leftdecor, linewidth=8, foreground=Colors.transparent),
+    # widget.Sep(linewidth=6, foreground=Colors.transparent, **decor_group,),
+    widget.Clock(
+        font="Ubuntu",
+        format="  %H:%M  %a, %-d %b  ",  # shows eg. Tue, 7 Jun  11:17
+        foreground=Colors.mocha["Text"],
+        mouse_callbacks={
+            "Button1": lazy.group["scratchpad"].dropdown_toggle("calcurse")
+        },
+        **decor_group,
+    ),
     widget.BatteryIcon(
-        theme_path=home / ".config/qtile/battery-icons/", scale=1.00, **middledecor,
+        theme_path=home / ".config/qtile/battery-icons/", scale=1.0, **decor_group,
     ),
     widget.TextBox(
         font="Symbols Nerd Font",
-        fmt="  \uf011  ",
+        fmt=" \uf011 ",
         fontsize=bar_fontsize + 4,
         foreground=Colors.latte["Flamingo"],
         mouse_callbacks={"Button1": lazy.spawn(rofi["powermenu"])},
-        **rightdecor,
+        **decor_group,
     ),
-    # widget.QuickExit(
-    #     fontsize="16",
-    #     foreground=Colors.latte["Maroon"],
-    #     background=Colors.transparent,
-    #     default_text="    ",
-    #     countdown_format="  [{}]  ",
-    #     **rightdecor,
-    # ),
 ]
-
-keys.extend(
-    [
-        Key(
-            [mod],
-            "x",
-            lazy.widget["widgetbox"].toggle(),
-            desc="Toggle WidgetBox open/closed",
-        ),
-    ]
-)
 
 screens = [
     Screen(

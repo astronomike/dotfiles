@@ -74,6 +74,8 @@ run_cmd() {
 				i3-msg exit
 			elif [[ "$DESKTOP_SESSION" == 'plasma' ]]; then
 				qdbus org.kde.ksmserver /KSMServer logout 0 0 0
+			else
+				qtile cmd-obj -o cmd -f shutdown
 			fi
 		fi
 	else
