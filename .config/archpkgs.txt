@@ -1,0 +1,84 @@
+# List of packages with their (general) use
+
+- ranger
+	TUI file manager. 
+	Config location: ~/.config/ranger/rc.conf
+	Opt Deps: 
+		atool: for previews of archives
+		ffmpegthumbnailer: for video previews
+		highlight: for syntax highlighting of code
+		mediainfo: for viewing information about media files
+		odt2txt: for OpenDocument texts
+		poppler: for pdf previews
+		ueberzug: for previews of images
+		w3m: for previews of images and html pages	
+
+- lf 
+	TUI file manager.
+	Config location: ~/.config/lf.conf
+
+- zsh
+	Alternative shell. 
+	Config location: ~/.zshrc
+	After editing config, reload with $ source .zshrc
+	Opt Deps:
+		zsh-autosuggestions
+		zsh-syntax-highlighting
+		zssh-completions
+	
+- starship
+	Custom prompt.
+	Config location: ~/.config/starship.toml
+
+- powerline
+	Nice status line for vim (or prompt for bash).
+	Config location: ~/.config/powerline
+
+- rofi
+	Menu system for X11.
+	Config location: ~/.config/rofi
+
+- wofi
+	Like rofi, but for wayland.
+
+- nm-applet
+	System try applet for NetworkManager.
+	(should just work)
+
+- redshift
+	Control colour temperature of the screen. Can be handled automatically based on 
+	location, set in the config file or manually.
+	Config location: ~/.config/redshift/redshift.conf
+	Autostarted with redshift &.
+	For single use, $ redshift -O <temp> -P
+	redshift-gtk gives systray icon.
+
+- texlive(-bin, -core, -latexextra, etc.)
+	LaTeX stuff. Check wiki for descriptions.
+
+- easyeffects
+	Additional sound effects for pipewire (analagous to pulseffects for pulseaudio).
+	Possibly fixes low sound output.
+
+- xfce4-notifyd
+	Notification server (use with libnotify).
+	Launch manually with /usr/lib/xfce4/notifyd/xfce-notifyd & (check wiki)
+	Custom theme location: .themes/<theme_name>/xfce-notify-4.0/gtk.css
+
+- xfce4-power-manager
+	Power management settings (gui).
+	
+- libinput-gestures
+	Multi-touch touchpad gestures on X11 using libinput. Use with xdotool, package to replicates keypresses.
+	Config location: ~/.config/libinput-gestures.conf
+
+- slock
+	Screen locking tool for X11. 
+	To configure, with tips and tricks, see wiki. 
+
+- lxappearance-gtk3
+	Graphical display options for X11 (lxde). Nice for changing themes, cursors etc. 
+
+- acpilight
+	Management of backlight brightness etc. (replacement for xbacklight which doesn't work on my laptop)
+
