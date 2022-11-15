@@ -23,6 +23,7 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # set env variables
 export EDITOR=vim 
 export PATH="$HOME/.local/bin:$PATH"
+export SUDO_ASKPASS="$HOME/.config/rofi/password/rofi_askpass.sh"
 
 # aliases
 alias ls='ls --color=auto'

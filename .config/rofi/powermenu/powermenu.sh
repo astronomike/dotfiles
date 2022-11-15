@@ -1,9 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 ## Author : Aditya Shakya (adi1090x)
 ## Github : @adi1090x
-#
-## Rofi   : Power Menu
+## Modified by @astronomike
 
 # Current Theme
 dir="$HOME/.config/rofi/powermenu/"
@@ -54,13 +53,23 @@ run_rofi() {
 }
 
 # Execute Command
+
+# For shutdown and reboot commands, a check is done if the session is broken (which leads to an authentication prompt by systemctl). If a password would be required, it sets the script to ask for a password and then asks for it with sudo -A.
 run_cmd() {
 	selected="$(confirm_exit)"
 	if [[ "$selected" == "$yes" ]]; then
 		if [[ $1 == '--shutdown' ]]; then
-			systemctl poweroff
+			if [[ -z $(loginctl show-session $XDG_SESSION_ID --property=Active) ]]; then
+				SUDO_ASKPASS=$HOME/.config/rofi/password/rofi_askpass.sh sudo -A systemctl poweroff  
+			else 
+				systemctl poweroff
+			fi
 		elif [[ $1 == '--reboot' ]]; then
-			systemctl reboot
+			if [[ -z $(loginctl show-session $XDG_SESSION_ID --property=Active) ]]; then
+				SUDO_ASKPASS=$HOME/.config/rofi/password/rofi_askpass.sh sudo -A systemctl reboot
+			else 
+				systemctl reboot
+			fi
 		elif [[ $1 == '--suspend' ]]; then
 			mpc -q pause
 			amixer set Master mute
