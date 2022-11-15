@@ -42,8 +42,8 @@ mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
 home = Path.home()
-wallpaper = home / "Pictures/Wallpapers/catpuccin/landscapes/Clearday.jpg"
-# wallpaper = home / "Pictures/Wallpapers/catpuccin/waves/cat-waves.png"
+wallpaper = home / "Pictures/Wallpapers/catpuccin/landscapes/tropic_island_day.jpg"
+# wallpaper = home / "Pictures/Wallpapers/catpuccin/waves/Waves Light 6016x6016.jpg"
 default_margin = 6  # window gaps
 bar_size = 30
 bar_fontsize = 14
@@ -150,15 +150,17 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     # Spawn commands
     Key([mod], "p", lazy.spawn(rofi["powermenu"]), desc="Spawn rofi power menu",),
-    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "Return", lazy.spawn(terminal), desc="Spawn terminal"),
     Key(
         [mod],
         "b",
         lazy.spawn(browser),
-        lazy.group["2"].toscreen(),
+        lazy.group["3"].toscreen(),
         desc="Launch default browser, move to browser group",
     ),
     Key([mod], "a", lazy.spawn(rofi["apps"]), desc="Spawn rofi with apps (drun) menu"),
+    Key([mod], "e", lazy.spawn("pcmanfm"), desc="Spawn PCManFM"),
+    Key([mod], "o", lazy.spawn("alacritty -e lf"), desc="Spawn lf in alacritty"),
     # Audio control
     Key(
         [],
@@ -409,7 +411,7 @@ widget_list = [
             default_sep_widget,
             widget.PulseVolume(
                 fmt=" \ufa7d {} ",
-                width=55,
+                # width=55,
                 limit_max_volume=True,
                 foreground=Colors.mocha["Lavender"],
                 # emoji=True,
@@ -417,14 +419,14 @@ widget_list = [
             ),
             widget.Backlight(
                 fmt=" \uf5dd {} ",
-                width=55,
+                # width=65,
                 foreground=Colors.mocha["Sapphire"],
                 backlight_name="intel_backlight",
                 **decor_group,
             ),
             widget.Wlan(
                 format=" \uf1eb {percent:2.0%} ",
-                width=65,
+                # width=65,
                 disconnected_message=" \ufaa9",
                 foreground=Colors.mocha["Teal"],
                 mouse_callbacks={
@@ -434,7 +436,7 @@ widget_list = [
             ),
             widget.CPU(
                 format=" \ue266  {load_percent}% ",
-                width=70,
+                # width=65,
                 mouse_callbacks={
                     "Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")
                 },
@@ -443,7 +445,7 @@ widget_list = [
             ),
             widget.Memory(
                 format=" \ue240 {MemPercent} ({SwapPercent})% ",
-                width=100,
+                # width=100,
                 mouse_callbacks={
                     "Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")
                 },
@@ -455,8 +457,9 @@ widget_list = [
                 discharge_char="\uf175",
                 charge_char="\uf176",
                 foreground=Colors.mocha["Peach"],
+				low_foreground=Colors.mocha["Red"],
                 update_interval=5,
-                notification_below=0.1,
+                notify_below=0.1,
                 notification_timeout=0,
                 **decor_group,
             ),
@@ -474,7 +477,10 @@ widget_list = [
         **decor_group,
     ),
     widget.BatteryIcon(
-        theme_path=home / ".config/qtile/battery-icons/", scale=1.0, **decor_group,
+        theme_path=home / ".config/qtile/battery-icons/", 
+		update_interval = 10,
+		scale=1.0, 
+		**decor_group,
     ),
     widget.TextBox(
         font="Symbols Nerd Font",
@@ -496,6 +502,23 @@ screens = [
             margin=[bar_margin, bar_margin, bar_margin, bar_margin],  # [N E S W]
             # margin=0,
         ),
+        bottom=bar.Gap(default_margin),
+        left=bar.Gap(default_margin),
+        right=bar.Gap(default_margin),
+        wallpaper=wallpaper,
+        wallpaper_mode="stretch",
+    ),
+    Screen(
+        top=bar.Bar(
+            widgets=widget_list,
+            # widget_list,
+            size=bar_size,
+            # background=Colors.transparent,
+            # background=Colors.latte["Crust"],
+            margin=[bar_margin, bar_margin, bar_margin, bar_margin],  # [N E S W]
+            # margin=0,
+        ),
+        # top=bar.Gap(default_margin),
         bottom=bar.Gap(default_margin),
         left=bar.Gap(default_margin),
         right=bar.Gap(default_margin),
@@ -556,4 +579,4 @@ wl_input_rules = None
 #
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
-wmname = "LG3D"
+wmname = "Qtile"
