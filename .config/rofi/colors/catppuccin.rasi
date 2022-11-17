@@ -30,7 +30,8 @@
     background:     #11111b;
     background-alt: #1e1e2e;
     foreground:     #D9E0EEFF;
-    selected:       #7AA2F7FF;
+    //selected:       #7AA2F7FF;
+    selected:       @sapphire;
     active:         #ABE9B3FF;
     urgent:         #F28FADFF;
 }

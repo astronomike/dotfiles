@@ -19,6 +19,10 @@ configuration {
 /*	cache-dir: ;*/
 	steal-focus: false;
 /*	dpi: -1;*/
+/*  single click vs double click */
+	hover-select: true;
+	me-select-entry: "";
+	me-accept-entry: "!MousePrimary";
 
 	/*---------- Matching setting ----------*/
 	matching: "normal";
@@ -58,7 +62,7 @@ configuration {
 	/*---------- Window switcher settings ----------*/
 	window-match-fields: "title,class,role,name,desktop";
 	window-command: "wmctrl -i -R {window}";
-	/* window-format: "{w} - {c} - {t:0}"; */
+	//window-format: "{w} - {c} - {t:0}"; 
 	window-format: "{c}";
 	window-thumbnail: false;
 	window {
@@ -178,7 +182,7 @@ configuration {
 	ml-row-right: "ScrollRight";
 	ml-row-up: "ScrollUp";
 	ml-row-down: "ScrollDown";
-	me-select-entry: "MousePrimary";
-	me-accept-entry: "MouseDPrimary";
+/*	me-select-entry: "MousePrimary";*/
+/*	me-accept-entry: "MouseDPrimary";*/
 	me-accept-custom: "Control+MouseDPrimary";
 }

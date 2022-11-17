@@ -1,13 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 ## Author : Aditya Shakya (adi1090x)
 ## Github : @adi1090x
-#
-## Rofi   : Power Menu
-#
-## Available Styles
-#
-## style-1   style-2   style-3   style-4   style-5
+## Modified by @astronomike
 
 # Current Theme
 dir="$HOME/.config/rofi/powermenu/"
@@ -31,15 +26,14 @@ no=' No'
 rofi_cmd() {
 	rofi -dmenu \
 		-p "$user" \
-		-mesg "Uptime: $uptime" \
+		-mesg "Up: $uptime" \
 		-theme ${dir}/${theme}.rasi
 }
 
 # Confirmation CMD
 confirm_cmd() {
-	rofi -theme-str 'window {location: center; anchor: center; fullscreen: false; width: 250px;}' \
-		-theme-str 'mainbox {children: [ "message", "listview" ];}' \
-		-theme-str 'listview {columns: 2; lines: 1;}' \
+	rofi -theme-str 'mainbox {children: [ "message", "listview" ];}' \
+		-theme-str 'listview {columns: 1; lines: 2;}' \
 		-theme-str 'element-text {horizontal-align: 0.5;}' \
 		-theme-str 'textbox {horizontal-align: 0.5;}' \
 		-dmenu \
@@ -59,21 +53,29 @@ run_rofi() {
 }
 
 # Execute Command
+
+# For shutdown and reboot commands, a check is done if the session is broken (which leads to an authentication prompt by systemctl). If a password would be required, it sets the script to ask for a password and then asks for it with sudo -A.
 run_cmd() {
 	selected="$(confirm_exit)"
 	if [[ "$selected" == "$yes" ]]; then
 		if [[ $1 == '--shutdown' ]]; then
-			systemctl poweroff
+			if [[ -z $(loginctl show-session $XDG_SESSION_ID --property=Active) ]]; then
+				SUDO_ASKPASS=$HOME/.config/rofi/password/rofi_askpass.sh sudo -A systemctl poweroff  
+			else 
+				systemctl poweroff
+			fi
 		elif [[ $1 == '--reboot' ]]; then
-			systemctl reboot
+			if [[ -z $(loginctl show-session $XDG_SESSION_ID --property=Active) ]]; then
+				SUDO_ASKPASS=$HOME/.config/rofi/password/rofi_askpass.sh sudo -A systemctl reboot
+			else 
+				systemctl reboot
+			fi
 		elif [[ $1 == '--suspend' ]]; then
 			mpc -q pause
 			amixer set Master mute
 			systemctl suspend
 		elif [[ $1 == '--logout' ]]; then
-			if [[ "$DESKTOP_SESSION" == 'LG3D' ]] || [[ "$DESKTOP_SESSION" == 'qtile'  ]]; then
-				qtile cmd-obj -o cmd -f shutdown
-			elif [[ "$DESKTOP_SESSION" == 'openbox' ]]; then
+			if [[ "$DESKTOP_SESSION" == 'openbox' ]]; then
 				openbox --exit
 			elif [[ "$DESKTOP_SESSION" == 'bspwm' ]]; then
 				bspc quit
@@ -81,6 +83,8 @@ run_cmd() {
 				i3-msg exit
 			elif [[ "$DESKTOP_SESSION" == 'plasma' ]]; then
 				qdbus org.kde.ksmserver /KSMServer logout 0 0 0
+			else
+				qtile cmd-obj -o cmd -f shutdown
 			fi
 		fi
 	else
@@ -102,6 +106,8 @@ case ${chosen} in
 			betterlockscreen -l
 		elif [[ -x '/usr/bin/i3lock' ]]; then
 			i3lock
+		elif [[ -x '/usr/bin/slock' ]]; then
+			slock
 		fi
         ;;
     $suspend)

@@ -10,9 +10,6 @@
 /*****----- Configuration -----*****/
 configuration {
     show-icons:                 false;
-	hover-select: 				true;
-	me-select-entry: 			"";
-	me-accept-entry: 			[ "!MousePrimary" ];
 }
 
 /*****----- Global Properties -----*****/
@@ -26,7 +23,7 @@ window {
     location:                    north east;
     anchor:                      north east;
     fullscreen:                  false;
-    width:                       250px;
+    width:                       280px;
     x-offset:                    -10px;
     y-offset:                    40px;
 

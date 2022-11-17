@@ -90,7 +90,7 @@ entry {
 listview {
     enabled:                     true;
     columns:                     3;
-    lines:                       1;
+    lines:                       2;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
@@ -119,7 +119,7 @@ scrollbar {
 /*****----- Elements -----*****/
 element {
     enabled:                     true;
-    spacing:                     15px;
+    spacing:                     0px;
     margin:                      0px;
     padding:                     20px 10px;
     border-radius:               10px;

@@ -2,5 +2,4 @@
 
 rofi \
     -show window \
-    -theme "$HOME/.config/rofi/window/window.rasi" \
-	-selected-row 1
+    -theme "$HOME/.config/rofi/window/window.rasi"
