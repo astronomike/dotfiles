@@ -1,0 +1,36 @@
+/**
+ *
+ * Author : Aditya Shakya (adi1090x)
+ * Github : @adi1090x
+ * 
+ * Colors
+ **/
+
+* {
+    surface0:   #313244;
+    base:       #1e1e2e;
+    mantle:     #181825;
+    crust:      #11111b;
+    text:       #c6d0f5;
+    alttext:    #b5bfe2;
+    blue:       #8caaee;
+    green:      #a6d189;
+	red: 		#e78284;
+	teal:		#81c8be;
+    mauve:      #ca9ee6;
+    pink:       #f4b8e4;
+    peach:      #ef9f76;
+	flamingo: 	#eebebe;
+	rosewater:	#f2d5cf;
+	beachsand:	#E9D1AE;
+	sky: 	 	#74B7D2;
+    maroon: 	#ea999c;
+	sapphire: 	#85c1dc;
+
+    background:     #11111b;
+    background-alt: #1e1e2e;
+    foreground:     #D9E0EEFF;
+    selected:       #7AA2F7FF;
+    active:         #ABE9B3FF;
+    urgent:         #F28FADFF;
+}

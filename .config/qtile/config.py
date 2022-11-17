@@ -502,13 +502,20 @@ widget_list = [
     # widget.BatteryIcon(
     #     theme_path=home / ".config/qtile/battery-icons/", scale=1.05, **middledecor,
     # ),
-    widget.QuickExit(
-        fontsize="16",
-        foreground=Colors.latte["Maroon"],
-        # background=Colors.transparent,
-        default_text="    ",
-        countdown_format="  [{}]  ",
-        **decor,
+    # widget.QuickExit(
+    #     fontsize="16",
+    #     foreground=Colors.latte["Maroon"],
+    #     # background=Colors.transparent,
+    #     default_text="    ",
+    #     countdown_format="  [{}]  ",
+    #     **decor,
+    # ),
+    widget.TextBox(
+        font="Nerd",
+        fmt="    ",
+        foreground=Colors.mocha["Red"],
+        fontsize=bar_fontsize + 4,
+        mouse_callbacks={"Button1": lazy.spawn(rofi["powermenu"])},
     ),
 ]
 
