@@ -1,6 +1,6 @@
 #!/bin/bash
 
-picom -b --experimental-backends
+picom -b 
 libinput-gestures-setup desktop start
 nm-applet &
 redshift &

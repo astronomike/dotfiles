@@ -406,8 +406,8 @@ widget_list = [
         font="Bold",
         foreground=Colors.mocha["Crust"],
         widgets=[
-            default_sep_widget,
-            widget.Systray(),
+            # default_sep_widget,
+            # widget.Systray(),
             default_sep_widget,
             widget.PulseVolume(
                 fmt=" \ufa7d {} ",
@@ -435,7 +435,7 @@ widget_list = [
                 **decor_group,
             ),
             widget.CPU(
-                format=" \ue266  {load_percent}% ",
+                format=" \ue266  {load_percent:.0f}% ",
                 # width=65,
                 mouse_callbacks={
                     "Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")
@@ -444,7 +444,7 @@ widget_list = [
                 **decor_group,
             ),
             widget.Memory(
-                format=" \ue240 {MemPercent} ({SwapPercent})% ",
+                format=" \ue240 {MemPercent:.0f}% ({SwapPercent:.0f}%) ",
                 # width=100,
                 mouse_callbacks={
                     "Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")
@@ -457,7 +457,7 @@ widget_list = [
                 discharge_char="\uf175",
                 charge_char="\uf176",
                 foreground=Colors.mocha["Peach"],
-				low_foreground=Colors.mocha["Red"],
+                low_foreground=Colors.mocha["Red"],
                 update_interval=5,
                 notify_below=0.1,
                 notification_timeout=0,
@@ -465,6 +465,8 @@ widget_list = [
             ),
         ],
     ),
+    default_sep_widget,
+    widget.Systray(),
     default_sep_widget,
     # widget.Sep(linewidth=6, foreground=Colors.transparent, **decor_group,),
     widget.Clock(
@@ -477,10 +479,10 @@ widget_list = [
         **decor_group,
     ),
     widget.BatteryIcon(
-        theme_path=home / ".config/qtile/battery-icons/", 
-		update_interval = 10,
-		scale=1.0, 
-		**decor_group,
+        theme_path=home / ".config/qtile/battery-icons/",
+        update_interval=10,
+        scale=1.0,
+        **decor_group,
     ),
     widget.TextBox(
         font="Symbols Nerd Font",
