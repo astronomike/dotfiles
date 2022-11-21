@@ -52,28 +52,40 @@ run_rofi() {
 	echo -e "$shutdown\n$reboot\n$suspend\n$logout\n$lock" | rofi_cmd
 }
 
-# Execute Command
-
 # For shutdown and reboot commands, a check is done if the session is broken (which leads to an authentication prompt by systemctl). If a password would be required, it sets the script to ask for a password and then asks for it with sudo -A.
+SUDO_ASKPASS=$HOME/.config/rofi/password/rofi_askpass.sh
+export SUDO_ASKPASS
+
+login_status() {
+	if [[ -z $(loginctl show-session $XDG_SESSION_ID --property=Active) ]]; then
+		active_login="false"
+	else 
+		active_login="true"
+	fi		
+}
+
+# Execute Command
 run_cmd() {
 	selected="$(confirm_exit)"
 	if [[ "$selected" == "$yes" ]]; then
 		if [[ $1 == '--shutdown' ]]; then
-			if [[ -z $(loginctl show-session $XDG_SESSION_ID --property=Active) ]]; then
-				SUDO_ASKPASS=$HOME/.config/rofi/password/rofi_askpass.sh sudo -A systemctl poweroff  
-			else 
+			if [ "$active_login" == "true" ]; then
 				systemctl poweroff
+			else 
+				sudo -A systemctl poweroff  
 			fi
 		elif [[ $1 == '--reboot' ]]; then
-			if [[ -z $(loginctl show-session $XDG_SESSION_ID --property=Active) ]]; then
-				SUDO_ASKPASS=$HOME/.config/rofi/password/rofi_askpass.sh sudo -A systemctl reboot
-			else 
+			if [ "$active_login" == "true" ]; then
 				systemctl reboot
+			else 
+				sudo -A systemctl reboot
 			fi
 		elif [[ $1 == '--suspend' ]]; then
-			mpc -q pause
-			amixer set Master mute
-			systemctl suspend
+			if [ "$active_login" == "true" ]; then
+				systemctl suspend
+			else 
+				sudo -A systemctl suspend  
+			fi
 		elif [[ $1 == '--logout' ]]; then
 			if [[ "$DESKTOP_SESSION" == 'openbox' ]]; then
 				openbox --exit
@@ -93,6 +105,7 @@ run_cmd() {
 }
 
 # Actions
+login_status
 chosen="$(run_rofi)"
 case ${chosen} in
     $shutdown)
