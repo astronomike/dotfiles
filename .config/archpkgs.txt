@@ -1,5 +1,33 @@
 # List of packages with their (general) use
 
+- zsh
+	Alternative shell. Make default with: $ chsh -s /usr/bin/zsh
+	Config location: ~/.zshrc
+	After editing config, reload with: $ source .zshrc
+	Opt Deps:
+		zsh-autosuggestions
+		zsh-syntax-highlighting
+		zsh-completions
+	
+- starship
+	Custom prompt.
+	Config location: ~/.config/starship.toml
+
+- powerline (-vim)
+	Nice status line for vim (or prompt for bash).
+	Config location: ~/.config/powerline
+
+- rofi
+	Menu system/run launcher for X11. Can also be used as a powermenu and window switcher.
+	Config location: ~/.config/rofi
+
+- wofi
+	Like rofi, but for wayland.
+
+- nm-applet
+	System try applet for NetworkManager.
+	(should just work)
+
 - ranger
 	TUI file manager. 
 	Config location: ~/.config/ranger/rc.conf
@@ -17,33 +45,9 @@
 	TUI file manager.
 	Config location: ~/.config/lf.conf
 
-- zsh
-	Alternative shell. 
-	Config location: ~/.zshrc
-	After editing config, reload with $ source .zshrc
-	Opt Deps:
-		zsh-autosuggestions
-		zsh-syntax-highlighting
-		zssh-completions
-	
-- starship
-	Custom prompt.
-	Config location: ~/.config/starship.toml
-
-- powerline
-	Nice status line for vim (or prompt for bash).
-	Config location: ~/.config/powerline
-
-- rofi
-	Menu system for X11.
-	Config location: ~/.config/rofi
-
-- wofi
-	Like rofi, but for wayland.
-
-- nm-applet
-	System try applet for NetworkManager.
-	(should just work)
+- ly 
+	Minimal display manager. Reads from /usr/share/xsessions for X11 sessions and 
+	/usr/share/wayland-sessions for Wayland sessions. 
 
 - redshift
 	Control colour temperature of the screen. Can be handled automatically based on 
@@ -62,14 +66,16 @@
 
 - xfce4-notifyd
 	Notification server (use with libnotify).
-	Launch manually with /usr/lib/xfce4/notifyd/xfce-notifyd & (check wiki)
+	Launch manually (autostart) with /usr/lib/xfce4/notifyd/xfce-notifyd & (check wiki)
 	Custom theme location: .themes/<theme_name>/xfce-notify-4.0/gtk.css
+	Edit theme, other options with /bin/xfce-notifyd-config
 
 - xfce4-power-manager
 	Power management settings (gui).
 	
 - libinput-gestures
-	Multi-touch touchpad gestures on X11 using libinput. Use with xdotool, package to replicates keypresses.
+	Multi-touch touchpad gestures on X11 using libinput. Use with xdotool, package to 
+	replicates keypresses.
 	Config location: ~/.config/libinput-gestures.conf
 
 - slock
@@ -79,6 +85,9 @@
 - lxappearance-gtk3
 	Graphical display options for X11 (lxde). Nice for changing themes, cursors etc. 
 
-- acpilight
-	Management of backlight brightness etc. (replacement for xbacklight which doesn't work on my laptop)
+- lxrandr-gtk3
+	Graphical monitor configuration tool (lxde).
 
+- acpilight
+	Management of backlight brightness etc. (replacement for xbacklight which doesn't work 
+	on my laptop)

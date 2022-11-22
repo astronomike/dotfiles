@@ -29,6 +29,7 @@ from pathlib import Path
 from libqtile import bar, layout, hook  # , widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
+from libqtile.log_utils import logger
 
 # qtile extras for widget decorations
 from qtile_extras import widget
@@ -37,7 +38,9 @@ from qtile_extras.widget.decorations import RectDecoration
 from colors import Colors
 import subprocess  # for hooks
 
+##########################################################
 # General/quick access settings
+##########################################################
 mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
@@ -51,21 +54,27 @@ bar_margin = int(default_margin / 2)  # smaller gap for bar
 volume_mod = 5
 brightness_mod = 5
 
+##########################################################
 # rofi scripts
+##########################################################
 rofi = {
     "apps": str(home / ".config/rofi/apps/apps.sh"),
     "powermenu": str(home / ".config/rofi/powermenu/powermenu.sh"),
     "window": str(home / ".config/rofi/window/window.sh"),
 }
 
+##########################################################
 # Hooks
+##########################################################
 @hook.subscribe.startup_once
 def autostart():
     autostart_path = home / ".config/qtile/autostart.sh"
     subprocess.Popen([autostart_path])
 
 
+##########################################################
 # Keybindings
+##########################################################
 keys = [
     # Focus windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
@@ -74,22 +83,13 @@ keys = [
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
     # Move windows in layouts
-    Key(
-        [mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"
-    ),
-    Key(
-        [mod, "shift"],
-        "l",
-        lazy.layout.shuffle_right(),
-        desc="Move window to the right",
-    ),
+    Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window left"),
+    Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window right",),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
     # Grow windows
-    Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
-    Key(
-        [mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"
-    ),
+    Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window left"),
+    Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window right"),
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
@@ -197,21 +197,24 @@ keys = [
     ),
 ]
 
+##########################################################
 # Group definitions
+##########################################################
 group_list = "12345678"
 groups = [
-    Group("1", label=""),
+    Group("1", label="\ue795"),
     Group("2", label="\uf752",),
     Group("3", label="\ufa9e", matches=[Match(wm_class="firefox")]),
-    Group("4", label="", matches=[Match(wm_class="code")]),
-    Group("5", label=""),
+    Group("4", label="\ue780", matches=[Match(wm_class="code")]),
     Group(
-        "6",
-        label="",
-        matches=[Match(wm_class="Thunderbird"), Match(wm_class="Ferdium")],
+        "5",
+        label="\uf02d",
+        matches=[Match(wm_class="qpdfview"), Match(wm_class="Zathura")],
+        layout="max",
     ),
+    Group("6", label="\uf6ed", matches=[Match(wm_class="Ferdium")],),
     Group("7", label="\uf11b", matches=[Match(wm_class="Steam")]),
-    Group("8", label="\ue006", matches=[Match(wm_class="Spotify")]),
+    Group("8", label="\uf885", matches=[Match(wm_class="Spotify")]),
 ]
 
 for i in groups:
@@ -266,7 +269,9 @@ keys.extend(
     ]
 )
 
+##########################################################
 # ScratchPads (invisible groups)
+##########################################################
 # defaults
 sp_width = 0.6  # as a fraction of screen width
 sp_height = 0.6  # as a fraction of screen height
@@ -306,7 +311,9 @@ keys.extend(
     ]
 )
 
+##########################################################
 # Layout configs
+##########################################################
 layouts = [
     layout.Columns(
         margin=default_margin,
@@ -358,7 +365,9 @@ default_sep_widget = widget.Sep(
     foreground=Colors.transparent, background=Colors.transparent, linewidth=5
 )
 
+##########################################################
 # Widgets
+##########################################################
 widget_list = [
     widget.TextBox(
         font="Symbols Nerd Font",
@@ -379,10 +388,12 @@ widget_list = [
         highlight_method="border",
         borderwidth=1,
         padding_y=1,
-        this_current_screen_border=Colors.mocha["Sapphire"],
         active=Colors.mocha["Sapphire"],
-        this_screen_border=Colors.mocha["Red"],
         inactive=Colors.mocha["Red"],
+        this_current_screen_border=Colors.mocha["Sapphire"],
+        # this_screen_border=Colors.mocha["Red"],
+        # other_current_screen_border=Colors.mocha["Sapphire"],
+        # other_screen_border=Colors.transparent,
         disable_drag=True,
         **decor_group,
     ),
@@ -399,7 +410,6 @@ widget_list = [
     widget.Spacer(width="stretch"),
     default_sep_widget,
     widget.Spacer(),
-    # default_sep_widget,
     widget.WidgetBox(
         text_closed="\ufc95",
         text_open="\ufc96",
@@ -468,7 +478,6 @@ widget_list = [
     default_sep_widget,
     widget.Systray(),
     default_sep_widget,
-    # widget.Sep(linewidth=6, foreground=Colors.transparent, **decor_group,),
     widget.Clock(
         font="Ubuntu",
         format="  %H:%M  %a, %-d %b  ",  # shows eg. Tue, 7 Jun  11:17
@@ -494,15 +503,25 @@ widget_list = [
     ),
 ]
 
+# Set widgets to be used on each screen. Note Systray can only exist on one screen, so
+# remove it for other screens than the main one. Just do it manually for now, matching
+# the object in the list needs a custom method in the widget source code.
+widget_list_screen1 = widget_list.copy()
+systray_index = -5
+widget_list.pop(systray_index)
+widget_list_screen2 = widget_list.copy()
+
+##########################################################
+# Screens
+##########################################################
 screens = [
+    # main laptop monitor
     Screen(
         top=bar.Bar(
-            widget_list,
+            widgets=widget_list_screen1,
             size=bar_size,
             background=Colors.transparent,
-            # background=Colors.latte["Crust"],
             margin=[bar_margin, bar_margin, bar_margin, bar_margin],  # [N E S W]
-            # margin=0,
         ),
         bottom=bar.Gap(default_margin),
         left=bar.Gap(default_margin),
@@ -510,17 +529,14 @@ screens = [
         wallpaper=wallpaper,
         wallpaper_mode="stretch",
     ),
+    # secondary monitor
     Screen(
         top=bar.Bar(
-            widgets=widget_list,
-            # widget_list,
+            widgets=widget_list_screen2,
             size=bar_size,
-            # background=Colors.transparent,
-            # background=Colors.latte["Crust"],
+            background=Colors.transparent,
             margin=[bar_margin, bar_margin, bar_margin, bar_margin],  # [N E S W]
-            # margin=0,
         ),
-        # top=bar.Gap(default_margin),
         bottom=bar.Gap(default_margin),
         left=bar.Gap(default_margin),
         right=bar.Gap(default_margin),
