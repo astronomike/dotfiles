@@ -40,6 +40,7 @@ alias feh="feh --scale-down"
 # git alias for dotfiles management
 alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 alias cs="config status"
+alias config-ls="config ls-tree -r --name-only HEAD"
 alias gits="git status"
 
 # starship prompt
