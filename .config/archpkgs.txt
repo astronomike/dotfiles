@@ -1,4 +1,6 @@
+####################################################
 # List of packages with their (general) use
+####################################################
 
 - zsh
 	Alternative shell. Make default with: $ chsh -s /usr/bin/zsh
@@ -8,6 +10,7 @@
 		zsh-autosuggestions
 		zsh-syntax-highlighting
 		zsh-completions
+		zsh-vi-mode (aur)
 	
 - starship
 	Custom prompt.
@@ -27,6 +30,9 @@
 - nm-applet
 	System try applet for NetworkManager.
 	(should just work)
+
+- pacman-contrib
+	Contains paccache command, which is used to clean pacman's package cache. 
 
 - ranger
 	TUI file manager. 
@@ -59,6 +65,8 @@
 
 - texlive(-bin, -core, -latexextra, etc.)
 	LaTeX stuff. Check wiki for descriptions.
+	texlive-most contains the useful packages (for me), so install this and then choose
+	from the presented list.
 
 - easyeffects
 	Additional sound effects for pipewire (analagous to pulseffects for pulseaudio).
@@ -76,7 +84,10 @@
 - libinput-gestures
 	Multi-touch touchpad gestures on X11 using libinput. Use with xdotool, package to 
 	replicates keypresses.
+	Must add user to input group for this to work (see github page), tldr: 
+		$ sudo gpasswd -a $USER input
 	Config location: ~/.config/libinput-gestures.conf
+	Add to startup script: libinput-gestures-setup desktop start
 
 - slock
 	Screen locking tool for X11. 
@@ -90,4 +101,38 @@
 
 - acpilight
 	Management of backlight brightness etc. (replacement for xbacklight which doesn't work 
-	on my laptop)
+	on my laptop).
+	Privileges are needed to change brightness in this way, so for this to work correctly 
+	a custom udev rule needs to be made, and the user needs to be in the video group. 
+	See the acpilight gitlab for instructions.
+
+- kvantum 
+	Theme engine for qt apps. 
+	Set QT_THEME_OVERRIDE=kvantum in /etc/environment for this to work for all qt apps. 
+	To install new themes, download (from KDE store - materia is a good one) and direct 
+	kvantum to the downloaded folder. 
+
+- xarchiver 
+	Manages archives. Can be used with graphical file managers. 
+
+- ntfs-3g
+	NTFS file system driver (needed to mount NTFS volumes, like ext. hard drive)
+
+
+####################################################
+# General Notes
+####################################################
+
+ -> Pacman can be configured with /etc/pacman.conf, of interest might be the ParallelDownloads, Color and ILoveCandy options.  
+
+ -> Every now and again, run paccache command to clean cache, as it can grow quite large as packages are installed.
+
+ -> The systemd journal can sometimes take long to flush on boots, especially if it gets large. Its total size can be limited with the --vacuum flags, and applied to active journals at the same time with --rotate.
+
+ -> To blacklist kernel modules (useful for ex. with a broken internal wifi card, or bluetooth modules that are never used), create a /etc/modprobe.d/blacklist.conf file with 
+	blacklist <module_name>
+lines for each module. Will work after a reboot. 
+
+ -> An aur helper like yay is useful for managing aur packages. Install yay manually using the instructions on the wiki, and then use the option --save --sudoloop for it to ask for the password before doing the download.  
+
+ -> On the Acer laptop, even when SecureBoot is disabled it requires the efi bootloader file to be in the list of trusted bootloaders. If it isn't, grub fails to load. When installing, activate SB -> manually add EFI/grub/grub.efi to trusted list -> deactivate SB again. After this grub should be visible again. 

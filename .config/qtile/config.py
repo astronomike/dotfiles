@@ -45,8 +45,8 @@ mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
 home = Path.home()
-wallpaper = home / "Pictures/Wallpapers/catpuccin/landscapes/tropic_island_day.jpg"
-# wallpaper = home / "Pictures/Wallpapers/catpuccin/waves/Waves Light 6016x6016.jpg"
+# wallpaper = home / "Pictures/Wallpapers/catpuccin/landscapes/tropic_island_day.jpg"
+wallpaper = home / "Pictures/Wallpapers/wallpapers-master/0111.jpg"
 default_margin = 6  # window gaps
 bar_size = 30
 bar_fontsize = 14
@@ -205,7 +205,7 @@ groups = [
     Group("1", label="\ue795"),
     Group("2", label="\uf752",),
     Group("3", label="\ufa9e", matches=[Match(wm_class="firefox")]),
-    Group("4", label="\ue780", matches=[Match(wm_class="code")]),
+    Group("4", label="\ue780", matches=[Match(wm_class="code")],layout="max"),
     Group(
         "5",
         label="\uf02d",
@@ -214,7 +214,7 @@ groups = [
     ),
     Group("6", label="\uf6ed", matches=[Match(wm_class="Ferdium")],),
     Group("7", label="\uf11b", matches=[Match(wm_class="Steam")]),
-    Group("8", label="\uf885", matches=[Match(wm_class="Spotify")]),
+    Group("8", label="\uf885", matches=[Match(wm_class="Cider")]),
 ]
 
 for i in groups:
@@ -359,7 +359,9 @@ decor_group = {
     "padding": default_widget_padding,
 }
 
-widget_defaults = dict(font="Ubuntu Regular", fontsize=bar_fontsize, padding=0,)
+icon_font = {"font":"Symbols Nerd Font", "fontsize":bar_fontsize+4}
+
+widget_defaults = dict(font="Ubuntu Nerd Font", fontsize=bar_fontsize, padding=0,)
 extension_defaults = widget_defaults.copy()
 default_sep_widget = widget.Sep(
     foreground=Colors.transparent, background=Colors.transparent, linewidth=5
@@ -370,17 +372,14 @@ default_sep_widget = widget.Sep(
 ##########################################################
 widget_list = [
     widget.TextBox(
-        font="Symbols Nerd Font",
-        fontsize=bar_fontsize + 4,
         foreground=Colors.mocha["Sapphire"],
         fmt=" \uf303 ",
         mouse_callbacks={"Button1": lazy.spawn(rofi["apps"])},
-        **decor_group,
+        **icon_font,
+		**decor_group,
     ),
     default_sep_widget,
     widget.GroupBox(
-        font="Symbols Nerd Font",
-        fontsize=bar_fontsize + 4,
         margin_x=10,
         markup=True,
         visible_groups=group_list,
@@ -395,6 +394,7 @@ widget_list = [
         # other_current_screen_border=Colors.mocha["Sapphire"],
         # other_screen_border=Colors.transparent,
         disable_drag=True,
+		**icon_font,
         **decor_group,
     ),
     default_sep_widget,
@@ -402,7 +402,6 @@ widget_list = [
     widget.WindowName(
         foreground=Colors.mocha["Crust"],
         font="Ubuntu Bold",
-        fontsize=bar_fontsize,
         format="  {name}  ",
         width=250,
         scroll=True,
@@ -413,31 +412,25 @@ widget_list = [
     widget.WidgetBox(
         text_closed="\ufc95",
         text_open="\ufc96",
-        font="Bold",
+        font="Symbols Nerd Font Bold",
         foreground=Colors.mocha["Crust"],
         widgets=[
-            # default_sep_widget,
-            # widget.Systray(),
             default_sep_widget,
             widget.PulseVolume(
                 fmt=" \ufa7d {} ",
-                # width=55,
                 limit_max_volume=True,
                 foreground=Colors.mocha["Lavender"],
-                # emoji=True,
                 **decor_group,
             ),
             widget.Backlight(
-                fmt=" \uf5dd {} ",
-                # width=65,
+                fmt=" \uf5dd  {} ",
                 foreground=Colors.mocha["Sapphire"],
                 backlight_name="intel_backlight",
                 **decor_group,
             ),
             widget.Wlan(
                 format=" \uf1eb {percent:2.0%} ",
-                # width=65,
-                disconnected_message=" \ufaa9",
+                disconnected_message=" \ufaa9 ",
                 foreground=Colors.mocha["Teal"],
                 mouse_callbacks={
                     "Button1": lazy.group["scratchpad"].dropdown_toggle("speedometer")
@@ -446,7 +439,6 @@ widget_list = [
             ),
             widget.CPU(
                 format=" \ue266  {load_percent:.0f}% ",
-                # width=65,
                 mouse_callbacks={
                     "Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")
                 },
@@ -454,8 +446,7 @@ widget_list = [
                 **decor_group,
             ),
             widget.Memory(
-                format=" \ue240 {MemPercent:.0f}% ({SwapPercent:.0f}%) ",
-                # width=100,
+                format=" \ue240  {MemPercent:.0f}% ({SwapPercent:.0f}%) ",
                 mouse_callbacks={
                     "Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")
                 },
@@ -480,25 +471,24 @@ widget_list = [
     default_sep_widget,
     widget.Clock(
         font="Ubuntu",
-        format="  %H:%M  %a, %-d %b  ",  # shows eg. Tue, 7 Jun  11:17
+        format="  %H:%M  %a, %-d %b ",  # shows eg. Tue, 7 Jun  11:17
         foreground=Colors.mocha["Text"],
         mouse_callbacks={
             "Button1": lazy.group["scratchpad"].dropdown_toggle("calcurse")
         },
         **decor_group,
     ),
-    widget.BatteryIcon(
-        theme_path=home / ".config/qtile/battery-icons/",
-        update_interval=10,
-        scale=1.0,
-        **decor_group,
-    ),
+    # widget.BatteryIcon(
+    #     theme_path=home / ".config/qtile/battery-icons/",
+    #     update_interval=10,
+    #     scale=1.0,
+    #     **decor_group,
+    # ),
     widget.TextBox(
-        font="Symbols Nerd Font",
-        fmt=" \uf011 ",
-        fontsize=bar_fontsize + 4,
+        fmt=" \uf011  ",
         foreground=Colors.latte["Flamingo"],
         mouse_callbacks={"Button1": lazy.spawn(rofi["powermenu"])},
+		**icon_font,
         **decor_group,
     ),
 ]
@@ -507,7 +497,7 @@ widget_list = [
 # remove it for other screens than the main one. Just do it manually for now, matching
 # the object in the list needs a custom method in the widget source code.
 widget_list_screen1 = widget_list.copy()
-systray_index = -5
+systray_index = -4
 widget_list.pop(systray_index)
 widget_list_screen2 = widget_list.copy()
 

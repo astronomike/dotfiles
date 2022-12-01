@@ -14,13 +14,13 @@ host=`hostname`
 user=`whoami`
 
 # Options
-shutdown=' Shutdown'
-reboot=' Reboot'
-lock=' Lock'
-suspend=' Suspend'
-logout=' Logout'
-yes=' Yes'
-no=' No'
+shutdown='  Shutdown'
+reboot='  Reboot'
+lock='  Lock'
+suspend='⏾  Suspend'
+logout='  Logout'
+yes='  Yes'
+no='  No'
 
 # Rofi CMD
 rofi_cmd() {
@@ -107,8 +107,11 @@ run_cmd() {
 # Actions
 login_status
 chosen="$(run_rofi)"
-case ${chosen} in
-    $shutdown)
+case "${chosen}" in
+    'Shutdown')
+		run_cmd --shutdown
+		;;
+	$shutdown)
 		run_cmd --shutdown
         ;;
     $reboot)

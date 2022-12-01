@@ -1,10 +1,18 @@
 add_newline = true
 
 format = """
-[| $username](green)$directory$python$package$conda$git_status$git_branch$status
+[| $username](green)$directory$python$package$conda$git_status$git_branch
 [  ➜  ](green) """
 
+right_format = "$character$status"
+
+[character]
+success_symbol = "[<](bold green)"
+error_symbol = "[<](bold red)"
+vimcmd_symbol = "[CMD](bold white)"
+
 [status]
+format = "[$symbol $status]($style)"
 disabled = false
 
 [username]
