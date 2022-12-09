@@ -29,8 +29,8 @@ window {
     y-offset:                    40px;
 
     enabled:                     true;
-    margin:                      2px;
-    padding:                     2px;
+    margin:                      0px;
+    padding:                     0px;
     border:                      2px solid;
     border-radius:               10px;
     border-color:                @selected;
@@ -47,7 +47,7 @@ mainbox {
     border:                      0px solid;
     border-radius:               0px 0px 0px 0px;
     border-color:                @selected;
-    background-color:            transparent;
+    background-color:            @background;
     children:                    [ "inputbar", "listview" ];
 }
 
@@ -105,7 +105,7 @@ listview {
     border:                      0px solid;
     border-radius:               0px;
     border-color:                @selected;
-    background-color:            transparent;
+    background-color:            @background;
     text-color:                  @foreground;
     cursor:                      "default";
 }
@@ -125,7 +125,7 @@ element {
     border:                      0px solid;
     border-radius:               0px;
     border-color:                @selected;
-    background-color:            transparent;
+    background-color:            @background;
     text-color:                  @foreground;
     cursor:                      pointer;
 }
