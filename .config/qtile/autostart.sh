@@ -1,6 +1,7 @@
 #!/bin/bash
 
 picom -b 
+~/.fehbg &
 libinput-gestures-setup desktop start
 nm-applet &
 redshift &

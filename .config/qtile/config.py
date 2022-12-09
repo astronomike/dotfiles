@@ -24,6 +24,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import os
 from pathlib import Path
 
 from libqtile import bar, layout, hook  # , widget
@@ -45,14 +46,65 @@ mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
 home = Path.home()
-# wallpaper = home / "Pictures/Wallpapers/catpuccin/landscapes/tropic_island_day.jpg"
-wallpaper = home / "Pictures/Wallpapers/wallpapers-master/0111.jpg"
+
 default_margin = 6  # window gaps
-bar_size = 30
+bar_size = 32
 bar_fontsize = 14
 bar_margin = int(default_margin / 2)  # smaller gap for bar
+
 volume_mod = 5
 brightness_mod = 5
+
+
+##########################################################
+# theme and wallpaper
+##########################################################
+dark_theme = True  # default
+theme = Colors.mocha
+
+# @lazy.function
+# def toggle_theme(qtile, dark_theme: bool):
+#     if dark_theme:
+#         theme = Colors.latte
+#     else:
+#         theme = Colors.mocha
+#     lazy.reload_config()
+
+
+bar_background = theme["Crust"]
+bar_foreground = theme["Text"]
+
+
+import random
+
+wallpaper_list = []
+wallpaper_path = home / "Pictures/Wallpapers/favourites/"
+for f in os.listdir(wallpaper_path):
+    wallpaper = os.path.join(wallpaper_path, f)
+    if os.path.isfile(wallpaper):
+        wallpaper_list.append(wallpaper)
+
+
+@lazy.function
+def random_wallpaper(qtile, wallpaper_list: list):
+    """
+    Set a new, random wallpaper from a pre-determined list of wallpapers.
+    This method can be used in a keybinding or hook.
+
+    This method finds the current wallpaper from ~/.fehbg, whose path should be the
+    last string in the file. It then chooses a new random one from wallpaper_list,
+    and there is a little check to make sure the same wallpaper as the current one
+    isn't chosen.
+    """
+    with open(home / ".fehbg") as fehbg:
+        last_line = fehbg.readlines()[-1]
+        current_wallpaper = last_line.split()[-1][1:-1]
+
+    wallpaper = random.choice(wallpaper_list)
+    while wallpaper == current_wallpaper:
+        wallpaper = random.choice(wallpaper_list)
+    os.system("feh --bg-fill " + wallpaper)
+
 
 ##########################################################
 # rofi scripts
@@ -84,7 +136,12 @@ keys = [
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
     # Move windows in layouts
     Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window right",),
+    Key(
+        [mod, "shift"],
+        "l",
+        lazy.layout.shuffle_right(),
+        desc="Move window right",
+    ),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
     # Grow windows
@@ -115,7 +172,10 @@ keys = [
         desc="Switch to the last visited group",
     ),
     Key(
-        ["mod1"], "Tab", lazy.spawn(rofi["window"]), desc="Spawn rofi with window menu",
+        ["mod1"],
+        "Tab",
+        lazy.spawn(rofi["window"]),
+        desc="Spawn rofi with window menu",
     ),
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
@@ -148,8 +208,18 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
+    # Themes
+    # Key(
+    #     [mod, "control"], "t", toggle_theme(dark_theme), desc="Toggle dark theme on/off"
+    # ),
+    Key([mod], "w", random_wallpaper(wallpaper_list), desc="Randomize wallpaper"),
     # Spawn commands
-    Key([mod], "p", lazy.spawn(rofi["powermenu"]), desc="Spawn rofi power menu",),
+    Key(
+        [mod],
+        "p",
+        lazy.spawn(rofi["powermenu"]),
+        desc="Spawn rofi power menu",
+    ),
     Key([mod], "Return", lazy.spawn(terminal), desc="Spawn terminal"),
     Key(
         [mod],
@@ -203,16 +273,16 @@ keys = [
 group_list = "12345678"
 groups = [
     Group("1", label="\ue795"),
-    Group("2", label="\uf752",),
+    Group("2", label="\uf752"),
     Group("3", label="\ufa9e", matches=[Match(wm_class="firefox")]),
-    Group("4", label="\ue780", matches=[Match(wm_class="code")],layout="max"),
+    Group("4", label="\ue780", matches=[Match(wm_class="code")], layout="max"),
     Group(
         "5",
         label="\uf02d",
         matches=[Match(wm_class="qpdfview"), Match(wm_class="Zathura")],
         layout="max",
     ),
-    Group("6", label="\uf6ed", matches=[Match(wm_class="Ferdium")],),
+    Group("6", label="\uf6ed", matches=[Match(wm_class="Ferdium")]),
     Group("7", label="\uf11b", matches=[Match(wm_class="Steam")]),
     Group("8", label="\uf885", matches=[Match(wm_class="Cider")]),
 ]
@@ -318,17 +388,17 @@ layouts = [
     layout.Columns(
         margin=default_margin,
         border_width=3,
-        border_focus_stack=["#d75f5f", "#8f3d3d"],
-        border_normal=Colors.frappe["Overlay0"],
-        border_focus=Colors.frappe["Sapphire"],
+        border_focus_stack=[theme["Green"], theme["Lavender"]],
+        border_normal=theme["Overlay0"],
+        border_focus=theme["Sapphire"],
         border_on_single=True,
     ),
     layout.Max(
         margin=0,
         border_width=3,
         border_on_single=True,
-        border_normal=Colors.frappe["Overlay0"],
-        border_focus=Colors.frappe["Sapphire"],
+        border_normal=theme["Overlay0"],
+        border_focus=theme["Sapphire"],
     ),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -348,7 +418,7 @@ default_widget_padding = 3
 decor_group = {
     "decorations": [
         RectDecoration(
-            colour=Colors.mocha["Crust"],
+            colour=theme["Base"],
             radius=10,
             filled=True,
             padding=0,
@@ -359,12 +429,16 @@ decor_group = {
     "padding": default_widget_padding,
 }
 
-icon_font = {"font":"Symbols Nerd Font", "fontsize":bar_fontsize+4}
+icon_font = {"font": "Symbols Nerd Font", "fontsize": bar_fontsize + 4}
 
-widget_defaults = dict(font="Ubuntu Nerd Font", fontsize=bar_fontsize, padding=0,)
+widget_defaults = dict(
+    font="Ubuntu Nerd Font",
+    fontsize=bar_fontsize,
+    # padding=0,
+)
 extension_defaults = widget_defaults.copy()
 default_sep_widget = widget.Sep(
-    foreground=Colors.transparent, background=Colors.transparent, linewidth=5
+    foreground=bar_background, background=bar_background, linewidth=5
 )
 
 ##########################################################
@@ -372,11 +446,11 @@ default_sep_widget = widget.Sep(
 ##########################################################
 widget_list = [
     widget.TextBox(
-        foreground=Colors.mocha["Sapphire"],
+        foreground=theme["Sapphire"],
         fmt=" \uf303 ",
         mouse_callbacks={"Button1": lazy.spawn(rofi["apps"])},
         **icon_font,
-		**decor_group,
+        **decor_group,
     ),
     default_sep_widget,
     widget.GroupBox(
@@ -387,51 +461,51 @@ widget_list = [
         highlight_method="border",
         borderwidth=1,
         padding_y=1,
-        active=Colors.mocha["Sapphire"],
-        inactive=Colors.mocha["Red"],
-        this_current_screen_border=Colors.mocha["Sapphire"],
-        # this_screen_border=Colors.mocha["Red"],
-        # other_current_screen_border=Colors.mocha["Sapphire"],
+        active=theme["Sapphire"],
+        inactive=theme["Red"],
+        this_current_screen_border=theme["Sapphire"],
+        # this_screen_border=theme["Red"],
+        # other_current_screen_border=theme["Sapphire"],
         # other_screen_border=Colors.transparent,
         disable_drag=True,
-		**icon_font,
+        **icon_font,
         **decor_group,
     ),
     default_sep_widget,
     widget.Prompt(**decor_group),
     widget.WindowName(
-        foreground=Colors.mocha["Crust"],
+        foreground=bar_foreground,
         font="Ubuntu Bold",
         format="  {name}  ",
         width=250,
         scroll=True,
     ),
     widget.Spacer(width="stretch"),
-    default_sep_widget,
-    widget.Spacer(),
+    # default_sep_widget,
+    # widget.Spacer(),
     widget.WidgetBox(
         text_closed="\ufc95",
         text_open="\ufc96",
         font="Symbols Nerd Font Bold",
-        foreground=Colors.mocha["Crust"],
+        foreground=bar_foreground,
         widgets=[
             default_sep_widget,
             widget.PulseVolume(
                 fmt=" \ufa7d {} ",
                 limit_max_volume=True,
-                foreground=Colors.mocha["Lavender"],
+                foreground=theme["Lavender"],
                 **decor_group,
             ),
             widget.Backlight(
                 fmt=" \uf5dd  {} ",
-                foreground=Colors.mocha["Sapphire"],
+                foreground=theme["Sapphire"],
                 backlight_name="intel_backlight",
                 **decor_group,
             ),
             widget.Wlan(
                 format=" \uf1eb {percent:2.0%} ",
                 disconnected_message=" \ufaa9 ",
-                foreground=Colors.mocha["Teal"],
+                foreground=theme["Teal"],
                 mouse_callbacks={
                     "Button1": lazy.group["scratchpad"].dropdown_toggle("speedometer")
                 },
@@ -442,7 +516,7 @@ widget_list = [
                 mouse_callbacks={
                     "Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")
                 },
-                foreground=Colors.mocha["Green"],
+                foreground=theme["Green"],
                 **decor_group,
             ),
             widget.Memory(
@@ -450,15 +524,15 @@ widget_list = [
                 mouse_callbacks={
                     "Button1": lazy.group["scratchpad"].dropdown_toggle("gotop")
                 },
-                foreground=Colors.mocha["Yellow"],
+                foreground=theme["Yellow"],
                 **decor_group,
             ),
             widget.Battery(
                 format=" \uf57d{char} {hour:d}h{min:02d}m ({percent:2.0%})  ",
                 discharge_char="\uf175",
                 charge_char="\uf176",
-                foreground=Colors.mocha["Peach"],
-                low_foreground=Colors.mocha["Red"],
+                foreground=theme["Peach"],
+                low_foreground=theme["Red"],
                 update_interval=5,
                 notify_below=0.1,
                 notification_timeout=0,
@@ -468,27 +542,26 @@ widget_list = [
     ),
     default_sep_widget,
     widget.Systray(),
-    default_sep_widget,
+    # default_sep_widget,
+    # widget.BatteryIcon(
+    #     theme_path=home / ".config/qtile/battery-icons/",
+    #     update_interval=10,
+    #     scale=1.4,
+    # ),
     widget.Clock(
         font="Ubuntu",
         format="  %H:%M  %a, %-d %b ",  # shows eg. Tue, 7 Jun  11:17
-        foreground=Colors.mocha["Text"],
+        foreground=bar_foreground,
         mouse_callbacks={
             "Button1": lazy.group["scratchpad"].dropdown_toggle("calcurse")
         },
         **decor_group,
     ),
-    # widget.BatteryIcon(
-    #     theme_path=home / ".config/qtile/battery-icons/",
-    #     update_interval=10,
-    #     scale=1.0,
-    #     **decor_group,
-    # ),
     widget.TextBox(
         fmt=" \uf011  ",
-        foreground=Colors.latte["Flamingo"],
+        foreground=Colors.mocha["Red"],
         mouse_callbacks={"Button1": lazy.spawn(rofi["powermenu"])},
-		**icon_font,
+        **icon_font,
         **decor_group,
     ),
 ]
@@ -510,14 +583,15 @@ screens = [
         top=bar.Bar(
             widgets=widget_list_screen1,
             size=bar_size,
-            background=Colors.transparent,
-            margin=[bar_margin, bar_margin, bar_margin, bar_margin],  # [N E S W]
+            background=bar_background,
+            margin=[0, 0, bar_margin, 0],
+            # margin=[bar_margin, bar_margin, bar_margin, bar_margin],  # [N E S W]
         ),
         bottom=bar.Gap(default_margin),
         left=bar.Gap(default_margin),
         right=bar.Gap(default_margin),
-        wallpaper=wallpaper,
-        wallpaper_mode="stretch",
+        # wallpaper=wallpaper,
+        # wallpaper_mode=wallpaper_mode,
     ),
     # secondary monitor
     Screen(
@@ -530,8 +604,8 @@ screens = [
         bottom=bar.Gap(default_margin),
         left=bar.Gap(default_margin),
         right=bar.Gap(default_margin),
-        wallpaper=wallpaper,
-        wallpaper_mode="stretch",
+        # wallpaper=wallpaper,
+        # wallpaper_mode=wallpaper_mode,
     ),
 ]
 
@@ -556,7 +630,7 @@ bring_front_click = False
 cursor_warp = False
 floating_layout = layout.Floating(
     border_width=2,
-    border_focus=Colors.frappe["Mauve"],
+    border_focus=theme["Mauve"],
     float_rules=[
         *layout.Floating.default_float_rules,
         Match(wm_class="confirmreset"),  # gitk
@@ -587,4 +661,4 @@ wl_input_rules = None
 #
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
-wmname = "Qtile"
+wmname = "LG3D"
