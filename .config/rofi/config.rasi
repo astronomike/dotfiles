@@ -100,9 +100,11 @@ configuration {
 
 	/*---------- File browser settings ----------*/
     filebrowser {
-/*	  directory: "/home";*/
+	  directory: "/home/michael";
       directories-first: true;
-      sorting-method:    "name";
+      sorting-method: "name";
+	  show-hidden: "false";
+	  command: "xdg-open";
     }
 
 	/*---------- Other settings ----------*/

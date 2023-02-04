@@ -32,6 +32,7 @@
     foreground:     #D9E0EEFF;
     //selected:       #7AA2F7FF;
     selected:       @sapphire;
+    floating:       @mauve;
     active:         #ABE9B3FF;
     urgent:         #F28FADFF;
 }
