@@ -36,7 +36,6 @@ alias kill-picom="pkill -e picom"
 alias start-picom="picom -b --experimental-backends"
 alias restart-picom="pkill -e picom && picom -b --experimental-backends"
 alias pconfig="$EDITOR $HOME/.config/picom/picom.conf"
-alias feh="feh --scale-down"
 
 # git alias for dotfiles management
 alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"

@@ -26,9 +26,9 @@ class Colors:
         "Surface2": "#acb0be",
         "Surface1": "#bcc0cc",
         "Surface0": "#ccd0da",
-        "Base": "#eff1f5",
+        "Base": "#dce0e8",
         "Mantle": "#e6e9ef",
-        "Crust": "#dce0e8",
+        "Crust": "#eff1f5",
     }
 
     frappe = {
@@ -117,4 +117,3 @@ class Colors:
         "Mantle": "#181825",
         "Crust": "#11111b",
     }
-
