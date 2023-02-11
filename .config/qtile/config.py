@@ -224,6 +224,10 @@ keys = [
     #     [mod, "control"], "t", toggle_theme(dark_theme), desc="Toggle dark theme on/off"
     # ),
     Key([mod], "w", random_wallpaper(wallpaper_list), desc="Randomize wallpaper"),
+    Key([mod, "control"], "p", lazy.spawn("pkill picom"), desc="Kill compositing"),
+    Key(
+        [mod, "control", "shift"], "p", lazy.spawn("picom -b"), desc="Start compositing"
+    ),
     # Spawn commands
     Key(
         [mod],

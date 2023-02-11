@@ -21,11 +21,6 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
  
-# set env variables
-export EDITOR=vim 
-export PATH="$HOME/.local/bin:$PATH"
-export SUDO_ASKPASS="$HOME/.config/rofi/password/rofi_askpass.sh"
-
 # aliases
 alias ls='ls --color=auto'
 alias qconfig="$EDITOR $HOME/.config/qtile/config.py"
