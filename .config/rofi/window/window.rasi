@@ -11,6 +11,10 @@
 configuration {
 	modi:                       "window";
     show-icons:                 true;
+    close-on-delete:            false;
+    prefer-icon-theme:          true;
+    window-thumbnail:           false;
+    hide-active-window:         false;
 }
 
 /*****----- Global Properties -----*****/
@@ -22,7 +26,8 @@ window {
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       500px;
+    width:                       50%;
+    height:                      50%;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -133,21 +138,21 @@ element normal.normal {
     text-color:                  @foreground;
 }
 element selected.active {
- /*   background-color:            @background-alt; */
-    text-color:                  @active;
-    border:                      2px solid;
+    background-color:            @background; 
+    text-color:                  @green;
+    border:                      4px solid;
     border-color:                @active;
 }
 element selected.normal {
     background-color:            @background-alt;
     text-color:                  @foreground;
-    border:                      2px solid;
+    border:                      4px solid;
     border-color:                @selected;
 }
 element-icon {
     background-color:            transparent;
     text-color:                  inherit;
-    size:                        60px;
+    size:                        10%;
     cursor:                      inherit;
 }
 element-text {

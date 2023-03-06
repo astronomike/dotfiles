@@ -61,14 +61,16 @@ configuration {
 
 	/*---------- Window switcher settings ----------*/
 	window-match-fields: "title,class,role,name,desktop";
-	window-command: "wmctrl -i -R {window}";
+	window-command: "wmctrl -i -c {window}";
 	//window-format: "{w} - {c} - {t:0}"; 
 	window-format: "{c}";
-	window-thumbnail: false;
-	window {
-		hide-active-window: false;
+    window {
+    	close-on-delete:            false;
+		prefer-icon-theme:          true;
+    	window-thumbnail:           true;
+    	hide-active-window:         false;
 	}
-	
+
 	/*---------- Combi settings ----------*/
 /*	combi-modi: "window,run";*/
 /*	combi-hide-mode-prefix: false;*/
@@ -186,5 +188,5 @@ configuration {
 	ml-row-down: "ScrollDown";
 /*	me-select-entry: "MousePrimary";*/
 /*	me-accept-entry: "MouseDPrimary";*/
-	me-accept-custom: "Control+MouseDPrimary";
+	me-accept-custom: "Control+MousePrimary";
 }

@@ -65,7 +65,7 @@
 	[Seat:*]
 	greeter-session=lightdm-slick-greeter
 
-- redshift
+- redshift (for wayland wlroots use: gammastep) 
 	Control colour temperature of the screen. Can be handled automatically based on 
 	location, set in the config file or manually.
 	Config location: ~/.config/redshift/redshift.conf
@@ -154,6 +154,13 @@
 	to mount the private upper-directory (~/Private) by default, and
 		$ ecryptfs-umount-private
 	to unmount.
+
+- jre-openjdk
+	Java Runtime Environment. This is needed for extensions in LibreOffice (Zotero). It pulls in the java-runtime-common and java-environment-common dependencies, but these are not enough for GUI applications. Note that there are several different environemnts that can be installed, and then managed with archlinux-java, but this one should be sufficient for most things. 
+
+- linux-wifi-hotspot (aur)
+	For creating a software access point (ethernet -> wifi ap). 
+	After install, create a hotspot with: # create_ap wlan0 enp1s0 <SSID> <PASSWD>
 
 ####################################################
 # General Notes

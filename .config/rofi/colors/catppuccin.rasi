@@ -11,9 +11,9 @@
     base:       #1e1e2e;
     mantle:     #181825;
     crust:      #11111b;
-    text:       #c6d0f5;
-    alttext:    #b5bfe2;
-    blue:       #8caaee;
+    text:       #eff1f5;
+    alttext:    #a6adc8;
+    blue:       #89b4fa;
     green:      #a6d189;
 	red: 		#e78284;
 	teal:		#81c8be;
@@ -27,12 +27,11 @@
     maroon: 	#ea999c;
 	sapphire: 	#85c1dc;
 
-    background:     #11111b;
-    background-alt: #1e1e2e;
-    foreground:     #D9E0EEFF;
-    //selected:       #7AA2F7FF;
     selected:       @sapphire;
+    background:     @crust;
+    background-alt: @base;
+    foreground:     @text;
     floating:       @mauve;
-    active:         #ABE9B3FF;
-    urgent:         #F28FADFF;
+    active:         @green;
+    urgent:         @red;
 }
