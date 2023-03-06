@@ -27,7 +27,7 @@
 import os
 from pathlib import Path
 
-from libqtile import bar, layout, hook  # , widget
+from libqtile import bar, layout, hook, qtile  # , widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
 from libqtile.log_utils import logger
@@ -38,6 +38,12 @@ from qtile_extras.widget.decorations import RectDecoration
 
 from colors import Colors
 import subprocess  # for hooks
+
+
+##########################################################
+# Wayland or X11
+##########################################################
+wayland = True if qtile.core.name == "wayland" else False
 
 ##########################################################
 # General/quick access settings
@@ -64,7 +70,7 @@ dark_theme = True
 
 if dark_theme:
     theme = Colors.mocha
-    bar_background = theme["Surface2"]
+    bar_background = Colors.transparent
     bar_foreground = theme["Text"]
 else:
     theme = Colors.latte
@@ -129,7 +135,10 @@ rofi = {
 ##########################################################
 @hook.subscribe.startup_once
 def autostart():
-    autostart_path = home / ".config/qtile/autostart.sh"
+    if wayland:
+        autostart_path = home / ".config/qtile/autostart_wayland.sh"
+    else:
+        autostart_path = home / ".config/qtile/autostart.sh"
     subprocess.Popen([autostart_path])
 
 
@@ -490,7 +499,11 @@ def init_widget_list():
             **icon_font,
             **decor_group,
         ),
-        default_sep_widget,
+        widget.TextBox(
+            foreground=theme["Text"],
+            fmt="|",
+            **decor_group,
+        ),
         widget.GroupBox(
             margin_x=10,
             markup=True,
@@ -524,7 +537,7 @@ def init_widget_list():
         ),
         widget.Prompt(**decor_group),
         widget.WindowName(
-            foreground=theme["Text"],
+            foreground=theme["Base"],
             font="Ubuntu Bold",
             format="  {name}  ",
             width=250,
@@ -595,7 +608,7 @@ def init_widget_list():
         # widget.BatteryIcon(
         #     theme_path=home / ".config/qtile/battery-icons/",
         #     update_interval=10,
-        #     scale=1.5,
+        #     scale=1.2,
         # ),
         widget.Systray(),
         default_sep_widget,
@@ -625,7 +638,10 @@ systray_index = -4
 # These functions return the widget lists for each screen
 # Main screen uses all widgets, secondary uses all but systray
 def init_main_widget_list():
-    return init_widget_list()
+    main_widget_list = init_widget_list()
+    if wayland:
+        del main_widget_list[systray_index]
+    return main_widget_list
 
 
 def init_secondary_widget_list():
@@ -711,7 +727,16 @@ reconfigure_screens = True
 auto_minimize = True
 
 # When using the Wayland backend, this can be used to configure input devices.
-wl_input_rules = None
+from libqtile.backend.wayland import InputConfig
+
+wl_input_rules = {
+    # Touchpad settings
+    "1267:12299:ELAN0501:00 04F3:300B Touchpad": InputConfig(
+        tap=True,
+        natural_scroll=True,
+        tap_button_map="lrm",  # 1 tap: l. click, 2 tap: r. click, 3 tap: m. click
+    ),
+}
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the
