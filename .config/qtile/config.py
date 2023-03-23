@@ -536,13 +536,13 @@ def init_widget_list():
             **decor_group,
         ),
         widget.Prompt(**decor_group),
-        widget.WindowName(
-            foreground=theme["Base"],
-            font="Ubuntu Bold",
-            format="  {name}  ",
-            width=250,
-            scroll=True,
-        ),
+        # widget.WindowName(
+        #     foreground=theme["Base"],
+        #     font="Ubuntu Bold",
+        #     format="  {name}  ",
+        #     width=250,
+        #     scroll=True,
+        # ),
         widget.Spacer(width="stretch"),
         widget.WidgetBox(
             text_closed="\ufc95",
@@ -683,6 +683,7 @@ screens = [
         # wallpaper_mode=wallpaper_mode,
     ),
 ]
+
 
 # Drag floating layouts.
 mouse = [
