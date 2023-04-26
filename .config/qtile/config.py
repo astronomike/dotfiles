@@ -71,6 +71,7 @@ dark_theme = True
 if dark_theme:
     theme = Colors.mocha
     bar_background = Colors.transparent
+    # bar_background = theme["Surface1"]
     bar_foreground = theme["Text"]
 else:
     theme = Colors.latte
@@ -478,6 +479,8 @@ decor_group = {
     ],
     "padding": default_widget_padding,
 }
+decor_group_statusnotifier = decor_group.copy()
+decor_group_statusnotifier["padding"] = default_widget_padding + 4
 icon_font = {"font": "Symbols Nerd Font", "fontsize": bar_fontsize + 4}
 
 widget_defaults = dict(
@@ -604,14 +607,24 @@ def init_widget_list():
             ],
         ),
         default_sep_widget,
-        # default_sep_widget,
-        # widget.BatteryIcon(
-        #     theme_path=home / ".config/qtile/battery-icons/",
-        #     update_interval=10,
-        #     scale=1.2,
-        # ),
-        widget.Systray(),
-        default_sep_widget,
+        # widget.Systray(),
+        widget.Sep(
+            foreground=decor_color,
+            # background=bar_background,
+            linewidth=5,
+            **decor_group,
+        ),
+        widget.BatteryIcon(
+            theme_path=home / ".config/qtile/battery-icons/",
+            update_interval=10,
+            scale=1.4,
+            **decor_group,
+        ),
+        widget.StatusNotifier(
+            icon_theme="Papirus",
+            icon_size=20,
+            **decor_group_statusnotifier,
+        ),
         widget.Clock(
             font="Ubuntu",
             format="  %H:%M  %a, %-d %b ",  # shows eg. Tue, 7 Jun  11:17
@@ -633,7 +646,7 @@ def init_widget_list():
     return widget_list
 
 
-systray_index = -4
+systray_index = -3
 
 # These functions return the widget lists for each screen
 # Main screen uses all widgets, secondary uses all but systray

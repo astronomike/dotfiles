@@ -2,8 +2,8 @@
 
 ~/.fehbg &
 picom -b 
-libinput-gestures-setup desktop start
-nm-applet &
+sh libinput-gestures-per-desktop-start.sh
+nm-applet --indicator &
 redshift &
 numlockx on
 xfce4-power-manager --daemon
