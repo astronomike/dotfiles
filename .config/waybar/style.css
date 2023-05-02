@@ -1,9 +1,9 @@
 * {
     background: rgba(0, 0, 0, 0);
     border: none;
-    font-family: "Ubuntu Nerd Font";
+    font-family: "Ubuntu Nerd Font Light";
     font-weight: normal;
-    font-size: 16px;
+    font-size: 15px;
     padding: 0px;
     border-radius: 0px;
     min-height: 0px;
@@ -68,7 +68,7 @@ tooltip {
 #idle_inhibitor,
 #tray {
     color: #cdd6f4;
-    background: #181825;
+    background: #000000;
     opacity: 1;
     /* padding: 0px; */
     /* margin: 2px 2px 0px 0px; */
@@ -93,11 +93,9 @@ tooltip {
 
 
 #clock {
-    border-radius: 10px;
-    margin-left: 5px;
-    padding-left: 10px;
+    border-radius: 0px 10px 10px 0px;
+    margin-right: 5px;
     padding-right: 10px;
-    margin-left: 5px;
 }
 
 
@@ -105,7 +103,7 @@ tooltip {
 #cpu {
     color: #f5c2e7;
     border-radius: 10px 0px 0px 10px;
-    padding-left: 5px;
+    padding-left: 10px;
     padding-right: 5px;
     margin-left: 10px;
 }
@@ -155,10 +153,10 @@ tooltip {
 }
 
 #battery {
-    border-radius: 0px 10px 10px 0px;
+    border-radius: 0px 0px 0px 0px;
     padding-left: 5px;
-    padding-right: 15px;
-    margin-right: 5px;
+    padding-right: 5px;
+    margin-right: 0px;
 }
 
 #battery.charging, #battery.plugged {

@@ -18,7 +18,7 @@ shutdown='  Shutdown'
 reboot='  Reboot'
 lock='  Lock'
 suspend='⏾  Suspend'
-logout='  Logout'
+logout='󰍃  Logout'
 yes='  Yes'
 no='  No'
 
@@ -95,7 +95,9 @@ run_cmd() {
 				i3-msg exit
 			elif [[ "$DESKTOP_SESSION" == 'plasma' ]]; then
 				qdbus org.kde.ksmserver /KSMServer logout 0 0 0
-			else
+			elif [[ "$DESKTOP_SESSION" == 'hyprland' ]]; then
+				hyprctl dispatch exit
+			elif [[ "$DESKTOP_SESSION" == 'qtile' ]]; then
 				qtile cmd-obj -o cmd -f shutdown
 			fi
 		fi

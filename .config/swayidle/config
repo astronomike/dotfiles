@@ -1,0 +1,16 @@
+# Sets the following rules:
+# 
+# After timeout <seconds>, do command.
+#  5 min - dim screen
+# 10 min - lock screen 
+# 15 min - turn off (locked) screen
+# 20 min - suspend 
+#
+# Additionally, if there is a suspend (sleep) call, make sure screen is locked first. 
+
+timeout 300 'xbacklight -set 15' resume 'xbacklight -set 50'
+timeout 600 'swaylock -C ~/.config/swaylock/config'
+timeout 900 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'
+timeout 1200 'systemctl suspend'
+before-sleep 'swaylock -C ~/.config/swaylock/config'
+lock 'swaylock -C ~/.config/swaylock/config'
