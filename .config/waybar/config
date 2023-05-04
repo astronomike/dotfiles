@@ -6,6 +6,10 @@
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
+    "margin-top":5,
+    "margin-bottom":0,
+    "margin-left":5,
+    "margin-right":5,
     "modules-left": [
         "wlr/workspaces",
         "hyprland/window"
@@ -13,6 +17,7 @@
     "modules-center": [],
     "modules-right": [
         "tray",
+        "idle_inhibitor",
         "cpu",
         "memory",
         "pulseaudio",
@@ -71,8 +76,8 @@
     },
 
     "clock": {
-        "format": "{: %I:%M %p  󰃭 %a %d}",
-        "format-alt": "{:󰥔 %H:%M   %b %Y}",
+        "format": "{: %I:%M %p   󰃭 %a %d}",
+        "format-alt": "{:󰥔 %H:%M    %b %Y}",
         "tooltip-format": "<tt><big>{calendar}</big></tt>"
     },
 

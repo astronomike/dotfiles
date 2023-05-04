@@ -1,27 +1,16 @@
 * {
-    background: rgba(0, 0, 0, 0);
     border: none;
     font-family: "Ubuntu Nerd Font Light";
     font-weight: normal;
     font-size: 15px;
     padding: 0px;
-    border-radius: 0px;
-    min-height: 0px;
-    margin-top: 2px;
-    margin-bottom: 2px;
+    border-radius: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 window#waybar {
     background: rgba(0, 0, 0, 0);
-}
-
-tooltip {
-    background: #0f0f1b;
-    color: #cdd6f4;
-    border-radius: 5px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: #00cfcf;
 }
 
 #workspaces button {
@@ -68,10 +57,7 @@ tooltip {
 #idle_inhibitor,
 #tray {
     color: #cdd6f4;
-    background: #000000;
-    opacity: 1;
-    /* padding: 0px; */
-    /* margin: 2px 2px 0px 0px; */
+    background: #11111b;
 }
 
 /* dimensions: NW NE SE SW */
@@ -96,16 +82,23 @@ tooltip {
     border-radius: 0px 10px 10px 0px;
     margin-right: 5px;
     padding-right: 10px;
+    padding-left: 5px;
 }
 
 
+#idle_inhibitor {
+    color: #f5e0dc;
+    border-radius: 10px 0px 0px 10px;
+    margin-left: 10px;
+    padding-left: 10px;
+    padding-right: 5px;
+}
 
 #cpu {
     color: #f5c2e7;
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 0px 0px 0px 0px;
     padding-left: 10px;
     padding-right: 5px;
-    margin-left: 10px;
 }
 
 #memory {
@@ -117,6 +110,7 @@ tooltip {
 
 #network {
     color: #94e2d5;
+    border-radius: 0px;
     padding-left: 5px;
     padding-right: 5px;
 }
@@ -129,11 +123,13 @@ tooltip {
 
 #pulseaudio {
     color: #f9e2af;
+    border-radius: 0px;
     padding-left: 5px;
     padding-right: 5px;
 }
 
 #pulseaudio.microphone {
+    border-radius: 0px;
     color: #f9e2af;
     padding-left: 5px;
     padding-right: 5px;
@@ -147,20 +143,20 @@ tooltip {
 
 #backlight {
     color: #a6e3a1;
-    border-radius: 0px 0px 0px 0px;
+    border-radius: 0px;
     padding-left: 5px;
     padding-right: 5px;
 }
 
 #battery {
-    border-radius: 0px 0px 0px 0px;
+    border-radius: 0px;
     padding-left: 5px;
     padding-right: 5px;
     margin-right: 0px;
 }
 
 #battery.charging, #battery.plugged {
-    color: #36ce10;
+    color: #5eff3a;
 }
 
 @keyframes blink {
@@ -179,3 +175,15 @@ tooltip {
     animation-iteration-count: infinite;
     animation-direction: alternate;
 } 
+
+tooltip {
+    background: #11111b;
+    border: 2px solid #04a5e5;
+}
+tooltip label {
+    /* T R B L */
+    padding: 0px 8px 0px 8px;
+    color: #cdd6f4;
+}
+
+
