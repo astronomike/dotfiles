@@ -65,7 +65,7 @@ eval "$(starship init zsh)"
 # fi
 # unset __conda_setup
 # # <<< conda initialize <<<
-export PATH="/home/michael/miniconda3/bin:$PATH"
+export PATH="$PATH:/home/michael/miniconda3/bin"
 
 alias conda-a="conda activate"
 alias conda-d="conda deactivate"
