@@ -315,8 +315,8 @@ keys = [
 group_list = "1234567890"
 groups = [
     Group("1", label="\ue795"),
-    Group("2", label="\uf752"),
-    Group("3", label="\ufa9e", matches=[Match(wm_class="firefox")]),
+    Group("2", label="\uf07c"),
+    Group("3", label="\uf269", matches=[Match(wm_class="firefox")]),
     Group("4", label="\ue780", matches=[Match(wm_class="code")]),
     Group(
         "5",
@@ -324,9 +324,9 @@ groups = [
         matches=[Match(wm_class="qpdfview"), Match(wm_class="Zathura")],
         layout="max",
     ),
-    Group("6", label="\uf869", matches=[Match(wm_class="Ferdium")]),
+    Group("6", label="󰇮", matches=[Match(wm_class="Ferdium")]),
     Group("7", label="\uf11b", matches=[Match(wm_class="Steam")]),
-    Group("8", label="\uf885", matches=[Match(wm_class="Cider")]),
+    Group("8", label="\uf001", matches=[Match(wm_class="Cider")]),
 ]
 
 for i in groups:
@@ -539,29 +539,35 @@ def init_widget_list():
             **decor_group,
         ),
         widget.Prompt(**decor_group),
+        # widget.TextBox(
+        #     foreground=theme["Text"],
+        #     fmt="|",
+        #     **decor_group,
+        # ),
         # widget.WindowName(
-        #     foreground=theme["Base"],
+        #     foreground=theme["Text"],
         #     font="Ubuntu Bold",
         #     format="  {name}  ",
         #     width=250,
         #     scroll=True,
+        #     **decor_group,
         # ),
         widget.Spacer(width="stretch"),
         widget.WidgetBox(
-            text_closed="\ufc95",
-            text_open="\ufc96",
+            text_closed="󰞓",
+            text_open="󰞔",
             font="Symbols Nerd Font Bold",
-            foreground=bar_foreground,
+            foreground=theme["Base"],
             widgets=[
                 default_sep_widget,
                 widget.PulseVolume(
-                    fmt=" \ufa7d {} ",
+                    fmt=" 󰕾 {} ",
                     limit_max_volume=True,
                     foreground=theme["Lavender"],
                     **decor_group,
                 ),
                 widget.Backlight(
-                    fmt=" \uf5dd  {} ",
+                    fmt=" 󰃞  {} ",
                     foreground=theme["Sapphire"],
                     backlight_name="intel_backlight",
                     **decor_group,
@@ -594,9 +600,9 @@ def init_widget_list():
                     **decor_group,
                 ),
                 widget.Battery(
-                    format=" \uf57d{char} {hour:d}h{min:02d}m ({percent:2.0%})  ",
-                    discharge_char="\uf175",
-                    charge_char="\uf176",
+                    format="{char} {hour:d}h{min:02d}m ({percent:2.0%})  ",
+                    discharge_char="󱟟",
+                    charge_char="󰂄",
                     foreground=theme["Peach"],
                     low_foreground=theme["Red"],
                     update_interval=5,

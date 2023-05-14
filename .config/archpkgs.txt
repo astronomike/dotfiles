@@ -118,6 +118,9 @@
 - lxappearance-gtk3
 	Graphical display options for X11 (lxde). Nice for changing themes, cursors etc. 
 
+- nwg-look-bin (aur)
+	Graphical display options for wayland. Nice for changing themes, cursors etc.
+
 - lxrandr-gtk3
 	Graphical monitor configuration tool (lxde).
 
