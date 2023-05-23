@@ -85,8 +85,6 @@ else:
 #     else:
 #         theme = Colors.mocha
 #     lazy.reload_config()
-
-
 # bar_background = theme["Crust"]
 
 
@@ -208,6 +206,8 @@ keys = [
         lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack",
     ),
+    Key([mod],"Up",lazy.layout.up(),desc="Move up in the layout stack"),
+    Key([mod],"Down",lazy.layout.down(),desc="Move down in the layout stack"),
     # Layout management
     Key([mod], "grave", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle Tiled/Floating"),
@@ -252,6 +252,13 @@ keys = [
         lazy.spawn(browser),
         lazy.group["3"].toscreen(),
         desc="Launch default browser, move to browser group",
+    ),
+    Key(
+        [mod],
+        "v",
+        lazy.spawn("code"),
+        lazy.group["4"].toscreen(),
+        desc="Launch VS Code, move to code group",
     ),
     Key([mod], "a", lazy.spawn(rofi["apps"]), desc="Spawn rofi with apps (drun) menu"),
     Key(
@@ -325,7 +332,7 @@ groups = [
         layout="max",
     ),
     Group("6", label="󰇮", matches=[Match(wm_class="Ferdium")]),
-    Group("7", label="\uf11b", matches=[Match(wm_class="Steam")]),
+    Group("7", label="\uf11b", matches=[Match(wm_class="Steam")],layout="floating"),
     Group("8", label="\uf001", matches=[Match(wm_class="Cider")]),
 ]
 
@@ -351,15 +358,15 @@ for i in groups:
 @lazy.window.function
 def window_to_next_group(window):
     index = window.qtile.groups.index(window.group)
-    index = (index + 1) % len(window.qtile.groups)
-    window.cmd_togroup(window.qtile.groups[index].name)
+    new_index = (index + 1) % len(window.qtile.groups)
+    window.togroup(window.qtile.groups[new_index].name)
 
 
 @lazy.window.function
 def window_to_prev_group(window):
     index = window.qtile.groups.index(window.group)
-    index = (index - 1) % len(window.qtile.groups)
-    window.cmd_togroup(window.qtile.groups[index].name)
+    new_index = (index - 1) % len(window.qtile.groups)
+    window.togroup(window.qtile.groups[new_index].name)
 
 
 keys.extend(
@@ -424,7 +431,7 @@ keys.extend(
 )
 
 ##########################################################
-# Layout configs
+# Layouts
 ##########################################################
 layouts = [
     layout.Columns(
@@ -446,6 +453,22 @@ layouts = [
         border_on_single=True,
         border_normal=theme["Overlay0"],
         border_focus=theme["Sapphire"],
+    ),
+    layout.Floating(
+        border_width=3,
+        border_focus=theme["Mauve"],
+        border_normal=theme["Overlay0"],
+        float_rules=[
+            *layout.Floating.default_float_rules,
+            Match(wm_class="confirmreset"),  # gitk
+            Match(wm_class="makebranch"),  # gitk
+            Match(wm_class="maketag"),  # gitk
+            Match(wm_class="ssh-askpass"),  # ssh-askpass
+            Match(title="branchdialog"),  # gitk
+            Match(title="pinentry"),  # GPG key password entry
+            Match(wm_class="zoom "),  # Zoom meetings
+            Match(wm_class="feh"),
+        ],
     ),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -527,7 +550,14 @@ def init_widget_list():
         ),
         widget.TextBox(
             foreground=theme["Text"],
-            fmt="|",
+            fmt="|  ",
+            **decor_group,
+        ),
+        widget.CurrentLayoutIcon(
+            foreground=theme["Text"],
+            fmt="{}",
+            scale=0.55,
+            **icon_font,
             **decor_group,
         ),
         widget.CurrentScreen(
@@ -721,10 +751,10 @@ mouse = [
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
 follow_mouse_focus = True
-bring_front_click = False
+bring_front_click = True
 cursor_warp = False
 floating_layout = layout.Floating(
-    border_width=2,
+    border_width=3,
     border_focus=theme["Mauve"],
     float_rules=[
         *layout.Floating.default_float_rules,
