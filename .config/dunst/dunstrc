@@ -275,17 +275,18 @@ separator_color= frame
     # These values can be strung together for each mouse event, and
     # will be executed in sequence.
     mouse_left_click = close_current
+	mouse_right_click = context
     mouse_middle_click = do_action, close_current
 
 [urgency_low]
 frame_color = "#89B4FA"
-background = "#181825"
+background = "#11111B"
 foreground = "#CDD6F4"
 timeout = 10 
 
 [urgency_normal]
 frame_color = "#89B4FA"
-background = "#181825"
+background = "#11111B"
 foreground = "#CDD6F4"
 timeout = 10 
 

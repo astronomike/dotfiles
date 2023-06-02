@@ -97,7 +97,7 @@ run_cmd() {
 				qdbus org.kde.ksmserver /KSMServer logout 0 0 0
 			elif [[ "$DESKTOP_SESSION" == 'hyprland' ]]; then
 				hyprctl dispatch exit
-			elif [[ "$DESKTOP_SESSION" == 'qtile' ]]; then
+			elif [[ "$DESKTOP_SESSION" == 'qtile' ]] || [[ "$DESKTOP_SESSION" == 'qtile-wayland' ]]; then
 				qtile cmd-obj -o cmd -f shutdown
 			fi
 		fi
