@@ -1,0 +1,24 @@
+swipe:
+  3:
+    right:
+      sendkey: "LEFTMETA+RIGHT"
+    left:
+      sendkey: "LEFTMETA+LEFT"
+  4:
+    right:
+      sendkey: "LEFTCTRL+LEFTSHIFT+TAB"
+    left:
+      sendkey: "LEFTCTRL+TAB"
+    up:
+      sendkey: "LEFTCTRL+T"
+    down:
+      sendkey: "LEFTCTRL+W"
+hold:
+  3:
+    sendkey: "LEFTALT+LEFT"
+  4:
+    sendkey: "LEFTALT+RIGHT"
+
+threshold: 
+  hold: 0.5
+  

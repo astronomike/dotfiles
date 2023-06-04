@@ -1,0 +1,13 @@
+hold:
+  1:
+    sendkey: "LEFTCTRL+LEFTSHIFT+TAB"
+  2:
+    sendkey: "LEFTCTRL+TAB"
+  3:
+    sendkey: "LEFTALT+LEFT"
+  4:
+    sendkey: "LEFTALT+RIGHT"
+  
+threshold: 
+  hold: 0.5
+  
