@@ -103,6 +103,11 @@
 	Config location: ~/.config/libinput-gestures.conf
 	Add to startup script: libinput-gestures-setup desktop start
 
+- ruby-fusuma, ruby-fusuma-plugin-sendkey (aur)
+    Like xdotool and libinput-gestures, but works on wayland (x11 too). 
+    Config location: ~/.config/fusuma/config.yml
+    Add to startup script: fusuma -d 
+
 - slock
 	Screen locking tool for X11. 
 	To configure, with tips and tricks, see wiki. 

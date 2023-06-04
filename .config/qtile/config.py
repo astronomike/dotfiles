@@ -55,7 +55,7 @@ file_manager = "nemo"
 home = Path.home()
 
 default_margin = 6  # window gaps
-bar_size = 32
+bar_size = 30
 bar_fontsize = 14
 bar_margin = int(default_margin / 2)  # smaller gap for bar
 
@@ -172,6 +172,8 @@ keys = [
     # Switch groups/applications
     Key([mod], "Left", lazy.screen.prev_group(), desc="Switch to previous group"),
     Key([mod], "Right", lazy.screen.next_group(), desc="Switch to next group"),
+    Key([mod], "Up", lazy.layout.up(), desc="Move up in the layout stack"),
+    Key([mod], "Down", lazy.layout.down(), desc="Move down in the layout stack"),
     Key(
         [mod, "control"],
         "Left",
@@ -206,8 +208,6 @@ keys = [
         lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack",
     ),
-    Key([mod],"Up",lazy.layout.up(),desc="Move up in the layout stack"),
-    Key([mod],"Down",lazy.layout.down(),desc="Move down in the layout stack"),
     # Layout management
     Key([mod], "grave", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle Tiled/Floating"),
@@ -584,7 +584,7 @@ def init_widget_list():
         # ),
         widget.Spacer(width="stretch"),
         widget.WidgetBox(
-            text_closed="󰞓",
+            text_closed="󰞗",
             text_open="󰞔",
             font="Symbols Nerd Font Bold",
             foreground=theme["Base"],

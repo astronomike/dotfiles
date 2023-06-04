@@ -5,3 +5,4 @@ nm-applet --indicator &
 /usr/bin/pcloud &
 /usr/bin/dunst &
 swayidle -C ~/.config/swayidle/config &
+fusuma -d &
