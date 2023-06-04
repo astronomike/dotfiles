@@ -1,96 +1,86 @@
+/* Defaults */
 * {
     border: none;
-    font-family: "Ubuntu Nerd Font Light";
+    font-family: "Ubuntu Nerd Font";
     font-weight: normal;
     font-size: 15px;
     padding: 0px;
     border-radius: 10px;
     margin-top: 0px;
     margin-bottom: 0px;
+    background: rgba(0, 0, 0, 0);
 }
 
-window#waybar {
-    background: rgba(0, 0, 0, 0);
+/* Tooltips */
+tooltip {
+    background: #11111b;
+    border: 2px solid #04a5e5;
+}
+tooltip label {
+    padding: 0px 8px 0px 8px;
+    color: #cdd6f4;
+}
+
+
+/* Modules below */
+/* dimensions: up-left up-right low-right low-left */
+
+/* Settings for all modules */
+#tray, #window, #idle_inhibitor, #cpu, #memory, #network, #pulseaudio, #backlight, #battery, #clock {
+    background: #11111b;
+    color: #cdd6f4;
+}
+
+#workspaces {
+    background: #11111b;
+    border-radius: 10px 0px 0px 10px;
+    margin-left: 0px;
+    padding-left: 10px;
 }
 
 #workspaces button {
     box-shadow: none;
 	text-shadow: none;
     border-radius: 5px;
-    margin-top: 3px;
-    margin-bottom: 3px;
-    padding-left: 2px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    padding-right: 2px;
-    color: #cdd6f4;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 3px;
+    padding-right: 3px;
     /* animation: gradient_f 20s ease-in infinite;
     transition: all 0.2s cubic-bezier(.55,-0.68,.48,1.682); */
 }
 
 #workspaces button.active {
-    background: #a6adc8;
-    color: #181825;
+    color: #11111b;
+    background: #cdd6f4;
     /* animation: gradient_f 20s ease-in infinite;
     transition: all 0.1s cubic-bezier(.55,-0.68,.48,1.682); */
 }
 
 #workspaces button:hover {
+    color: #11111b;
     background: #f5c2e7;
-    color: #181825;
     /* animation: gradient_f 20s ease-in infinite;
     transition: all 0.1s cubic-bezier(.55,-0.68,.48,1.682); */
-}
-
-#cpu,
-#memory,
-#custom-power,
-#clock,
-#workspaces,
-#window,
-#custom-updates,
-#network,
-#bluetooth,
-#pulseaudio,
-#battery,
-#backlight,
-#idle_inhibitor,
-#tray {
-    color: #cdd6f4;
-    background: #11111b;
-}
-
-/* dimensions: NW NE SE SW */
-/* dimensions: up-left up-right low-right low-left */
-
-
-#workspaces {
-    border-radius: 10px 0px 0px 10px;
-    margin-left: 5px;
-    padding-left: 10px;
 }
 
 #window {
     border-radius: 0px 10px 10px 0px;
     padding-right: 10px;
-    padding-left: 10px;
-}
-
-
-
-#clock {
-    border-radius: 0px 10px 10px 0px;
-    margin-right: 5px;
-    padding-right: 10px;
     padding-left: 5px;
 }
-
+    
+#tray {
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
 
 #idle_inhibitor {
     color: #f5e0dc;
     border-radius: 10px 0px 0px 10px;
-    margin-left: 10px;
-    padding-left: 10px;
+    margin-left: 5px;
+    padding-left: 15px;
     padding-right: 5px;
 }
 
@@ -135,12 +125,6 @@ window#waybar {
     padding-right: 5px;
 }
 
-#tray {
-    border-radius: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
 #backlight {
     color: #a6e3a1;
     border-radius: 0px;
@@ -176,14 +160,12 @@ window#waybar {
     animation-direction: alternate;
 } 
 
-tooltip {
-    background: #11111b;
-    border: 2px solid #04a5e5;
+#clock {
+    border-radius: 0px 10px 10px 0px;
+    margin-right: 5px;
+    padding-right: 10px;
+    padding-left: 5px;
 }
-tooltip label {
-    /* T R B L */
-    padding: 0px 8px 0px 8px;
-    color: #cdd6f4;
-}
+
 
 

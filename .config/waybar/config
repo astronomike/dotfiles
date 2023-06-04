@@ -2,7 +2,7 @@
     "layer": "top",
     "position": "top",
     "mod": "dock",
-    "height": 32,
+    "height": 36,
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
@@ -38,17 +38,14 @@
            "5": [],
            "6": [],
            "7": [],
-           "8": [],
-           "9": [],
-           "10": []
+           "8": []
        }
    },
 
     "hyprland/window": {
-        "format": "  {}",
+        "format": "{}",
         "separate-outputs": true,
         "rewrite": {
-            "tittu@kryptonite:(.*)": "$1 ",
             "(.*) — Mozilla Firefox": "$1 󰈹",
             "(.*)Mozilla Firefox": "Firefox 󰈹",
             "(.*) - Visual Studio Code": "$1 󰨞",
@@ -70,7 +67,6 @@
         "interval": 30,
         "format": "\ue240 {percentage}%",
         "format-alt": "\ue240 {used}GB",
-        "max-length": 10,
         "tooltip": true,
         "tooltip-format": "\ue240 {used:0.1f}GB/{total:0.1f}GB"
     },
@@ -82,12 +78,12 @@
     },
 
     "network": {
-        "format-wifi": "󰤨 {essid}",
+        "format-wifi": "󰤨 {signalStrength}%",
+        "format-alt": "󰤨 {essid}",
         "format-ethernet": "󱘖 Wired",
         "tooltip-format": "󱘖 {ipaddr}  {bandwidthUpBytes}  {bandwidthDownBytes}",
         "format-linked": "󱘖 {ifname} (No IP)",
         "format-disconnected": " Disconnected",
-        "format-alt": "󰤨 {signalStrength}%",
         "interval": 5
     },
 
