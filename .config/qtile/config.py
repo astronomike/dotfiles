@@ -25,6 +25,8 @@
 # SOFTWARE.
 
 import os
+import subprocess  
+import random
 from pathlib import Path
 
 from libqtile import bar, layout, hook, qtile  # , widget
@@ -37,7 +39,6 @@ from qtile_extras import widget
 from qtile_extras.widget.decorations import RectDecoration
 
 from colors import Colors
-import subprocess  # for hooks
 
 
 ##########################################################
@@ -88,35 +89,43 @@ else:
 # bar_background = theme["Crust"]
 
 
-import random
-
-wallpaper_list = []
-wallpaper_path = home / "Pictures/Wallpapers/favourites/"
-for f in os.listdir(wallpaper_path):
-    wallpaper = os.path.join(wallpaper_path, f)
-    if os.path.isfile(wallpaper):
-        wallpaper_list.append(wallpaper)
-
-
 @lazy.function
-def random_wallpaper(qtile, wallpaper_list: list):
+def random_wallpaper(qtile, wayland: bool):
     """
     Set a new, random wallpaper from a pre-determined list of wallpapers.
     This method can be used in a keybinding or hook.
 
-    This method finds the current wallpaper from ~/.fehbg, whose path should be the
-    last string in the file. It then chooses a new random one from wallpaper_list,
+    This method finds the current wallpaper (from ~/.fehbg or swww query). 
+    It then chooses a new random one from wallpaper_list,
     and there is a little check to make sure the same wallpaper as the current one
     isn't chosen.
+    wallpaper_list is defined in this function to allow for changing lists dynamically
     """
-    with open(home / ".fehbg") as fehbg:
-        last_line = fehbg.readlines()[-1]
-        current_wallpaper = last_line.split()[-1][1:-1]
-
+    wallpaper_list = []
+    wallpaper_path = home / "Pictures/Wallpapers/favourites/"
+    for f in os.listdir(wallpaper_path):
+        wallpaper = os.path.join(wallpaper_path, f)
+        if os.path.isfile(wallpaper):
+            wallpaper_list.append(wallpaper)
     new_wallpaper = random.choice(wallpaper_list)
-    while new_wallpaper == current_wallpaper:
-        new_wallpaper = random.choice(wallpaper_list)
-    os.system("feh --bg-fill " + new_wallpaper)
+
+    if wayland:
+        # get current wallpaper
+        swww_query = subprocess.check_output(["swww","query"],text=True)
+        current_wallpaper = os.path.join(wallpaper_path, swww_query.split('"')[1])
+        
+        # set new wallpaper if different to current wallpaper
+        while new_wallpaper == current_wallpaper:
+            new_wallpaper = random.choice(wallpaper_list)        
+        subprocess.run(["swww", "img", new_wallpaper, "--transition-fps","60"])
+    else:
+        with open(home / ".fehbg") as fehbg:
+            last_line = fehbg.readlines()[-1]
+            current_wallpaper = last_line.split()[-1][1:-1]
+
+        while new_wallpaper == current_wallpaper:
+            new_wallpaper = random.choice(wallpaper_list)
+        os.system("feh --bg-fill " + new_wallpaper)
 
 
 ##########################################################
@@ -233,7 +242,7 @@ keys = [
     # Key(
     #     [mod, "control"], "t", toggle_theme(dark_theme), desc="Toggle dark theme on/off"
     # ),
-    Key([mod], "w", random_wallpaper(wallpaper_list), desc="Randomize wallpaper"),
+    Key([mod], "w", random_wallpaper(wayland), desc="Randomize wallpaper"),
     Key([mod, "control"], "p", lazy.spawn("pkill picom"), desc="Kill compositing"),
     Key(
         [mod, "control", "shift"], "p", lazy.spawn("picom -b"), desc="Start compositing"
@@ -324,7 +333,7 @@ groups = [
     Group("1", label="\ue795"),
     Group("2", label="\uf07c"),
     Group("3", label="\uf269", matches=[Match(wm_class="firefox")]),
-    Group("4", label="\ue780", matches=[Match(wm_class="code")]),
+    Group("4", label="\ue780", matches=[Match(wm_class="Code")]),
     Group(
         "5",
         label="\uf02d",
@@ -688,8 +697,8 @@ systray_index = -3
 # Main screen uses all widgets, secondary uses all but systray
 def init_main_widget_list():
     main_widget_list = init_widget_list()
-    if wayland:
-        del main_widget_list[systray_index]
+    # if wayland:
+    #     del main_widget_list[systray_index]
     return main_widget_list
 
 
