@@ -1,7 +1,6 @@
 #!/bin/bash
 
 swww init &
-swww img ~/Pictures/Wallpapers/animated/vector-01.gif &
 nm-applet --indicator &
 /usr/bin/pcloud &
 /usr/bin/dunst &

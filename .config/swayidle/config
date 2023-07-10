@@ -8,9 +8,9 @@
 #
 # Additionally, if there is a suspend (sleep) call, make sure screen is locked first. 
 
-timeout 300 'xbacklight -set 15' resume 'xbacklight -set 50'
+timeout 300 'xbacklight -get > $XDG_CONFIG_DIR/swayidle/display_brightness && xbacklight -set 15' resume 'xbacklight -set "$(< $XDG_CONFIG_DIR/swayidle/display_brightness)"'
 timeout 600 'swaylock -C ~/.config/swaylock/config'
-timeout 900 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'
+# timeout 900 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'
 timeout 1200 'systemctl suspend'
 before-sleep 'swaylock -C ~/.config/swaylock/config'
 lock 'swaylock -C ~/.config/swaylock/config'

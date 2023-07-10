@@ -45,6 +45,12 @@ from colors import Colors
 # Wayland or X11
 ##########################################################
 wayland = True if qtile.core.name == "wayland" else False
+if wayland:
+    screenshot = 'grim -g "$(slurp)"'
+    warp = False
+else:
+    screenshot = 'gnome-screenshot -i'
+    warp = True
 
 ##########################################################
 # General/quick access settings
@@ -62,7 +68,6 @@ bar_margin = int(default_margin / 2)  # smaller gap for bar
 
 volume_mod = 5
 brightness_mod = 5
-
 
 ##########################################################
 # theme and wallpaper
@@ -149,6 +154,9 @@ def autostart():
         autostart_path = home / ".config/qtile/autostart.sh"
     subprocess.Popen([autostart_path])
 
+@hook.subscribe.screen_change
+def restart_on_randr(_):
+	qtile.cmd_reload_config()
 
 ##########################################################
 # Keybindings
@@ -320,8 +328,9 @@ keys = [
     Key(
         [],
         "Print",
-        lazy.spawn("gnome-screenshot -i"),
-        desc="Open screenshot UI",
+        lazy.spawn(screenshot),
+        logger.warning(f"trying to use {screenshot}"),
+        desc="Take screenshot",
     ),
 ]
 
@@ -432,10 +441,10 @@ groups.extend(
 
 keys.extend(
     [
-        Key(["control"], "1", lazy.group["scratchpad"].dropdown_toggle("term")),
-        Key(["control"], "2", lazy.group["scratchpad"].dropdown_toggle("gotop")),
-        Key(["control"], "3", lazy.group["scratchpad"].dropdown_toggle("speedometer")),
-        Key(["control"], "4", lazy.group["scratchpad"].dropdown_toggle("calcurse")),
+        Key([mod, "control"], "1", lazy.group["scratchpad"].dropdown_toggle("term")),
+        Key([mod, "control"], "2", lazy.group["scratchpad"].dropdown_toggle("gotop")),
+        Key([mod, "control"], "3", lazy.group["scratchpad"].dropdown_toggle("speedometer")),
+        Key([mod, "control"], "4", lazy.group["scratchpad"].dropdown_toggle("calcurse")),
     ]
 )
 
@@ -761,7 +770,7 @@ dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
 follow_mouse_focus = True
 bring_front_click = True
-cursor_warp = False
+cursor_warp = warp
 floating_layout = layout.Floating(
     border_width=3,
     border_focus=theme["Mauve"],

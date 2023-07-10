@@ -94,6 +94,9 @@
 
 - xfce4-power-manager
 	Power management settings (gui).
+
+- caffeine-ng (aur)
+	Idle inhibitor. Works with a systray icon. 
 	
 - libinput-gestures (aur)
 	Multi-touch touchpad gestures on X11 using libinput. Use with xdotool, package to 
