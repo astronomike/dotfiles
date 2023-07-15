@@ -28,6 +28,7 @@ import os
 import subprocess  
 import random
 from pathlib import Path
+home = Path.home()
 
 from libqtile import bar, layout, hook, qtile  # , widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
@@ -46,7 +47,7 @@ from colors import Colors
 ##########################################################
 wayland = True if qtile.core.name == "wayland" else False
 if wayland:
-    screenshot = 'grim -g "$(slurp)"'
+    screenshot = str(home / '.local/scripts/wayland-screenshot.sh')
     warp = False
 else:
     screenshot = 'gnome-screenshot -i'
@@ -59,7 +60,6 @@ mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
 file_manager = "nemo"
-home = Path.home()
 
 default_margin = 6  # window gaps
 bar_size = 30
@@ -115,9 +115,10 @@ def random_wallpaper(qtile, wayland: bool):
     new_wallpaper = random.choice(wallpaper_list)
 
     if wayland:
-        # get current wallpaper
-        swww_query = subprocess.check_output(["swww","query"],text=True)
-        current_wallpaper = os.path.join(wallpaper_path, swww_query.split('"')[1])
+        # get current wallpaper (only consider first monitor)
+        swww_query = subprocess.check_output(["swww","query"],text=True).splitlines()[0]
+        # current_wallpaper = os.path.join(wallpaper_path, swww_query.split('"')[1])
+        current_wallpaper = swww_query.partition("image")[-1]
         
         # set new wallpaper if different to current wallpaper
         while new_wallpaper == current_wallpaper:
