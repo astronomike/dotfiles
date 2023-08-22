@@ -104,7 +104,7 @@ def random_wallpaper(qtile, wayland: bool):
     It then chooses a new random one from wallpaper_list,
     and there is a little check to make sure the same wallpaper as the current one
     isn't chosen.
-    wallpaper_list is defined in this function to allow for changing lists dynamically
+    wallpaper_list is defined in this function to allow for intermediate changes to the list.
     """
     wallpaper_list = []
     wallpaper_path = home / "Pictures/Wallpapers/favourites/"
@@ -186,6 +186,8 @@ keys = [
     Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window right"),
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
+    Key([mod], "equal", lazy.layout.grow(), desc="Grow window"),
+    Key([mod], "minus", lazy.layout.shrink(), desc="Shrink window"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
     # Switch groups/applications
     Key([mod], "Left", lazy.screen.prev_group(), desc="Switch to previous group"),
@@ -330,7 +332,6 @@ keys = [
         [],
         "Print",
         lazy.spawn(screenshot),
-        logger.warning(f"trying to use {screenshot}"),
         desc="Take screenshot",
     ),
 ]
@@ -340,15 +341,15 @@ keys = [
 ##########################################################
 group_list = "1234567890"
 groups = [
-    Group("1", label="\ue795"),
-    Group("2", label="\uf07c"),
-    Group("3", label="\uf269", matches=[Match(wm_class="firefox")]),
-    Group("4", label="\ue780", matches=[Match(wm_class="Code")]),
+    Group("1", label="\ue795",layout="columns"),
+    Group("2", label="\uf07c",layout="monadtall"),
+    Group("3", label="\uf269", matches=[Match(wm_class="firefox")], layout="monadtall"),
+    Group("4", label="\ue780", matches=[Match(wm_class="Code")], layout="monadtall"),
     Group(
         "5",
         label="\uf02d",
         matches=[Match(wm_class="qpdfview"), Match(wm_class="Zathura")],
-        layout="max",
+        layout="treetab", 
     ),
     Group("6", label="󰇮", matches=[Match(wm_class="Ferdium")]),
     Group("7", label="\uf11b", matches=[Match(wm_class="Steam")],layout="floating"),
@@ -463,7 +464,7 @@ layouts = [
     ),
     layout.Max(
         margin=[
-            -bar_margin,
+            0,
             -default_margin,
             -default_margin,
             -default_margin,
@@ -490,16 +491,54 @@ layouts = [
         ],
     ),
     # Try more layouts by unleashing below layouts.
-    # layout.Stack(num_stacks=2),
+    layout.Stack(
+        num_stacks=1,
+        margin=default_margin,
+        border_width=3,
+        border_focus=theme["Sapphire"],
+        border_focus_stack=theme["Green"],
+        border_normal=theme["Overlay0"],
+        border_normal_stack=theme["Maroon"],
+        border_on_single=True,
+    ),
     # layout.Bsp(),
     # layout.Matrix(),
-    # layout.MonadTall(),
+    layout.MonadTall(
+        ratio=0.6,
+        margin=default_margin,
+        border_width=3,
+        border_focus_stack=[theme["Green"], theme["Lavender"]],
+        border_normal=theme["Overlay0"],
+        border_focus=theme["Sapphire"],
+        border_on_single=True,
+    ),
     # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
-    # layout.TreeTab(),
+    layout.TreeTab(
+        margin=default_margin,
+        margin_y=0,
+        place_right=False,
+        border_width=3,
+        vspace=3,
+        panel_width=150,
+        sections=['Main'],
+        section_fontsize=bar_fontsize,
+        section_fg=theme["Text"],
+        bg_color=theme["Crust"],
+        active_bg=theme["Sapphire"],
+        inactive_bg=theme["Base"],
+        inactive_fg=theme["Text"],
+        active_fg=theme["Crust"],
+        section_left=10,
+        section_top=10,
+        padding_left=15,
+    ),
     # layout.VerticalTile(),
-    # layout.Zoomy(),
+    # layout.Zoomy(
+    #     margin=default_margin,
+    #     border_width=3,
+    # ),
 ]
 
 ##########################################################
@@ -555,14 +594,16 @@ def init_widget_list():
             visible_groups=group_list,
             rounded=True,
             highlight_method="border",
-            borderwidth=1,
-            padding_y=1,
+            # highlight_method="line",
+            highlight_color=[theme["Base"],theme["Surface2"]],
+            borderwidth=1.5,
+            padding_y=2,
             active=theme["Sapphire"],
             inactive=theme["Red"],
-            this_current_screen_border=theme["Sapphire"],
-            this_screen_border=theme["Red"],
-            other_current_screen_border=theme["Sapphire"],
-            other_screen_border=theme["Red"],
+            this_current_screen_border=theme["Green"],
+            this_screen_border=theme["Overlay2"],
+            other_current_screen_border=theme["Green"],
+            other_screen_border=theme["Overlay2"],
             disable_drag=True,
             **icon_font,
             **decor_group,
@@ -815,4 +856,4 @@ wl_input_rules = {
 #
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
-wmname = "LG3D"
+wmname = "Qtile"

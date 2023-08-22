@@ -9,5 +9,6 @@ hold:
     sendkey: "LEFTALT+RIGHT"
   
 threshold: 
+  swipe: 0.5555
   hold: 0.5
   

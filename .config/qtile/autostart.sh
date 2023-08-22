@@ -6,6 +6,7 @@ nm-applet --indicator &
 redshift &
 numlockx on &
 xfce4-power-manager --daemon &
+xss-lock --transfer-sleep-lock -- i3lock -i $HOME/Pictures/Wallpapers/lock/win01_scaled.png --nofork &
 dunst &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 #check if fusuma is running - the deamon doesn't stop on logout
