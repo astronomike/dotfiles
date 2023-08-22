@@ -78,6 +78,13 @@
 	texlive-most contains the useful packages (for me), so install this and then choose
 	from the presented list.
 
+- hunspell (-en_us, -en_gb)
+	Needed for spell checking in LibreOffice. Add dictionaries with each additional hunspel-en_LOCALE pkg (include US one because it's default and sometimes falls back to that). 
+	Additional functionality: 
+		Thesaurus - libmythes (library), mythes-en (english thesaurus)
+		Hyphenation - hyphen (library), hyphen-en (english)
+	Enable these in LO Options -> Language Settings, after LO restart. 
+
 - otf-latin-modern 
 	Contains latex-like fonts (Latin Modern family). 
 	For math fonts, also install otf-latinmodern-math.
@@ -93,7 +100,13 @@
 	Edit theme, other options with /bin/xfce-notifyd-config
 
 - xfce4-power-manager
-	Power management settings (gui).
+	Power management settings (gui). Deselect the `lock before sleep' option if using with i3lock and xss-lock. 
+
+- i3lock, xss-lock
+	Lockscreen for X11. Autostart with `xss-lock --transfer-sleep-lock -- i3lock -i <image.png> --nofork &` to lock before suspend, and couple with xfce4-power-management settings for timings.   
+
+- swaylock, swayidle
+	Lockscreen and idle manager for wayland. Autostart with `swayidle -C <config location> &'. For configuration options with swaylock, see man pages. 
 
 - caffeine-ng (aur)
 	Idle inhibitor. Works with a systray icon. 
