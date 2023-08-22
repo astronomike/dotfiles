@@ -87,6 +87,7 @@ run_cmd() {
 				sudo -A systemctl suspend  
 			fi
 		elif [[ $1 == '--logout' ]]; then
+			sh ~/.local/scripts/logout.sh
 			if [[ "$DESKTOP_SESSION" == 'openbox' ]]; then
 				openbox --exit
 			elif [[ "$DESKTOP_SESSION" == 'bspwm' ]]; then

@@ -1,9 +1,12 @@
 /* Defaults */
+@define-color base  #1e1e2e ;
+@define-color text  #cdd6f4 ;
+
 * {
     border: none;
     font-family: "Ubuntu Nerd Font";
     font-weight: normal;
-    font-size: 15px;
+    font-size: 14px;
     padding: 0px;
     border-radius: 10px;
     margin-top: 0px;
@@ -13,37 +16,46 @@
 
 /* Tooltips */
 tooltip {
-    background: #11111b;
+    background: @base;
     border: 2px solid #04a5e5;
 }
 tooltip label {
     padding: 0px 8px 0px 8px;
-    color: #cdd6f4;
+    color: @text;
 }
 
 
 /* Modules below */
 /* dimensions: up-left up-right low-right low-left */
 
-/* Settings for all modules */
+/* Settings for most modules */
 #tray, #window, #idle_inhibitor, #cpu, #memory, #network, #pulseaudio, #backlight, #battery, #clock {
-    background: #11111b;
-    color: #cdd6f4;
+    background: @base;
+    color: @text;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 #workspaces {
-    background: #11111b;
+    background: @base;
     border-radius: 10px 0px 0px 10px;
-    margin-left: 0px;
-    padding-left: 10px;
+    /* font-size: 16px; */
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-left: 5px;
+    padding-left: 5px;
 }
 
 #workspaces button {
+    color: #a6e3a1;
+    background: @base;
     box-shadow: none;
 	text-shadow: none;
-    border-radius: 5px;
+    border-radius: 7px;
     margin-top: 5px;
     margin-bottom: 5px;
+    margin-left: 3px;
+    margin-right: 3px;
     padding-left: 3px;
     padding-right: 3px;
     /* animation: gradient_f 20s ease-in infinite;
@@ -51,17 +63,21 @@ tooltip label {
 }
 
 #workspaces button.active {
-    color: #11111b;
-    background: #cdd6f4;
-    /* animation: gradient_f 20s ease-in infinite;
-    transition: all 0.1s cubic-bezier(.55,-0.68,.48,1.682); */
+    /* focused */
+    color: @base;
+    background: #a6e3a1;
+}
+
+#workspaces button.persistent {
+    /* not occiupied or focused, just there */
+    color: #585b70;
+    background: @base;
 }
 
 #workspaces button:hover {
-    color: #11111b;
-    background: #f5c2e7;
-    /* animation: gradient_f 20s ease-in infinite;
-    transition: all 0.1s cubic-bezier(.55,-0.68,.48,1.682); */
+    /* on mouse hover */
+    color: @base;
+    background: #74c7ec;
 }
 
 #window {
@@ -75,6 +91,23 @@ tooltip label {
     padding-left: 10px;
     padding-right: 10px;
 }
+
+#tray menu {
+    background-color: #181825;
+    border: 2px solid #04a5e5;
+    padding: 5px;
+}
+
+#tray menu.separator {
+    background-color: @text;
+    color: @text;
+}
+
+#tray menuitem:hover {
+    background-color: #7f849c;
+    color: @base;
+}
+
 
 #idle_inhibitor {
     color: #f5e0dc;
@@ -140,7 +173,7 @@ tooltip label {
 }
 
 #battery.charging, #battery.plugged {
-    color: #5eff3a;
+    color: #5fe053;
 }
 
 @keyframes blink {
@@ -148,6 +181,10 @@ tooltip label {
         background-color: #ffffff;
         color: #000000;
     }
+}
+
+#battery.warning:not(.charging) {
+    color: #f53c3c;
 }
 
 #battery.critical:not(.charging) {

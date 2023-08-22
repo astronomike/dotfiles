@@ -2,14 +2,14 @@
     "layer": "top",
     "position": "top",
     "mod": "dock",
-    "height": 36,
+    "height": 40,
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
-    "margin-top":5,
+    "margin-top":0,
     "margin-bottom":0,
-    "margin-left":5,
-    "margin-right":5,
+    "margin-left":0,
+    "margin-right":0,
     "modules-left": [
         "wlr/workspaces",
         "hyprland/window"
@@ -28,6 +28,7 @@
     ],
 
    "wlr/workspaces": {
+       "format": "<span font='13'>{icon}</span>", 
        "disable-scroll": true,
        "on-click": "activate",
        "persistent_workspaces": {
@@ -39,6 +40,16 @@
            "6": [],
            "7": [],
            "8": []
+       },
+       "format-icons": {
+        "1": "\ue795",
+        "2": "\uf07c",
+        "3": "\uf269",
+        "4": "\ue780",
+        "5": "\uf02d",
+        "6": "󰇮",
+        "7": "\uf11b",
+        "8": "\uF025"
        }
    },
 
@@ -117,14 +128,19 @@
     },
 
     "tray": {
-        "icon-size": 15,
-        "spacing": 5
+        "icon-size": 16,
+        "spacing": 10
     },
 
     "battery": {
         "format": "{icon}   {capacity}%",
         "format-icons": ["", "", "", "", ""],
-        "interval": 10
+        "format-charging": "{icon}    {capacity}%",
+        "states": {
+            "warning": 25,
+            "critical": 15
+        },
+        "interval": 30
     },
     
     "backlight": {
