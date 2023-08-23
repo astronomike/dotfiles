@@ -29,20 +29,28 @@ tooltip label {
 /* dimensions: up-left up-right low-right low-left */
 
 /* Settings for most modules */
-#tray, #window, #idle_inhibitor, #cpu, #memory, #network, #pulseaudio, #backlight, #battery, #clock {
+#tray, #window, #custom-menu, #idle_inhibitor, #cpu, #memory, #network, #pulseaudio, #backlight, #battery, #clock, #custom-power {
     background: @base;
     color: @text;
     margin-top: 4px;
     margin-bottom: 4px;
 }
 
+#custom-menu {
+    background: @base;
+    /* color: #2c9cbf; */
+    color: @text;
+    margin-left: 5px;
+    border-radius: 10px 0px 0px 10px;
+}
+
 #workspaces {
     background: @base;
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 0px 0px 0px 0px;
     /* font-size: 16px; */
     margin-top: 4px;
     margin-bottom: 4px;
-    margin-left: 5px;
+    margin-left: 0px;
     padding-left: 5px;
 }
 
@@ -198,11 +206,17 @@ tooltip label {
 } 
 
 #clock {
-    border-radius: 0px 10px 10px 0px;
-    margin-right: 5px;
+    border-radius: 0px 0px 0px 0px;
+    margin-right: 0px;
     padding-right: 10px;
     padding-left: 5px;
 }
 
-
+#custom-power {
+    border-radius: 0px 10px 10px 0px;
+    margin-right: 5px;
+    padding-left: 0px;
+    padding-right: 10px;
+    color: #f38ba8;
+}
 
