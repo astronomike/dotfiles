@@ -66,14 +66,9 @@ tooltip label {
     margin-right: 3px;
     padding-left: 3px;
     padding-right: 3px;
+    transition: all 0.25s ease;
     /* animation: gradient_f 20s ease-in infinite;
     transition: all 0.2s cubic-bezier(.55,-0.68,.48,1.682); */
-}
-
-#workspaces button.active {
-    /* focused */
-    color: @base;
-    background: #a6e3a1;
 }
 
 #workspaces button.persistent {
@@ -86,6 +81,12 @@ tooltip label {
     /* on mouse hover */
     color: @base;
     background: #74c7ec;
+}
+
+#workspaces button.active {
+    /* focused */
+    color: @base;
+    background: #a6e3a1;
 }
 
 #window {
