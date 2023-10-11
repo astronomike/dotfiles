@@ -2,6 +2,7 @@
 @define-color base  #1e1e2e ;
 @define-color text  #cdd6f4 ;
 
+
 * {
     border: none;
     font-family: "Ubuntu Nerd Font";
