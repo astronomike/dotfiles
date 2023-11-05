@@ -30,7 +30,7 @@ tooltip label {
 /* dimensions: up-left up-right low-right low-left */
 
 /* Settings for most modules */
-#tray, #window, #custom-menu, #idle_inhibitor, #cpu, #memory, #network, #pulseaudio, #backlight, #battery, #clock, #custom-power {
+#tray, #window, #custom-menu, #idle_inhibitor, #cpu, #memory, #network, #pulseaudio, #pulseaudio-slider, #backlight, #backlight-slider, #battery, #clock, #custom-power {
     background: @base;
     color: @text;
     margin-top: 4px;
@@ -74,9 +74,22 @@ tooltip label {
 
 #workspaces button.persistent {
     /* not occiupied or focused, just there */
-    color: #585b70;
+    color: #a6e3a1;
     background: @base;
 }
+
+#workspaces button.empty {
+    /* empty persistent */
+    color: #585B70;
+    background: @base;
+}
+
+#workspaces button.active, 
+#workspaces button.visible {
+    /* focused */
+    color: @base;
+    background: #a6e3a1;
+}    
 
 #workspaces button:hover {
     /* on mouse hover */
@@ -84,10 +97,9 @@ tooltip label {
     background: #74c7ec;
 }
 
-#workspaces button.active {
-    /* focused */
+#workspaces button.urgent {
     color: @base;
-    background: #a6e3a1;
+    background: #f38ba8;
 }
 
 #window {
@@ -162,8 +174,8 @@ tooltip label {
 }
 
 #pulseaudio.microphone {
-    border-radius: 0px;
     color: #f9e2af;
+    border-radius: 0px;
     padding-left: 5px;
     padding-right: 5px;
 }
@@ -173,6 +185,35 @@ tooltip label {
     border-radius: 0px;
     padding-left: 5px;
     padding-right: 5px;
+}
+
+#pulseaudio-slider, #pulseaudio-slider *, #backlight-slider, #backlight-slider * {
+    padding: 0;
+    border-radius: 0px;
+}
+
+slider {
+    min-height: 5px;
+    border-radius: 5px;
+    background-color: rgb(104, 106, 104);
+}
+
+trough {
+    min-height: 5px;
+    min-width: 80px;
+    background-color: #000000;
+}
+
+highlight {
+    min-height: 5px;
+}
+
+#pulseaudio-slider highlight {
+    background-color: #f9e2af;
+}
+
+#backlight-slider highlight {
+    background-color: #a6e3a1;
 }
 
 #battery {

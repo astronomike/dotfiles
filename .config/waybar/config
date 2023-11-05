@@ -21,8 +21,8 @@
         "idle_inhibitor",
         "cpu",
         "memory",
-        "pulseaudio",
-        "backlight",
+        "group/group-audio",
+        "group/group-backlight",
         "network",
         "battery",
         "clock",
@@ -41,7 +41,7 @@
        "disable-scroll": true,
        "on-click": "activate",
        "active-only": false,
-       "persistent_workspaces": {
+       "persistent-workspaces": {
            "1": ["eDP-1"],
            "2": ["eDP-1"],
            "3": ["eDP-1"],
@@ -62,8 +62,8 @@
         "6": "󰇮",
         "7": "\uf11b",
         "8": "\uF025",
-        "9": "i",
-        "10": "ii"
+        "9": " i ",
+        "10": " ii "
        }
    },
 
@@ -79,6 +79,11 @@
             "(.*)Spotify Free": "Spotify 󰓇",
             "(.*)Steam": "Steam 󰓓"
           }
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 10
     },
 
     "cpu": {
@@ -112,6 +117,19 @@
         "interval": 5
     },
 
+    "group/group-audio": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "pulseaudio",
+            "transition-left-to-right": true
+        },
+        "modules": [
+            "pulseaudio",
+            "pulseaudio/slider"
+        ]
+    },
+
     "pulseaudio": {
         "format": "{icon} {volume}%",
         "format-muted": "婢",
@@ -131,6 +149,12 @@
         }
     },
 
+    "pulseaudio/slider": {
+        "min": 0,
+        "max": 100,
+        "orientation": "horizontal"
+    },
+
     "pulseaudio#microphone": {
         "format": "{format_source}",
         "format-source": " {volume}%",
@@ -139,11 +163,6 @@
         "on-scroll-up": "pamixer --default-source -i 5",
         "on-scroll-down": "pamixer --default-source -d 5",
         "scroll-step": 5
-    },
-
-    "tray": {
-        "icon-size": 16,
-        "spacing": 10
     },
 
     "battery": {
@@ -157,6 +176,19 @@
         "interval": 30
     },
     
+    "group/group-backlight": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "backlight",
+            "transition-left-to-right": true
+        },
+        "modules": [
+            "backlight",
+            "backlight/slider"
+        ]
+    },
+
     "backlight": {
         "device": "intel_backlight",
         "format": "{icon} {percent}%",
@@ -164,6 +196,12 @@
         "on-scroll-down": "xbacklight -dec 5",
         "format-icons": ["󰃚", "󰃛", "󰃜", "󰃞", "󰃟", "󰃝", "󰃠"]
     },
+
+    "backlight/slider": {
+        "min": 0,
+        "max": 100,
+        "orientation": "horizontal"
+    },    
     
     "custom/power": {
         "format": "<span font='13'></span>",
@@ -177,6 +215,5 @@
             "activated": "",
             "deactivated": ""
         },
-        "timeout": 0
     }
 }
