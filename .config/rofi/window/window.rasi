@@ -10,7 +10,7 @@
 /*****----- Configuration -----*****/
 configuration {
 	modi:                       "window";
-    show-icons:                 true;
+    show-icons:                 false;
     close-on-delete:            false;
     prefer-icon-theme:          true;
     window-thumbnail:           false;
@@ -25,9 +25,9 @@ window {
     transparency:                "real";
     location:                    center;
     anchor:                      center;
-    fullscreen:                  false;
+    fullscreen:                  true;
     width:                       50%;
-    height:                      50%;
+    height:                      55%;
     x-offset:                    0px;
     y-offset:                    0px;
 

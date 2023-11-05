@@ -1,18 +1,7 @@
-/**
- *
- * Author : Aditya Shakya (adi1090x)
- * Github : @adi1090x
- * 
- * Rofi Theme File
- * Rofi Version: 1.7.3
- **/
-
 /*****----- Configuration -----*****/
 configuration {
-	modi:                       "drun";
+	modi:                       "run";
     show-icons:                 true;
-    display-drun:               "";
-	drun-display-format:        "{name}";
 }
 
 /*****----- Global Properties -----*****/
@@ -21,12 +10,12 @@ configuration {
 /*****----- Main Window -----*****/
 window {
     transparency:                "real";
-    location:                    north west;
-    anchor:                      north west;
+    location:                    center;
+    anchor:                      center;
     fullscreen:                  false;
-    width:                       400px;
-    x-offset:                    5px;
-    y-offset:                    50px;
+    width:                       33%;
+    x-offset:                    0px;
+    y-offset:                    0px;
 
     enabled:                     true;
     margin:                      0px;
@@ -41,28 +30,28 @@ window {
 /*****----- Main Box -----*****/
 mainbox {
     enabled:                     true;
-    spacing:                     0px;
-    margin:                      2px;
-    padding:                     0px 0px 10px 0px;
+    spacing:                     20px;
+    margin:                      0px;
+    padding:                     10px;
     border:                      0px solid;
     border-radius:               0px 0px 0px 0px;
     border-color:                @selected;
-    background-color:            @background;
+    background-color:            transparent;
     children:                    [ "inputbar", "listview" ];
 }
 
 /*****----- Inputbar -----*****/
 inputbar {
     enabled:                     true;
-    spacing:                     10px;
-    margin:                      12px 12px 15px 12px;
-    padding:                     12px;
-    border:                      0px solid;
+    spacing:                     0px 0px 0px 0px;
+    margin:                      0px 0px 0px 0px;
+    padding:                     5px 0px 5px 0px;
+    border:                      2px solid;
     border-radius:               10px;
-    border-color:                @selected;
+    border-color:                @background-alt;
     background-color:            @selected;
     text-color:                  @background;
-    children:                    [ "prompt", "entry" ];
+    children:                    [ "entry" ];
 }
 
 prompt {
@@ -82,30 +71,32 @@ entry {
     background-color:            inherit;
     text-color:                  inherit;
     cursor:                      text;
-    placeholder:                 " Choose wisely...";
+    placeholder:                 " Go on, do something... ";
     placeholder-color:           inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
 }
 
 /*****----- Listview -----*****/
 listview {
     enabled:                     true;
-    columns:                     2;
+    columns:                     1;
     lines:                       5;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
     layout:                      vertical;
     reverse:                     false;
-    fixed-height:                true;
+    fixed-height:                false;
     fixed-columns:               true;
     
-    spacing:                     5px;
+    spacing:                     0px;
     margin:                      0px;
     padding:                     0px;
     border:                      0px solid;
     border-radius:               0px;
     border-color:                @selected;
-    background-color:            @background;
+    background-color:            transparent;
     text-color:                  @foreground;
     cursor:                      "default";
 }
@@ -119,28 +110,36 @@ scrollbar {
 /*****----- Elements -----*****/
 element {
     enabled:                     true;
-    spacing:                     10px;
+    spacing:                     0px;
     margin:                      0px;
-    padding:                     8px;
-    border:                      0px solid;
-    border-radius:               0px;
-    border-color:                @selected;
-    background-color:            @background;
+    padding:                     0px 0px;
+    border-radius:               10px;
+    background-color:            transparent;
     text-color:                  @foreground;
+    orientation:                 horizontal;
     cursor:                      pointer;
 }
 element normal.normal {
-    background-color:            @background;
+    background-color:            transparent;
     text-color:                  @foreground;
+}
+element selected.active {
+ /*   background-color:            @background-alt; */
+    text-color:                  @active;
+    border:                      2px solid;
+    border-color:                @active;
 }
 element selected.normal {
     background-color:            @background-alt;
     text-color:                  @foreground;
+    border:                      2px solid;
+    border-color:                @selected;
 }
 element-icon {
+    margin:                      10px;
     background-color:            transparent;
     text-color:                  inherit;
-    size:                        32px;
+    size:                        26px;
     cursor:                      inherit;
 }
 element-text {
@@ -149,22 +148,22 @@ element-text {
     highlight:                   inherit;
     cursor:                      inherit;
     vertical-align:              0.5;
-    horizontal-align:            0.0;
+    horizontal-align:            0.1;
 }
 
 /*****----- Message -----*****/
 error-message {
-    padding:                     15px;
-    border:                      2px solid;
-    border-radius:               12px;
+    padding:                     0px;
+    border:                      0px solid;
+    border-radius:               0px;
     border-color:                @selected;
-    background-color:            @background;
+    background-color:            black / 10%;
     text-color:                  @foreground;
 }
 textbox {
-    background-color:            @background;
+    background-color:            transparent;
     text-color:                  @foreground;
     vertical-align:              0.5;
-    horizontal-align:            0.0;
+    horizontal-align:            0.5;
     highlight:                   none;
 }
