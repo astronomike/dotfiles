@@ -34,6 +34,10 @@
 - pacman-contrib
 	Contains paccache command, which is used to clean pacman's package cache. 
 
+- grim, slurp, wf-recorder (wayland)
+	For screen recordings, use wf-recorder (-a flag for audio), then Ctrl+c to stop.
+	Video will be saved to current directory. 
+
 - ranger
 	TUI file manager. 
 	Config location: ~/.config/ranger/rc.conf

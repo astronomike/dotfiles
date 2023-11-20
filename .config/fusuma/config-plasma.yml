@@ -1,8 +1,8 @@
 hold:
-  1:
-    sendkey: "LEFTCTRL+LEFTSHIFT+TAB"
-  2:
-    sendkey: "LEFTCTRL+TAB"
+#  1:
+#    sendkey: "LEFTCTRL+LEFTSHIFT+TAB"
+#  2:
+#    sendkey: "LEFTCTRL+TAB"
   3:
     sendkey: "LEFTALT+LEFT"
   4:

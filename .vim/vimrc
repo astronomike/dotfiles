@@ -18,11 +18,15 @@ runtime! archlinux.vim
 "let skip_defaults_vim=1
 
 " Custom settings
+set laststatus=2
 set number        		" display linenumbers 
+set relativenumber  	" relative numbers
 set tabstop=4 	  		" tabs
 set shiftwidth=4  		" indenting>
-set relativenumber  	" relative numbers
 set switchbuf=useopen	" if buffer is open, switch to it
+set splitright			" split new vertical window to right
+set timeoutlen=1000 ttimeoutlen=0  " remove check delay, for after <esc> key 
+set ww=b,s,<,>,[,]		" wrap to next/prev line (space, BS, arrows)
  
 syntax enable     " syntax highlighting if available
 
@@ -38,8 +42,4 @@ nnoremap <C-Left> :tabprevious<CR>
 nnoremap <C-Right> :tabnext<CR>
 nnoremap <silent> <A-Left> :tabm -1<CR>
 nnoremap <silent> <A-Right> :tabm +1<CR>
-
-" powerline
-set laststatus=2
-" set noshowmode
 

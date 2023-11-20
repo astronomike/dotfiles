@@ -115,13 +115,17 @@ tooltip label {
 }
 
 #tray menu {
-    background-color: #181825;
+    background-color: @base;
     border: 2px solid #04a5e5;
     padding: 5px;
 }
 
 #tray menu.separator {
     background-color: @text;
+    color: @text;
+}
+
+#tray menuitem {
     color: @text;
 }
 

@@ -62,7 +62,7 @@ browser = "firefox"
 file_manager = "nemo"
 
 default_margin = 6  # window gaps
-bar_size = 30
+bar_size = 36
 bar_fontsize = 14
 bar_margin = int(default_margin / 2)  # smaller gap for bar
 
@@ -155,6 +155,14 @@ def autostart():
         autostart_path = home / ".config/qtile/autostart.sh"
     subprocess.Popen([autostart_path])
 
+@hook.subscribe.shutdown
+def autostop():
+    if wayland:
+        autostart_path = home / ".config/qtile/autostop_wayland.sh"
+    else:
+        autostart_path = home / ".config/qtile/autostop.sh"
+    subprocess.Popen([autostop_path])
+
 @hook.subscribe.screen_change
 def restart_on_randr(_):
 	qtile.cmd_reload_config()
@@ -246,7 +254,7 @@ keys = [
     ),
     # General operations
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
-    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    Key([mod, "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     # Themes
@@ -553,6 +561,7 @@ decor_group = {
             colour=decor_color,
             radius=10,
             filled=True,
+			padding_y=3,
             padding=0,
             group=True,
             clip=True,
@@ -576,6 +585,7 @@ default_sep_widget = widget.Sep(
 # The following is a list of all widgets used
 def init_widget_list():
     widget_list = [
+		default_sep_widget,
         widget.TextBox(
             foreground=theme["Sapphire"],
             fmt=" \uf303 ",
@@ -737,6 +747,7 @@ def init_widget_list():
             **icon_font,
             **decor_group,
         ),
+		default_sep_widget,
     ]
 
     return widget_list
@@ -769,7 +780,8 @@ screens = [
             widgets=init_main_widget_list(),
             size=bar_size,
             background=bar_background,
-            margin=[bar_margin, bar_margin, default_margin, bar_margin],  # [N E S W]
+            # margin=[bar_margin, bar_margin, default_margin, bar_margin],  # [N E S W]
+			margin=0,
         ),
         bottom=bar.Gap(default_margin),
         left=bar.Gap(default_margin),
@@ -783,7 +795,8 @@ screens = [
             widgets=init_secondary_widget_list(),
             size=bar_size + 4,
             background=bar_background,
-            margin=[bar_margin, bar_margin, default_margin, bar_margin],  # [N E S W]
+            #margin=[bar_margin, bar_margin, default_margin, bar_margin],  # [N E S W]
+			margin=0,
         ),
         bottom=bar.Gap(default_margin),
         left=bar.Gap(default_margin),
