@@ -4,7 +4,7 @@ format = """
 [| $username](green)$directory$python$package$conda$git_status$git_branch
 [  ➜  ](green) """
 
-right_format = "$character$status"
+right_format = "$time$character$status"
 
 [character]
 success_symbol = "[<](bold green)"
@@ -48,3 +48,10 @@ symbol = " "
 [python]
 symbol = " "
 style = "yellow"
+
+[time]
+format = "[$time](white)"
+time_format = "%T, %v "
+disabled = false
+utc_time_offset = "+2"
+
