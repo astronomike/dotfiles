@@ -1,0 +1,186 @@
+{
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "height": 40,
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "margin-top":0,
+    "margin-bottom":0,
+    "margin-left":0,
+    "margin-right":0,
+    "modules-left": [
+        "custom/menu",
+        "wlr/taskbar"
+    ],
+    "modules-center": [],
+    "modules-right": [
+        "tray",
+        "idle_inhibitor",
+        "cpu",
+        "memory",
+        "group/group-audio",
+        "group/group-backlight",
+        "network",
+        "battery",
+        "clock",
+        "custom/power"
+
+    ],
+
+    "custom/menu": {
+        "format": "   <span font='13'>\uf303  |</span>",
+        "on-click": "sh $HOME/.config/rofi/apps/apps.sh",
+        "tooltip": false
+    },
+
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 20,
+        "markup": true,
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "on-click-right": "minimize-raise",
+        "rewrite": {
+            "Firefox*": "Firefox"
+        }
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 10
+    },
+
+    "cpu": {
+        "interval": 10,
+        "format": "\ue266 {usage}%",
+        "format-alt": "{icon0}{icon1}{icon2}{icon3}",
+        "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
+    },
+
+    "memory": {
+        "interval": 30,
+        "format": "\ue240 {percentage}%",
+        "format-alt": "\ue240 {used}GB",
+        "tooltip": true,
+        "tooltip-format": "\ue240 {used:0.1f}GB/{total:0.1f}GB"
+    },
+
+    "clock": {
+        "format": "{:󰥔 %H:%M   󰃭 %a %d}",
+        "format-alt": "{:󰥔 %H:%M    %b %Y}",
+        "tooltip-format": "<tt><big>{calendar}</big></tt>"
+    },
+
+    "network": {
+        "format-wifi": "󰤨 {signalStrength}%",
+        "format-alt": "󰤨 {essid}",
+        "format-ethernet": "󱘖 Wired",
+        "tooltip-format": "󱘖 {ipaddr}  {bandwidthUpBytes}  {bandwidthDownBytes}",
+        "format-linked": "󱘖 {ifname} (No IP)",
+        "format-disconnected": " Disconnected",
+        "interval": 5
+    },
+
+    "group/group-audio": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "pulseaudio",
+            "transition-left-to-right": true
+        },
+        "modules": [
+            "pulseaudio",
+            "pulseaudio/slider"
+        ]
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "婢",
+        "on-click-middle": "pamixer -t",
+        "on-scroll-up": "pamixer -i 5",
+        "on-scroll-down": "pamixer -d 5",
+        "tooltip-format": "{icon} {desc} {volume}%",
+        "scroll-step": 5,
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        }
+    },
+
+    "pulseaudio/slider": {
+        "min": 0,
+        "max": 100,
+        "orientation": "horizontal"
+    },
+
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": "",
+        "on-click-middle": "pamixer --default-source -t",
+        "on-scroll-up": "pamixer --default-source -i 5",
+        "on-scroll-down": "pamixer --default-source -d 5",
+        "scroll-step": 5
+    },
+
+    "battery": {
+        "format": "{icon}   {capacity}%",
+        "format-icons": ["", "", "", "", ""],
+        "format-charging": "{icon}    {capacity}%",
+        "states": {
+            "warning": 25,
+            "critical": 15
+        },
+        "interval": 30
+    },
+    
+    "group/group-backlight": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "backlight",
+            "transition-left-to-right": true
+        },
+        "modules": [
+            "backlight",
+            "backlight/slider"
+        ]
+    },
+
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{icon} {percent}%",
+        "on-scroll-up": "xbacklight -inc 5",
+        "on-scroll-down": "xbacklight -dec 5",
+        "format-icons": ["󰃚", "󰃛", "󰃜", "󰃞", "󰃟", "󰃝", "󰃠"]
+    },
+
+    "backlight/slider": {
+        "min": 0,
+        "max": 100,
+        "orientation": "horizontal"
+    },    
+    
+    "custom/power": {
+        "format": "<span font='13'></span>",
+        "on-click": "sh $HOME/.config/rofi/powermenu/powermenu.sh",
+        "tooltip": false
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        },
+    }
+}
