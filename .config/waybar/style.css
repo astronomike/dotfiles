@@ -222,18 +222,22 @@ tooltip label {
 
 slider {
     min-height: 5px;
-    border-radius: 5px;
+    min-width: 0px;
+	margin-right: 0px;
     background-color: rgb(104, 106, 104);
 }
 
 trough {
     min-height: 5px;
     min-width: 80px;
+    border-radius: 5px;
     background-color: #000000;
 }
 
 highlight {
     min-height: 5px;
+    min-width: 8px;
+    border-radius: 5px;
 }
 
 #pulseaudio-slider highlight {

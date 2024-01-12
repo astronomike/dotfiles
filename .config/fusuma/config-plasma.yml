@@ -7,8 +7,14 @@ hold:
     sendkey: "LEFTALT+LEFT"
   4:
     sendkey: "LEFTALT+RIGHT"
-  
+pinch:
+  3:
+    in:
+      sendkey: "LEFTMETA+W"  
+    out: 
+      sendkey: "LEFTMETA+W"  
 threshold: 
   swipe: 0.5555
   hold: 0.5
+  pinch: 0.2
   

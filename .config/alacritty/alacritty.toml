@@ -269,7 +269,7 @@
 # [color_schemes.mocha.vi_mode_cursor]
 # cursor = "#B4BEFE"
 # text = "#1E1E2E"
-
+# 
 [colors.bright]
 black = "#45475A"
 blue = "#89B4FA"
@@ -357,9 +357,6 @@ family = "Ubuntu Mono"
 style = "Regular"
 
 [window]
-decorations = "full"
 opacity = 0.85
-
-[window.padding]
-x = 6
-y = 6
+blur = true
+padding = { x = 6, y = 6 } 

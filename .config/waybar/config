@@ -19,11 +19,8 @@
     "modules-right": [
         "tray",
         "idle_inhibitor",
-        "cpu",
-        "memory",
         "group/group-audio",
         "group/group-backlight",
-        "network",
         "battery",
         "clock",
         "custom/power"
