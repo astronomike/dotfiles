@@ -9,3 +9,18 @@
 #   startx
 # fi 
 
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+case ":$PATH:" in
+    *:/home/michael/.juliaup/bin:*)
+        ;;
+
+    *)
+        export PATH=/home/michael/.juliaup/bin${PATH:+:${PATH}}
+        ;;
+esac
+
+# <<< juliaup initialize <<<

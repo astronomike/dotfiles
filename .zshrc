@@ -69,3 +69,12 @@ eval "$(starship init zsh)"
 
 alias conda-a="conda activate"
 alias conda-d="conda deactivate"
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+path=('/home/michael/.juliaup/bin' $path)
+export PATH
+
+# <<< juliaup initialize <<<
