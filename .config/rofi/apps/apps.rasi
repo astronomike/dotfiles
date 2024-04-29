@@ -11,8 +11,8 @@
 configuration {
 	modi:                       "drun";
     show-icons:                 true;
-    display-drun:               "";
-	drun-display-format:        "{name}";
+    display-drun:               " ";
+	drun-display-format:        " {name} ";
 }
 
 /*****----- Global Properties -----*****/
@@ -26,7 +26,7 @@ window {
     fullscreen:                  false;
     width:                       400px;
     x-offset:                    5px;
-    y-offset:                    50px;
+    y-offset:                    10px;
 
     enabled:                     true;
     margin:                      0px;
