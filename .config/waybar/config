@@ -19,6 +19,7 @@
     "modules-right": [
         "tray",
         "idle_inhibitor",
+		"custom/gfx",
         "group/group-audio",
         "group/group-backlight",
         "battery",
@@ -36,11 +37,13 @@
     "hyprland/workspaces": {
        "format": "<span font='13'>{icon}</span>", 
        "disable-scroll": true,
-       "on-click": "activate",
        "active-only": false,
        "persistent-workspaces": {
-		"*": 9,
-		"HDMI-A-1": 3
+		"eDP-1": [1,2,3,4,5,6,7,8],
+		"eDP-2": [1,2,3,4,5,6,7,8],
+		"HDMI-A-1": [1,2,3,4,5,6,7,8],
+		"DP-1": [9,10],
+		"DP-2": [1,2,3,4,5,6,7,8],
        },
        "format-icons": {
         "1": "\ue795",
@@ -74,6 +77,14 @@
         "icon-size": 16,
         "spacing": 10
     },
+
+	"custom/gfx": {
+	  "format": "<span font='13'>\uec19 {}</span>",
+	  "interval": 5,
+	  "return-type": "json",
+	  "exec": "sh $XDG_CONFIG_HOME/waybar/modules/gfx.sh",
+	  "on-click": "sh $XDG_CONFIG_HOME/waybar/modules/gfxmenu.sh"
+	},
 
     "cpu": {
         "interval": 10,
@@ -134,7 +145,7 @@
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", "", ""]
+            "default": ["", "", " "]
         }
     },
 

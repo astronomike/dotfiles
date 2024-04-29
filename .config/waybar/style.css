@@ -30,7 +30,7 @@ tooltip label {
 /* dimensions: up-left up-right low-right low-left */
 
 /* Settings for most modules */
-#tray, #window, #taskbar, #custom-menu, #idle_inhibitor, #cpu, #memory, #network, #pulseaudio, #pulseaudio-slider, #backlight, #backlight-slider, #battery, #clock, #custom-power {
+#tray, #window, #taskbar, #custom-menu, #custom-gfx, #idle_inhibitor, #cpu, #memory, #network, #pulseaudio, #pulseaudio-slider, #backlight, #backlight-slider, #battery, #clock, #custom-power {
     background: @base;
     color: @text;
     margin-top: 4px;
@@ -43,6 +43,20 @@ tooltip label {
     color: @text;
     margin-left: 5px;
     border-radius: 10px 0px 0px 10px;
+}
+
+#custom-gfx {
+	padding-left: 5px;
+	padding-right: 5px;
+	border-radius: 0px;
+}
+
+#custom-gfx.enabled {
+	color: #f38ba8;
+}
+
+#custom-gfx.disabled {
+	color: @text;
 }
 
 #workspaces {
@@ -84,12 +98,16 @@ tooltip label {
     background: @base;
 }
 
-#workspaces button.active, 
 #workspaces button.visible {
     /* focused */
     color: @base;
-    background: #a6e3a1;
+	background: #89b4fa;
 }    
+
+#workspaces button.active {
+	color: @base;
+    background: #a6e3a1;
+}
 
 #workspaces button:hover {
     /* on mouse hover */
