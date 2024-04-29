@@ -16,7 +16,7 @@
 	Custom prompt.
 	Config location: ~/.config/starship.toml
 
-- powerline (-vim)
+- powerline-{vim,common,fonts}, python-powerline
 	Nice status line for vim (or prompt for bash).
 	Config location: ~/.config/powerline
 
@@ -54,6 +54,11 @@
 - lf 
 	TUI file manager.
 	Config location: ~/.config/lf.conf
+
+- zathura
+	Minimal document/PDF viewer with vim keybindings. 
+	Also install dependencies for various backends: 
+		sudo pacman -S zathura-{cb,djvu,pdf-poppler,ps}
 
 - ly (aur) 
 	Minimal display manager. Reads from /usr/share/xsessions for X11 sessions and 
@@ -165,6 +170,9 @@
 - xarchiver 
 	Manages archives. Can be used with graphical file managers. 
 
+- kdegraphics-thumbnailers
+	Allows dolphin to preivew PDF and some other graphics files. 
+
 - ntfs-3g
 	NTFS file system driver (needed to mount NTFS volumes, like ext. hard drive)
 
@@ -196,7 +204,9 @@
 
  -> Pacman can be configured with /etc/pacman.conf, of interest might be the ParallelDownloads, Color and ILoveCandy options.  
 
- -> Every now and again, run paccache command to clean cache, as it can grow quite large as packages are installed.
+ -> Every now and again, run paccache command to clean cache, as it can grow quite large as packages are installed. For AUR packages installed with yay.
+		sudo paccache -r -k <number of pkg versions to keep>     (-r remove, -d dry-run, -k keep <number>) 
+		yay -Scc 	(will prompt for deletions)
 
  -> If using an SSD, TRIM can be enabled by enabling the fstrim.timer systemd unit (# systemctl enable fstrim.timer) - note that the utils-linux package is required. This schedules fstrim to run once per week. TRIM erases data blocks in the SSD that are no longer in use, which can improve the longevity of the drive. 
 
@@ -213,3 +223,10 @@ lines for each module. Will work after a reboot.
 -> To work with encrypted files, the ecryptfs module can be used. This is in the kernel by default, but needs to be loaded the first time by # modprobe ecryptfs. There are different ways it can be used, the simplest is to use a set of scripts provided by the ecryptfs-utils package. To set this up with the default configuration (the Ubuntu way in the wiki), use 
 	$ ecryptfs-setup-private --nopwcheck --noautomount
 This creates the directory ~/Private, which will (when mounted) contain the sensitive unencrypted data. The lower directory ~/.Private will contain the encrypted data when the upper directory is not mounted. When setting up with the above command, a passphrase is needed. Keep this safe!! It will be needed for the data to be decrypted each time the upper directory is mounted. 
+
+-> To check battery status, use $ acpi -i (will possibly need to install acpi pkg) or $ upower -d
+
+-> For general theming, check the wiki (https://wiki.archlinux.org/title/Uniform_look_for_Qt_and_GTK_applications). For QT apps on a standalone WM or compositor, ensure that qt5ct and qt6ct pkgs are installed. If you want to use kvantum themes, use these config tools to choose kvantum as the overall theme. This will require the environment variables 
+	export QT_QPA_PLATFORMTHEME=qt6ct
+	export QT_QPA_PLATFORM=wayland
+	
