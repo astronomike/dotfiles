@@ -2,7 +2,7 @@
 
 state=$(supergfxctl -g)
 newmode=$(printf "Integrated\nHybrid\nAsusMuxDgpu" | rofi -dmenu -p "Select new mode" -mesg "Current mode: $state" -no-custom -i -theme "$XDG_CONFIG_HOME/rofi/gfxmenu/gfxmenu.rasi")
-case $ans in
+case $newmode in
   Integrated)
       supergfxctl -m Integrated
     ;;

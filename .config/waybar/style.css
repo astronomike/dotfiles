@@ -1,128 +1,113 @@
-/* Defaults */
-@define-color base  #1e1e2e ;
-@define-color text  #cdd6f4 ;
+@import "mocha.css";
 
+@define-color bar-background @mantle;
+@define-color bar-accent @sapphire;
+@define-color mantle-transparent #181825;
+@define-color transparent rgba(0, 0, 0, 0);
 
 * {
-    border: none;
     font-family: "Ubuntu Nerd Font";
     font-weight: normal;
     font-size: 14px;
-    padding: 0px;
-    border-radius: 10px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    background: rgba(0, 0, 0, 0);
+}
+
+window#waybar {
+    background: @transparent;
+    color: @text;
 }
 
 /* Tooltips */
 tooltip {
-    background: @base;
-    border: 2px solid #04a5e5;
-}
-tooltip label {
-    padding: 0px 8px 0px 8px;
+    background: @bar-background;
     color: @text;
+    border: 1px solid @bar-accent;
+    border-radius: 10px;
 }
 
+tooltip label {
+    color: @text;
+	background: @bar-background;
+    padding: 0px 8px 0px 8px;
+}
 
 /* Modules below */
-/* dimensions: up-left up-right low-right low-left */
+/* dimensions: up-left up-right low-right low-left or top right bottom left*/
 
-/* Settings for most modules */
-#tray, #window, #taskbar, #custom-menu, #custom-gfx, #idle_inhibitor, #cpu, #memory, #network, #pulseaudio, #pulseaudio-slider, #backlight, #backlight-slider, #battery, #clock, #custom-power {
-    background: @base;
-    color: @text;
-    margin-top: 4px;
-    margin-bottom: 4px;
+/* Default settings for most modules */
+#apps-windows, #tray, #system, #window, #taskbar, #custom-menu, #custom-gfx, #custom-overview, #idle_inhibitor, #cpu, #memory, #network, #pulseaudio, #pulseaudio-slider, #backlight, #backlight-slider, #battery, #clock, #custom-power {
+    margin: 2px 0px 2px 0px;
+}
+
+#apps-windows { 
+    border: 1px solid @bar-accent;
+    border-radius: 15px 0px 15px 0px;
+    background: @bar-background;
+    margin: 2px 0px 2px 10px;
 }
 
 #custom-menu {
-    background: @base;
     /* color: #2c9cbf; */
     color: @text;
-    margin-left: 5px;
-    border-radius: 10px 0px 0px 10px;
 }
 
-#custom-gfx {
-	padding-left: 5px;
-	padding-right: 5px;
-	border-radius: 0px;
-}
-
-#custom-gfx.enabled {
-	color: #f38ba8;
-}
-
-#custom-gfx.disabled {
-	color: @text;
+#window {
+    padding: 0px 10px 0px 0px;
 }
 
 #workspaces {
-    background: @base;
-    border-radius: 0px 0px 0px 0px;
-    /* font-size: 16px; */
-    margin-top: 4px;
-    margin-bottom: 4px;
-    margin-left: 0px;
-    padding-left: 5px;
+    padding: 0px 5px 0px 5px;
 }
 
+/* box around each workspace icon */
 #workspaces button {
-    color: #a6e3a1;
-    background: @base;
+    border: 0px;
+    border-radius: 7px;
     box-shadow: none;
 	text-shadow: none;
-    border-radius: 7px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: 3px;
-    margin-right: 3px;
-    padding-left: 3px;
-    padding-right: 3px;
+    margin: 5px 3px 5px 3px;
+    padding: 0px 4px 0px 4px;  
     transition: all 0.25s ease;
     /* animation: gradient_f 20s ease-in infinite;
     transition: all 0.2s cubic-bezier(.55,-0.68,.48,1.682); */
 }
 
 #workspaces button.persistent {
-    /* not occiupied or focused, just there */
-    color: #a6e3a1;
-    background: @base;
+    /* occupied but not focused*/
+    color: @text;
+    background: @bar-background;
 }
 
 #workspaces button.empty {
     /* empty persistent */
-    color: #585B70;
-    background: @base;
+    color: @surface1;
+    background: @bar-background;
 }
 
 #workspaces button.visible {
-    /* focused */
-    color: @base;
-	background: #89b4fa;
+    color: @bar-background;
+	background: @blue;
 }    
 
 #workspaces button.active {
-	color: @base;
-    background: #a6e3a1;
+    /* focused */
+	color: @bar-background;
+    background: @green;
 }
 
 #workspaces button:hover {
     /* on mouse hover */
-    color: @base;
-    background: #74c7ec;
+    color: @bar-background;
+    background: @bar-accent;
 }
 
 #workspaces button.urgent {
-    color: @base;
-    background: #f38ba8;
+    color: @bar-background;
+    background: @peach;
 }
 
 #taskbar {
     color: @text;
-    background: @base;
+    background: @bar-background;
     border-radius: 0px 10px 10px 0px;
     padding-right: 5px;
     padding-left: 5px;
@@ -130,7 +115,7 @@ tooltip label {
 
 #taskbar button {
     color: @text;
-    background: @base;
+    background: @bar-background;
     margin-left: 5px;
     padding-left: 5px;
     padding-right: 5px;
@@ -144,137 +129,153 @@ tooltip label {
     background: #7f849c;
 }
 
-#window {
-    border-radius: 0px 10px 10px 0px;
-    padding-right: 10px;
-    padding-left: 5px;
-}
-    
 #tray {
-    border-radius: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    background-color: @bar-background;
+    border: 1px solid @bar-accent;
+    border-radius: 0px 15px 0px 15px;
+    margin: 2px 0px 2px 0px;
+    padding: 0px 10px 0px 10px;
 }
 
 #tray menu {
-    background-color: @base;
-    border: 2px solid #04a5e5;
+    background-color: @bar-background;
+    color: @text;
+    border: 2px solid @bar-accent;
+    border-radius: 10px;
     padding: 5px;
 }
 
 #tray menu.separator {
-    background-color: @text;
+    background-color: @bar-background;
     color: @text;
 }
 
 #tray menuitem {
+    border: 0px;
     color: @text;
 }
 
 #tray menuitem:hover {
-    background-color: #7f849c;
-    color: @base;
+    border: 0px;
+    background-color: @subtext1;
+    color: @bar-background;
 }
 
+#system {
+    border: 1px solid @bar-accent;
+    border-radius: 15px 0px 15px 0px;
+    background: @bar-background;
+    margin: 2px 10px 2px 5px;
+}
 
 #idle_inhibitor {
-    color: #f5e0dc;
-    border-radius: 10px 0px 0px 10px;
-    margin-left: 5px;
-    padding-left: 15px;
-    padding-right: 5px;
+    padding: 0px 5px 0px 15px;
+}
+
+#custom-gfx {
+    padding: 0px 5px 0px 5px;
+}
+
+#custom-gfx.enabled {
+    color: @maroon;
+}
+
+#custom-gfx.disabled {
+    color: @text;
+}
+
+#custom-overview {
+    padding: 0px 5px 0px 5px;
 }
 
 #cpu {
-    color: #f5c2e7;
-    border-radius: 0px 0px 0px 0px;
-    padding-left: 10px;
-    padding-right: 5px;
+    color: @peach;
+    padding: 0px 5px 0px 5px;
 }
 
 #memory {
-    color: #cba6f7;
-    border-radius: 0px 0px 0px 0px;
-    padding-left: 5px;
-    padding-right: 5px;
+    color: @flamingo;
+    padding: 0px 5px 0px 5px;
 }
 
 #network {
-    color: #94e2d5;
-    border-radius: 0px;
-    padding-left: 5px;
-    padding-right: 5px;
+    color: @text;
+    padding: 0px 5px 0px 5px;
 }
 
 #bluetooth {
-    color: #89b4fa;
-    padding-left: 4px;
-    padding-right: 4px;
+    color: @blue;
+    padding: 0px 5px 0px 5px;
 } 
 
 #pulseaudio {
-    color: #f9e2af;
-    border-radius: 0px;
-    padding-left: 5px;
-    padding-right: 5px;
+    color: @yellow;
+    padding: 0px 5px 0px 5px;
 }
 
 #pulseaudio.microphone {
-    color: #f9e2af;
-    border-radius: 0px;
-    padding-left: 5px;
-    padding-right: 5px;
+    color: @yellow;
+    padding: 0px 5px 0px 5px;
 }
 
-#backlight {
-    color: #a6e3a1;
-    border-radius: 0px;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-#pulseaudio-slider, #pulseaudio-slider *, #backlight-slider, #backlight-slider * {
-    padding: 0;
-    border-radius: 0px;
-}
-
-slider {
+#pulseaudio-slider slider {
     min-height: 5px;
-    min-width: 0px;
-	margin-right: 0px;
-    background-color: rgb(104, 106, 104);
+    min-width: 5px;
+    border-radius: 5px;
+    border: 0px;
+    background-color: @bar-accent;
+    background-size: 1px;
+    padding: 0px;
 }
 
-trough {
+#pulseaudio-slider trough {
     min-height: 5px;
     min-width: 80px;
     border-radius: 5px;
-    background-color: #000000;
-}
-
-highlight {
-    min-height: 5px;
-    min-width: 8px;
-    border-radius: 5px;
+    background-color: @yellow;
 }
 
 #pulseaudio-slider highlight {
-    background-color: #f9e2af;
+    min-height: 0px;
+    min-width: 0px;
+    border-radius: 5px;
+}
+
+#backlight {
+    color: @green;
+    padding: 0px 5px 0px 5px;
+}
+
+#backlight-slider slider {
+    min-height: 2px;
+    min-width: 2px;
+    border: 0px;
+    border-radius: 5px;
+    background-color: @bar-accent;
+}
+
+#backlight-slider trough {
+    min-height: 5px;
+    min-width: 80px;
+    border-radius: 5px;
+    background-color: @green;
+    color: @green;
 }
 
 #backlight-slider highlight {
-    background-color: #a6e3a1;
+    background-color: @green;
+    color: @green;
+    min-height: 5px;
+    min-width: 0px;
+    border-radius: 5px;
 }
 
 #battery {
-    border-radius: 0px;
-    padding-left: 5px;
-    padding-right: 5px;
-    margin-right: 0px;
+    padding: 0px 5px 0px 5px;
 }
 
 #battery.charging, #battery.plugged {
-    color: #5fe053;
+    color: @green;
 }
 
 @keyframes blink {
@@ -285,7 +286,7 @@ highlight {
 }
 
 #battery.warning:not(.charging) {
-    color: #f53c3c;
+    color: @peach;
 }
 
 #battery.critical:not(.charging) {
@@ -299,17 +300,11 @@ highlight {
 } 
 
 #clock {
-    border-radius: 0px 0px 0px 0px;
-    margin-right: 0px;
-    padding-right: 10px;
-    padding-left: 5px;
+    padding: 0px 5px 0px 5px;
 }
 
 #custom-power {
-    border-radius: 0px 10px 10px 0px;
-    margin-right: 5px;
-    padding-left: 0px;
-    padding-right: 10px;
-    color: #f38ba8;
+    padding: 0px 10px 0px 5px;
+    color: @red;
 }
 
