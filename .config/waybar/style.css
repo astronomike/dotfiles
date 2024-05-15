@@ -85,7 +85,7 @@ tooltip label {
 
 #workspaces button.visible {
     color: @bar-background;
-	background: @blue;
+	background: @overlay0;
 }    
 
 #workspaces button.active {
@@ -141,7 +141,7 @@ tooltip label {
     background-color: @bar-background;
     color: @text;
     border: 2px solid @bar-accent;
-    border-radius: 10px;
+    border-radius: 0px;
     padding: 5px;
 }
 
@@ -280,8 +280,8 @@ tooltip label {
 
 @keyframes blink {
     to {
-        background-color: #ffffff;
-        color: #000000;
+        background-color: @text;
+        color: @bar-background;
     }
 }
 
@@ -291,7 +291,7 @@ tooltip label {
 
 #battery.critical:not(.charging) {
     background-color: #f53c3c;
-    color: #ffffff;
+    color: @bar-background;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
