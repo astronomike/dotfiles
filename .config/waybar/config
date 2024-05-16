@@ -81,6 +81,7 @@
 
     "group/system": {
         "modules": [
+            "hyprland/submap",
             "idle_inhibitor",
             "custom/overview",
             "group/vitals",
@@ -113,6 +114,13 @@
 		"tooltip": false,
 		"tooltip-format": "Show workspace overview",
 	},
+    
+    "hyprland/submap": {
+        "format": "<span font='13'>󰌐</span>",
+        "always-on": false,
+        "tooltip": true,
+        "tooltip-format": "Active submap: {}",
+    },
 
 	"custom/gfx": {
 	  "format": "<span font='13'>\uec19 {}</span>",
@@ -132,9 +140,9 @@
     "memory": {
         "interval": 30,
         "format": "\ue240 {percentage}%",
-        "format-alt": "\ue240 {used}GB",
+        "format-alt": "\ue240 {used} GB",
         "tooltip": true,
-        "tooltip-format": "\ue240 {used:0.1f}GB/{total:0.1f}GB"
+        "tooltip-format": "Used memory: {used:0.1f} GB / {total:0.1f} GB"
     },
 
     "clock": {

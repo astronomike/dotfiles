@@ -2,7 +2,6 @@
 
 @define-color bar-background @mantle;
 @define-color bar-accent @sapphire;
-@define-color mantle-transparent #181825;
 @define-color transparent rgba(0, 0, 0, 0);
 
 * {
@@ -34,7 +33,7 @@ tooltip label {
 /* dimensions: up-left up-right low-right low-left or top right bottom left*/
 
 /* Default settings for most modules */
-#apps-windows, #tray, #system, #window, #taskbar, #custom-menu, #custom-gfx, #custom-overview, #idle_inhibitor, #cpu, #memory, #network, #pulseaudio, #pulseaudio-slider, #backlight, #backlight-slider, #battery, #clock, #custom-power {
+#apps-windows, #tray, #system, #window, #submap, #taskbar, #custom-menu, #custom-gfx, #custom-overview, #idle_inhibitor, #cpu, #memory, #network, #pulseaudio, #pulseaudio-slider, #backlight, #backlight-slider, #battery, #clock, #custom-power {
     margin: 2px 0px 2px 0px;
 }
 
@@ -168,12 +167,16 @@ tooltip label {
     margin: 2px 10px 2px 5px;
 }
 
+#submap {
+    padding: 0px 0px 0px 10px;
+}
+
 #idle_inhibitor {
-    padding: 0px 5px 0px 15px;
+    padding: 0px 10px 0px 15px;
 }
 
 #custom-gfx {
-    padding: 0px 5px 0px 5px;
+    padding: 0px 10px 0px 10px;
 }
 
 #custom-gfx.enabled {
