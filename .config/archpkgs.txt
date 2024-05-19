@@ -161,7 +161,7 @@
 	a custom udev rule needs to be made, and the user needs to be in the video group. 
 	See the acpilight gitlab for instructions.
 
-- kvantum 
+- kvantum (also kvantum-qt5)
 	Theme engine for qt apps. 
 	Set QT_THEME_OVERRIDE=kvantum in /etc/environment for this to work for all qt apps. 
 	To install new themes, download (from KDE store - materia is a good one) and direct 
@@ -226,7 +226,7 @@ This creates the directory ~/Private, which will (when mounted) contain the sens
 
 -> To check battery status, use $ acpi -i (will possibly need to install acpi pkg) or $ upower -d
 
--> For general theming, check the wiki (https://wiki.archlinux.org/title/Uniform_look_for_Qt_and_GTK_applications). For QT apps on a standalone WM or compositor, ensure that qt5ct and qt6ct pkgs are installed. If you want to use kvantum themes, use these config tools to choose kvantum as the overall theme. This will require the environment variables 
+-> For general theming, check the wiki (https://wiki.archlinux.org/title/Uniform_look_for_Qt_and_GTK_applications). For QT apps on a standalone WM or compositor, ensure that qt5ct and qt6ct pkgs are installed. If you want to use kvantum themes, also install kvantum-qt5 and use these config tools to choose kvantum as the overall theme. This will require the environment variables (set in .zprofile for eg).
 	export QT_QPA_PLATFORMTHEME=qt6ct
 	export QT_QPA_PLATFORM=wayland
 	
