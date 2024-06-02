@@ -1,0 +1,56 @@
+[$Version]
+update_info=dolphin_detailsmodesettings.upd:rename-leading-padding,dolphin_detailsmodesettings.upd:move-content-display
+
+[ContentDisplay]
+UsePermissionsFormat=NumericFormat
+
+[ExtractDialog]
+1536x960 screen: Height=500
+1536x960 screen: Width=1024
+
+[FileDialogSize]
+1440x900 screen: Window-Maximized=true
+
+[General]
+GlobalViewProps=false
+LockPanels=false
+RememberOpenedTabs=false
+ShowSpaceInfo=false
+SortingChoice=CaseInsensitiveSorting
+Version=202
+ViewPropsTimestamp=2024,3,20,21,5,56.137
+
+[IconsMode]
+IconSize=48
+PreviewSize=96
+
+[KFileDialog Settings]
+Places Icons Auto-resize=false
+Places Icons Static Size=22
+
+[KPropertiesDialog]
+1366x768 screen: Height=534
+1366x768 screen: Width=474
+1536x960 screen: Height=443
+1536x960 screen: Width=409
+1920x1200 screen: Height=588
+1920x1200 screen: Width=427
+eDP-1 Height 1366x768 eDP-1=633
+eDP-1 Width 1366x768 eDP-1=501
+
+[MainWindow]
+ToolBarsMovable=Disabled
+
+[PreviewSettings]
+Plugins=appimagethumbnail,audiothumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,fontthumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,opendocumentthumbnail,gsthumbnail,svgthumbnail,textthumbnail
+
+[Search]
+What=Content
+
+[ViewPropertiesDialog]
+1366x768 screen: Height=360
+1366x768 screen: Width=379
+1536x960 screen: Height=688
+1536x960 screen: Width=371
+2 screens: Height=687
+2 screens: Width=372
