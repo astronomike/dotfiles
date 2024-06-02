@@ -61,8 +61,6 @@ configuration {
 
 	/*---------- Window switcher settings ----------*/
 	window-match-fields: "title,class";
-	window-command: "wmctrl -i -c {window}";
-	//window-format: "{w} - {c} - {t:0}"; 
 	window-format: "{t}";
     window {
     	close-on-delete:            false;

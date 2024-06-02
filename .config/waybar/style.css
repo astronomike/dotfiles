@@ -33,7 +33,7 @@ tooltip label {
 /* dimensions: up-left up-right low-right low-left or top right bottom left*/
 
 /* Default settings for most modules */
-#apps-windows, #tray, #system, #window, #submap, #taskbar, #custom-menu, #custom-gfx, #custom-overview, #idle_inhibitor, #cpu, #memory, #network, #pulseaudio, #pulseaudio-slider, #backlight, #backlight-slider, #battery, #clock, #custom-power {
+#apps-windows, #separator, #tray, #system, #window, #submap, #taskbar, #custom-menu, #custom-gfx, #custom-overview, #idle_inhibitor, #cpu, #memory, #network, #pulseaudio, #pulseaudio-slider, #backlight, #backlight-slider, #battery, #clock, #custom-power {
     margin: 2px 0px 2px 0px;
 }
 
@@ -45,8 +45,12 @@ tooltip label {
 }
 
 #custom-menu {
-    /* color: #2c9cbf; */
     color: @text;
+    padding: 0px 5px 0px 0px;
+}
+
+#custom-menu:hover {
+    color: @sapphire;
 }
 
 #window {
@@ -54,7 +58,7 @@ tooltip label {
 }
 
 #workspaces {
-    padding: 0px 5px 0px 5px;
+    padding: 0px 0px 0px 0px;
 }
 
 /* box around each workspace icon */
@@ -191,6 +195,10 @@ tooltip label {
     padding: 0px 5px 0px 5px;
 }
 
+#custom-overview:hover {
+    color: @bar-accent;
+} 
+
 #cpu {
     color: @peach;
     padding: 0px 5px 0px 5px;
@@ -279,22 +287,26 @@ tooltip label {
 
 #battery.charging, #battery.plugged {
     color: @green;
+    background-color: @bar-background;
+}
+
+#battery.warning:not(.charging) {
+    background-color: @peach;
+    color: @bar-background;
+    border-radius: 5px;
 }
 
 @keyframes blink {
     to {
-        background-color: @text;
+        background-color: @red;
         color: @bar-background;
     }
-}
-
-#battery.warning:not(.charging) {
-    color: @peach;
 }
 
 #battery.critical:not(.charging) {
     background-color: #f53c3c;
     color: @bar-background;
+    border-radius: 5px;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;

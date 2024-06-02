@@ -62,8 +62,8 @@ browser = "firefox"
 file_manager = "nemo"
 
 default_margin = 6  # window gaps
-bar_size = 36
-bar_fontsize = 14
+bar_size = 52
+bar_fontsize = 20
 bar_margin = int(default_margin / 2)  # smaller gap for bar
 
 volume_mod = 5
@@ -660,16 +660,26 @@ def init_widget_list():
             foreground=theme["Base"],
             widgets=[
                 default_sep_widget,
-                widget.PulseVolume(
+                widget.Volume(
                     fmt=" 󰕾 {} ",
-                    limit_max_volume=True,
+					volume_app="pamixer",
+					get_volume_command="pamixer --get-volume-human",
+					volume_down_command=f"pamixer -i {volume_mod}",
+					volume_up_command=f"pamixer -d {volume_mod}",
                     foreground=theme["Lavender"],
                     **decor_group,
                 ),
+                # widget.PulseVolume(
+                #     fmt=" 󰕾 {} ",
+                #     limit_max_volume=True,
+                #     foreground=theme["Lavender"],
+                #     **decor_group,
+                # ),
                 widget.Backlight(
                     fmt=" 󰃞  {} ",
                     foreground=theme["Sapphire"],
-                    backlight_name="intel_backlight",
+                    backlight_name="amdgpu_bl2",
+					# backlight_name=ls /sys/class/backlight
                     **decor_group,
                 ),
                 widget.Wlan(
@@ -855,6 +865,11 @@ from libqtile.backend.wayland import InputConfig
 wl_input_rules = {
     # Touchpad settings
     "1267:12299:ELAN0501:00 04F3:300B Touchpad": InputConfig(
+        tap=True,
+        natural_scroll=True,
+        tap_button_map="lrm",  # 1 tap: l. click, 2 tap: r. click, 3 tap: m. click
+    ),
+	'10248:514:ASUF1204:00 2808:0202 Touchpad': InputConfig(
         tap=True,
         natural_scroll=True,
         tap_button_map="lrm",  # 1 tap: l. click, 2 tap: r. click, 3 tap: m. click

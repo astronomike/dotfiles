@@ -9,12 +9,19 @@ hold:
     sendkey: "LEFTALT+RIGHT"
 pinch:
   3:
-    in:
-      sendkey: "LEFTMETA+W"  
-    out: 
-      sendkey: "LEFTMETA+W"  
+    out:
+      sendkey: "LEFTCTRL+TAB"  
+    in: 
+      sendkey: "LEFTCTRL+LEFTSHIFT+TAB"  
+# rotate:
+#   2: 
+#     clockwise: 
+#       sendkey: "LEFTCTRL+TAB"
+#     counterclockwise: 
+#       sendkey: "LEFTCTRL+LEFTSHIFT+TAB"
 threshold: 
   swipe: 0.5555
   hold: 0.5
   pinch: 0.2
+  rotate: 0.4
   

@@ -10,10 +10,10 @@
 /*****----- Configuration -----*****/
 configuration {
 	modi:                       "window";
-    show-icons:                 false;
+    show-icons:                 true;
     close-on-delete:            false;
     prefer-icon-theme:          true;
-    window-thumbnail:           false;
+    window-thumbnail:           true;
     hide-active-window:         false;
 }
 
@@ -25,7 +25,7 @@ window {
     transparency:                "real";
     location:                    center;
     anchor:                      center;
-    fullscreen:                  true;
+    fullscreen:                  false;
     width:                       50%;
     height:                      55%;
     x-offset:                    0px;
@@ -95,14 +95,14 @@ entry {
 listview {
     enabled:                     true;
     columns:                     3;
-    lines:                       2;
+    lines:                       3;
     cycle:                       true;
-    dynamic:                     true;
+    dynamic:                     false;
     scrollbar:                   false;
     layout:                      vertical;
     reverse:                     false;
     fixed-height:                true;
-    fixed-columns:               true;
+    fixed-columns:               false;
     
     spacing:                     10px;
     margin:                      0px;

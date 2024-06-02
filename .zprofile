@@ -11,8 +11,8 @@ export GIT_ASKPASS=/usr/bin/ksshaskpass
 
 #theming
 # export GTK_THEME=Catppuccin-Mocha-Standard-Blue-dark
-export QT_QPA_PLATFORM=wayland
-export QT_QPA_PLATFORMTHEME=qt5ct
+# export QT_QPA_PLATFORMTHEME=qt5ct
+# export QT_QPA_PLATFORM=wayland
 
 #wayland
 if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
