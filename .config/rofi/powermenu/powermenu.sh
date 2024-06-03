@@ -129,6 +129,8 @@ case "${chosen}" in
 			i3lock
 		elif [[ -x '/usr/bin/slock' ]]; then
 			slock
+		elif [[ -x '/usr/bin/swaylock' ]]; then
+			swaylock -c $XDG_CONFIG_HOME/swaylock/config
 		fi
         ;;
     $suspend)

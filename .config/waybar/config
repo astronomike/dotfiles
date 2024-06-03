@@ -32,7 +32,7 @@
     },
 
     "custom/menu": {
-        "format": "   <span font='13'>\uf303</span>",
+        "format": "   <span font='13'>\uf30a</span>",
         "on-click": "sh $HOME/.config/rofi/apps/apps.sh",
         "tooltip": false
     },
@@ -105,19 +105,14 @@
     
     "group/vitals": {
         "orientation": "horizontal",
-        "drawer": {
-            "transition-duration": 500,
-            "transition-left-to-right": false
-        },
         "modules": [
-            "custom/gfx",
             "cpu",
             "memory"
         ],
     },
 
 	"custom/overview": {
-		"format": "<span font='13'> 󰝘</span>",
+		"format": "<span font='13'>󰝘 </span>",
 		"on-click": "sleep 0.2 && hyprctl dispatch hyprexpo:expo enable",
 		"exec-on-event": false,
 		"tooltip": true,

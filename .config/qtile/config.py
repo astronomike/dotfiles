@@ -62,8 +62,8 @@ browser = "firefox"
 file_manager = "nemo"
 
 default_margin = 6  # window gaps
-bar_size = 52
-bar_fontsize = 20
+bar_size = 44
+bar_fontsize = 16
 bar_margin = int(default_margin / 2)  # smaller gap for bar
 
 volume_mod = 5
@@ -675,24 +675,24 @@ def init_widget_list():
                 #     foreground=theme["Lavender"],
                 #     **decor_group,
                 # ),
-                widget.Backlight(
-                    fmt=" 󰃞  {} ",
-                    foreground=theme["Sapphire"],
-                    backlight_name="amdgpu_bl2",
-					# backlight_name=ls /sys/class/backlight
-                    **decor_group,
-                ),
-                widget.Wlan(
-                    format=" \uf1eb {percent:2.0%} ",
-                    disconnected_message=" \ufaa9 ",
-                    foreground=theme["Teal"],
-                    mouse_callbacks={
-                        "Button1": lazy.group["scratchpad"].dropdown_toggle(
-                            "speedometer"
-                        )
-                    },
-                    **decor_group,
-                ),
+     #            widget.Backlight(
+     #                fmt=" 󰃞  {} ",
+     #                foreground=theme["Sapphire"],
+     #                # backlight_name="amdgpu_bl2",
+					# backlight_name="ls /sys/class/backlight",
+     #                **decor_group,
+     #            ),
+                # widget.Wlan(
+                #     format=" \uf1eb {percent:2.0%} ",
+                #     disconnected_message=" \ufaa9 ",
+                #     foreground=theme["Teal"],
+                #     mouse_callbacks={
+                #         "Button1": lazy.group["scratchpad"].dropdown_toggle(
+                #             "speedometer"
+                #         )
+                #     },
+                #     **decor_group,
+                # ),
                 widget.CPU(
                     format=" \ue266  {load_percent:.0f}% ",
                     mouse_callbacks={
@@ -709,17 +709,17 @@ def init_widget_list():
                     foreground=theme["Yellow"],
                     **decor_group,
                 ),
-                widget.Battery(
-                    format="{char} {hour:d}h{min:02d}m ({percent:2.0%})  ",
-                    discharge_char="󱟟",
-                    charge_char="󰂄",
-                    foreground=theme["Peach"],
-                    low_foreground=theme["Red"],
-                    update_interval=5,
-                    notify_below=0.1,
-                    notification_timeout=0,
-                    **decor_group,
-                ),
+                # widget.Battery(
+                #     format="{char} {hour:d}h{min:02d}m ({percent:2.0%})  ",
+                #     discharge_char="󱟟",
+                #     charge_char="󰂄",
+                #     foreground=theme["Peach"],
+                #     low_foreground=theme["Red"],
+                #     update_interval=5,
+                #     notify_below=0.1,
+                #     notification_timeout=0,
+                #     **decor_group,
+                # ),
             ],
         ),
         default_sep_widget,
@@ -730,12 +730,12 @@ def init_widget_list():
             linewidth=5,
             **decor_group,
         ),
-        widget.BatteryIcon(
-            theme_path=home / ".config/qtile/battery-icons/",
-            update_interval=10,
-            scale=1.4,
-            **decor_group,
-        ),
+        # widget.BatteryIcon(
+        #     theme_path=home / ".config/qtile/battery-icons/",
+        #     update_interval=10,
+        #     scale=1.4,
+        #     **decor_group,
+        # ),
         widget.StatusNotifier(
             icon_theme="Papirus",
             icon_size=20,
@@ -792,6 +792,8 @@ screens = [
             background=bar_background,
             # margin=[bar_margin, bar_margin, default_margin, bar_margin],  # [N E S W]
 			margin=0,
+			border_width=0,
+			border_color=theme["Teal"],
         ),
         bottom=bar.Gap(default_margin),
         left=bar.Gap(default_margin),

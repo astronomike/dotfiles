@@ -1,7 +1,7 @@
 @import "mocha.css";
 
 @define-color bar-background @mantle;
-@define-color bar-accent @sapphire;
+@define-color bar-accent @teal;
 @define-color transparent rgba(0, 0, 0, 0);
 
 * {
@@ -94,13 +94,13 @@ tooltip label {
 #workspaces button.active {
     /* focused */
 	color: @bar-background;
-    background: @green;
+    background: @bar-accent;
 }
 
 #workspaces button:hover {
     /* on mouse hover */
     color: @bar-background;
-    background: @bar-accent;
+    background: @mauve;
 }
 
 #workspaces button.urgent {
@@ -200,12 +200,12 @@ tooltip label {
 } 
 
 #cpu {
-    color: @peach;
+    color: @teal;
     padding: 0px 5px 0px 5px;
 }
 
 #memory {
-    color: @flamingo;
+    color: @teal;
     padding: 0px 5px 0px 5px;
 }
 
@@ -220,7 +220,7 @@ tooltip label {
 } 
 
 #pulseaudio {
-    color: @yellow;
+    color: @teal;
     padding: 0px 5px 0px 5px;
 }
 
