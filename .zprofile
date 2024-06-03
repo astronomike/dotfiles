@@ -1,10 +1,12 @@
 export EDITOR=vim 
-export PATH="$HOME/.local/bin:$PATH"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CONFIG_DIR="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
+
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$XDG_CONFIG_HOME/emacs/bin:$PATH"
 
 export SUDO_ASKPASS="$HOME/.config/rofi/password/rofi_askpass.sh"
 export GIT_ASKPASS=/usr/bin/ksshaskpass
