@@ -36,7 +36,7 @@ window {
     padding:                     0px;
     border:                      2px solid;
     border-radius:               10px;
-    border-color:                @selected;
+    border-color:                @accent-primary;
     background-color:            @background;
     cursor:                      "default";
 }
@@ -49,7 +49,7 @@ mainbox {
     padding:                     20px;
     border:                      0px solid;
     border-radius:               0px 0px 0px 0px;
-    border-color:                @selected;
+    border-color:                @accent-primary;
     background-color:            transparent;
     children:                    [ "inputbar", "listview" ];
 }
@@ -63,7 +63,7 @@ inputbar {
     border:                      2px solid;
     border-radius:               10px;
     border-color:                @background-alt;
-    background-color:            @selected;
+    background-color:            @accent-primary;
     text-color:                  @background;
     children:                    [ "entry" ];
 }
@@ -109,14 +109,14 @@ listview {
     padding:                     0px;
     border:                      0px solid;
     border-radius:               0px;
-    border-color:                @selected;
+    border-color:                @accent-primary;
     background-color:            transparent;
     text-color:                  @foreground;
     cursor:                      "default";
 }
 scrollbar {
     handle-width:                5px ;
-    handle-color:                @selected;
+    handle-color:                @accent-primary;
     border-radius:               0px;
     background-color:            @background-alt;
 }
@@ -138,7 +138,7 @@ element normal.normal {
     text-color:                  @foreground;
 }
 element selected.active {
-    background-color:            @background; 
+    background-color:            @background-alt;
     text-color:                  @green;
     border:                      4px solid;
     border-color:                @active;
@@ -147,7 +147,7 @@ element selected.normal {
     background-color:            @background-alt;
     text-color:                  @foreground;
     border:                      4px solid;
-    border-color:                @selected;
+    border-color:                @accent-primary;
 }
 element-icon {
     background-color:            transparent;
@@ -169,7 +169,7 @@ error-message {
     padding:                     20px;
     border:                      0px solid;
     border-radius:               0px;
-    border-color:                @selected;
+    border-color:                @accent-primary;
     background-color:            black / 10%;
     text-color:                  @foreground;
 }

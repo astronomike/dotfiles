@@ -7,6 +7,15 @@
  **/
 
 * {
+    accent-primary:         @mauve;
+    accent-secondary:       @sapphire;
+    background:             @crust;
+    background-alt:         @surface0;
+    foreground:             @text;
+    floating:               @mauve;
+    active:                 @green;
+    urgent:                 @red;
+
     surface0:   #313244;
     base:       #1e1e2e;
     mantle:     #181825;
@@ -26,12 +35,4 @@
 	sky: 	 	#74B7D2;
     maroon: 	#ea999c;
 	sapphire: 	#85c1dc;
-
-    selected:       @sapphire;
-    background:     @crust;
-    background-alt: @surface0;
-    foreground:     @text;
-    floating:       @mauve;
-    active:         @green;
-    urgent:         @red;
 }
