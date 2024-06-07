@@ -1,7 +1,8 @@
 @import "mocha.css";
 
 @define-color bar-background @mantle;
-@define-color bar-accent @teal;
+@define-color bar-accent-primary @mauve;
+@define-color bar-accent-secondary @teal;
 @define-color transparent rgba(0, 0, 0, 0);
 
 * {
@@ -19,7 +20,7 @@ window#waybar {
 tooltip {
     background: @bar-background;
     color: @text;
-    border: 1px solid @bar-accent;
+    border: 1px solid @bar-accent-primary;
     border-radius: 10px;
 }
 
@@ -38,7 +39,7 @@ tooltip label {
 }
 
 #apps-windows { 
-    border: 1px solid @bar-accent;
+    border: 2px solid @bar-accent-primary;
     border-radius: 15px 0px 15px 0px;
     background: @bar-background;
     margin: 2px 0px 2px 10px;
@@ -74,6 +75,11 @@ tooltip label {
     transition: all 0.2s cubic-bezier(.55,-0.68,.48,1.682); */
 }
 
+/* #workspaces button.hosting-monitor {
+    color: @bar-background;
+    background: @yellow;
+} */
+
 #workspaces button.persistent {
     /* occupied but not focused*/
     color: @text;
@@ -87,25 +93,24 @@ tooltip label {
 }
 
 #workspaces button.visible {
-    color: @bar-background;
 	background: @overlay0;
-}    
+}
 
 #workspaces button.active {
     /* focused */
 	color: @bar-background;
-    background: @bar-accent;
+    background: @bar-accent-secondary;
 }
 
 #workspaces button:hover {
     /* on mouse hover */
     color: @bar-background;
-    background: @mauve;
+    background: @bar-accent-primary;
 }
 
 #workspaces button.urgent {
     color: @bar-background;
-    background: @peach;
+    background: @yellow;
 }
 
 #taskbar {
@@ -134,7 +139,7 @@ tooltip label {
 
 #tray {
     background-color: @bar-background;
-    border: 1px solid @bar-accent;
+    border: 2px solid @bar-accent-primary;
     border-radius: 0px 15px 0px 15px;
     margin: 2px 0px 2px 0px;
     padding: 0px 10px 0px 10px;
@@ -143,7 +148,7 @@ tooltip label {
 #tray menu {
     background-color: @bar-background;
     color: @text;
-    border: 2px solid @bar-accent;
+    border: 2px solid @bar-accent-primary;
     border-radius: 0px;
     padding: 5px;
 }
@@ -165,7 +170,7 @@ tooltip label {
 }
 
 #system {
-    border: 1px solid @bar-accent;
+    border: 2px solid @bar-accent-primary;
     border-radius: 15px 0px 15px 0px;
     background: @bar-background;
     margin: 2px 10px 2px 5px;
@@ -177,6 +182,18 @@ tooltip label {
 
 #idle_inhibitor {
     padding: 0px 10px 0px 15px;
+}
+
+#idle_inhibitor:hover {
+    color: @bar-accent-primary;
+}
+
+#custom-overview {
+    padding: 0px 5px 0px 5px;
+}
+
+#custom-overview:hover {
+    color: @bar-accent-primary;
 }
 
 #custom-gfx {
@@ -191,22 +208,18 @@ tooltip label {
     color: @text;
 }
 
-#custom-overview {
-    padding: 0px 5px 0px 5px;
+#custom-gfx:hover {
+    color: @bar-accent-primary;
 }
 
-#custom-overview:hover {
-    color: @bar-accent;
-} 
-
 #cpu {
-    color: @teal;
+    color: @bar-accent-primary;
     padding: 0px 5px 0px 5px;
 }
 
 #memory {
-    color: @teal;
-    padding: 0px 0px 0px 5px;
+    color: @bar-accent-primary;
+    padding: 0px 5px 0px 5px;
 }
 
 #network {
@@ -220,21 +233,25 @@ tooltip label {
 } 
 
 #pulseaudio {
-    color: @teal;
+    color: @text;
     padding: 0px 5px 0px 5px;
 }
 
+#pulseaudio:hover {
+    color: @bar-accent-primary;
+}
+
 #pulseaudio.microphone {
-    color: @yellow;
+    color: @bar-accent-secondary;
     padding: 0px 5px 0px 5px;
 }
 
 #pulseaudio-slider slider {
+    background-color: @bar-accent-primary;
     min-height: 5px;
     min-width: 5px;
     border-radius: 5px;
     border: 0px;
-    background-color: @bar-accent;
     background-size: 1px;
     padding: 0px;
 }
@@ -243,7 +260,6 @@ tooltip label {
     min-height: 5px;
     min-width: 80px;
     border-radius: 5px;
-    background-color: @yellow;
 }
 
 #pulseaudio-slider highlight {
@@ -253,8 +269,12 @@ tooltip label {
 }
 
 #backlight {
-    color: @green;
+    color: @text;
     padding: 0px 5px 0px 5px;
+}
+
+#backlight:hover {
+    color: @bar-accent-primary;
 }
 
 #backlight-slider slider {
@@ -262,20 +282,15 @@ tooltip label {
     min-width: 2px;
     border: 0px;
     border-radius: 5px;
-    background-color: @bar-accent;
 }
 
 #backlight-slider trough {
     min-height: 5px;
     min-width: 80px;
     border-radius: 5px;
-    background-color: @green;
-    color: @green;
 }
 
 #backlight-slider highlight {
-    background-color: @green;
-    color: @green;
     min-height: 5px;
     min-width: 0px;
     border-radius: 5px;
