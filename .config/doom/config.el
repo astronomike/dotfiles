@@ -33,8 +33,8 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-(setq doom-font (font-spec :family "Ubuntu Mono" :size 14 :weight 'regular)
-      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 14))
+(setq doom-font (font-spec :family "Ubuntu Mono" :size 16 :weight 'regular)
+      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 16))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -48,7 +48,7 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -86,3 +86,15 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(setq doom-theme 'catppuccin)
+
+(defun my-org-faces ()
+    (set-face-attribute 'org-todo nil :height 0.8)
+    (set-face-attribute 'org-level-1 nil :height 1.2)
+    (set-face-attribute 'org-level-2 nil :height 1.1))
+
+(set-face-attribute 'fill-column-indicator nil :foreground "grey25")
+(add-hook 'org-mode-hook #'my-org-faces)
+
+(after! org (plist-put org-format-latex-options :scale 2))
