@@ -1,8 +1,8 @@
 @import "mocha.css";
 
 @define-color bar-background @mantle;
-@define-color bar-accent-primary @mauve;
-@define-color bar-accent-secondary @teal;
+@define-color bar-accent-primary @teal;
+@define-color bar-accent-secondary @pink;
 @define-color transparent rgba(0, 0, 0, 0);
 
 * {
@@ -12,7 +12,8 @@
 }
 
 window#waybar {
-    background: @transparent;
+ /*   background: @transparent; */
+    background: alpha(@bar-background,0.35);
     color: @text;
 }
 
@@ -66,7 +67,7 @@ tooltip label {
 #workspaces button {
     border: 0px;
     border-radius: 7px;
-    box-shadow: none;
+    box-shadow: 0px 2px @surface1;
 	text-shadow: none;
     margin: 5px 3px 5px 3px;
     padding: 0px 4px 0px 4px;  
@@ -74,11 +75,6 @@ tooltip label {
     /* animation: gradient_f 20s ease-in infinite;
     transition: all 0.2s cubic-bezier(.55,-0.68,.48,1.682); */
 }
-
-/* #workspaces button.hosting-monitor {
-    color: @bar-background;
-    background: @yellow;
-} */
 
 #workspaces button.persistent {
     /* occupied but not focused*/
@@ -111,6 +107,12 @@ tooltip label {
 #workspaces button.urgent {
     color: @bar-background;
     background: @yellow;
+}
+
+#workspaces button.hosting-monitor {
+    box-shadow: 0px 0px;
+    border: 1px;
+    border-color: @overlay0;
 }
 
 #taskbar {
