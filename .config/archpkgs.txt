@@ -198,6 +198,9 @@
 	For creating a software access point (ethernet -> wifi ap). 
 	After install, create a hotspot with: # create_ap wlan0 enp1s0 <SSID> <PASSWD>
 
+- ntp
+	Time synchronisation service. Enable and start ntpd.service, and wait a bit until the clocks are synchronised. Note that $ timedatectl  output should say time synchronisation enabled, though they have their own version of this called systemd-timesyncd. To query status use $ ntpq -p  offset, delay and jitter values should be non-zero with an asterisk next to the server used for synchronisation 
+
 ####################################################
 # General Notes
 ####################################################
@@ -206,7 +209,7 @@
 
  -> Every now and again, run paccache command to clean cache, as it can grow quite large as packages are installed. For AUR packages installed with yay.
 		sudo paccache -r -k <number of pkg versions to keep>     (-r remove, -d dry-run, -k keep <number>) 
-		yay -Scc 	(will prompt for deletions)
+		yay -Sca 	(will prompt for deletions)
 
  -> If using an SSD, TRIM can be enabled by enabling the fstrim.timer systemd unit (# systemctl enable fstrim.timer) - note that the utils-linux package is required. This schedules fstrim to run once per week. TRIM erases data blocks in the SSD that are no longer in use, which can improve the longevity of the drive. 
 
@@ -229,4 +232,7 @@ This creates the directory ~/Private, which will (when mounted) contain the sens
 -> For general theming, check the wiki (https://wiki.archlinux.org/title/Uniform_look_for_Qt_and_GTK_applications). For QT apps on a standalone WM or compositor, ensure that qt5ct and qt6ct pkgs are installed. If you want to use kvantum themes, also install kvantum-qt5 and use these config tools to choose kvantum as the overall theme. This will require the environment variables (set in .zprofile for eg).
 	export QT_QPA_PLATFORMTHEME=qt6ct
 	export QT_QPA_PLATFORM=wayland
+(note that setting the env variable QT_PLATFORMTHEME_OVERRIDE=kvantum does not work with qt5(6)ct, so if this is set (maybe in /etc/environment for example) unset it). 
 	
+-> For ssh passphrases to be cached and thus remembered for the login session, you can use ssh-agent (which is part of the openssh package). This also needs a configuration option, set in ~/.ssh/config as     AddKeysToAgent yes
+Then, add `eval $(ssh-agent)` to a startup or login script (or .zprofile or something) to have it fork in the background. It will ask for the passphrase first time you need it, then cache it so it won't ask each following time you invoke ssh (including through git and things)  

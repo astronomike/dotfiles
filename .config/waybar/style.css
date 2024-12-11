@@ -1,8 +1,8 @@
 @import "mocha.css";
 
 @define-color bar-background @mantle;
-@define-color bar-accent-primary @teal;
-@define-color bar-accent-secondary @pink;
+@define-color bar-accent-primary @green;
+@define-color bar-accent-secondary @peach;
 @define-color transparent rgba(0, 0, 0, 0);
 
 * {
@@ -13,7 +13,7 @@
 
 window#waybar {
  /*   background: @transparent; */
-    background: alpha(@bar-background,0.35);
+    background: alpha(@bar-background,0.5);
     color: @text;
 }
 
@@ -43,7 +43,7 @@ tooltip label {
     border: 2px solid @bar-accent-primary;
     border-radius: 15px 0px 15px 0px;
     background: @bar-background;
-    margin: 2px 0px 2px 10px;
+    margin: 0px 0px 0px 10px;
 }
 
 #custom-menu {
@@ -92,12 +92,6 @@ tooltip label {
 	background: @overlay0;
 }
 
-#workspaces button.active {
-    /* focused */
-	color: @bar-background;
-    background: @bar-accent-secondary;
-}
-
 #workspaces button:hover {
     /* on mouse hover */
     color: @bar-background;
@@ -113,6 +107,13 @@ tooltip label {
     box-shadow: 0px 0px;
     border: 1px;
     border-color: @overlay0;
+}
+
+#workspaces button.active {
+    /* focused */
+	color: @bar-background;
+    background: @bar-accent-secondary;
+	box-shadow: 1px 1px @overlay0;
 }
 
 #taskbar {
@@ -143,7 +144,7 @@ tooltip label {
     background-color: @bar-background;
     border: 2px solid @bar-accent-primary;
     border-radius: 0px 15px 0px 15px;
-    margin: 2px 0px 2px 0px;
+    margin: 0px 0px 0px 0px;
     padding: 0px 10px 0px 10px;
 }
 
@@ -175,7 +176,7 @@ tooltip label {
     border: 2px solid @bar-accent-primary;
     border-radius: 15px 0px 15px 0px;
     background: @bar-background;
-    margin: 2px 10px 2px 5px;
+    margin: 0px 10px 0px 5px;
 }
 
 #submap {
@@ -250,23 +251,22 @@ tooltip label {
 
 #pulseaudio-slider slider {
     background-color: @bar-accent-primary;
-    min-height: 5px;
-    min-width: 5px;
+    min-height: 0px;
+    min-width: 0px;
     border-radius: 5px;
-    border: 0px;
-    background-size: 1px;
-    padding: 0px;
 }
 
 #pulseaudio-slider trough {
-    min-height: 5px;
+    background-color: @text;
+    min-height: 3px;
     min-width: 80px;
     border-radius: 5px;
 }
 
 #pulseaudio-slider highlight {
-    min-height: 0px;
-    min-width: 0px;
+    background-color: @bar-accent-secondary;
+    min-height: 3px;
+    min-width: 80px;
     border-radius: 5px;
 }
 
@@ -280,21 +280,23 @@ tooltip label {
 }
 
 #backlight-slider slider {
-    min-height: 2px;
-    min-width: 2px;
-    border: 0px;
+    background-color: @bar-accent-primary;
+    min-height: 3px;
+    min-width: 3px;
     border-radius: 5px;
 }
 
 #backlight-slider trough {
-    min-height: 5px;
+    background-color: @text;
+    min-height: 3px;
     min-width: 80px;
     border-radius: 5px;
 }
 
 #backlight-slider highlight {
-    min-height: 5px;
-    min-width: 0px;
+    background-color: @bar-accent-secondary;
+    min-height: 3px;
+    min-width: 3px;
     border-radius: 5px;
 }
 

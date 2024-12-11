@@ -28,7 +28,8 @@ format = "[$symbol$environment](blue)"
 ignore_base = false
 
 [directory]
-read_only = " "
+truncation_length = 5
+truncation_symbol = '.../'
 
 [git_branch]
 symbol = " "
