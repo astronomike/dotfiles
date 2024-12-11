@@ -1,6 +1,8 @@
 #!/bin/bash
 
 ~/.fehbg &
+sh .xinitrc
+sh .screenlayout/home.sh
 picom -b &
 nm-applet --indicator &
 redshift &

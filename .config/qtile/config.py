@@ -59,7 +59,7 @@ else:
 mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
-file_manager = "nemo"
+file_manager = "dolphin"
 
 default_margin = 6  # window gaps
 bar_size = 52
@@ -77,6 +77,7 @@ dark_theme = True
 if dark_theme:
     theme = Colors.mocha
     bar_background = Colors.transparent
+    bar_background = theme["Crust"]
     # bar_background = theme["Surface1"]
     bar_foreground = theme["Text"]
 else:
@@ -153,15 +154,17 @@ def autostart():
         autostart_path = home / ".config/qtile/autostart_wayland.sh"
     else:
         autostart_path = home / ".config/qtile/autostart.sh"
-    subprocess.Popen([autostart_path])
+    if autostart_path.exists():
+        subprocess.Popen([autostart_path])
 
 @hook.subscribe.shutdown
 def autostop():
     if wayland:
-        autostart_path = home / ".config/qtile/autostop_wayland.sh"
+        autostop = home / ".config/qtile/autostop_wayland.sh"
     else:
-        autostart_path = home / ".config/qtile/autostop.sh"
-    subprocess.Popen([autostop_path])
+        autostop_path = home / ".config/qtile/autostop.sh"
+    if autostop_path.exists():
+        subprocess.Popen([autostop_path])
 
 @hook.subscribe.screen_change
 def restart_on_randr(_):
@@ -295,7 +298,7 @@ keys = [
         lazy.spawn(rofi["filebrowser"]),
         desc="Spawn rofi with filebrowser mode",
     ),
-    Key([mod], "e", lazy.spawn(file_manager), desc="Spawn file manager"),
+    Key([mod], "d", lazy.spawn(file_manager), desc="Spawn file manager"),
     Key(
         [mod, "control"],
         "o",
@@ -569,6 +572,8 @@ decor_group = {
     ],
     "padding": default_widget_padding,
 }
+decor_group.update({"decorations":[],"padding":default_widget_padding})
+
 decor_group_statusnotifier = decor_group.copy()
 decor_group_statusnotifier["padding"] = default_widget_padding + 4
 icon_font = {"font": "Symbols Nerd Font", "fontsize": bar_fontsize + 4}
@@ -603,16 +608,17 @@ def init_widget_list():
             markup=True,
             visible_groups=group_list,
             rounded=True,
-            highlight_method="border",
-            # highlight_method="line",
+            # highlight_method="border",
+            highlight_method="line",
             highlight_color=[theme["Base"],theme["Surface2"]],
             borderwidth=1.5,
-            padding_y=2,
+            padding_y=3.5,
+            padding_x=3.5,
             active=theme["Sapphire"],
-            inactive=theme["Red"],
+            inactive=theme["Surface2"],
             this_current_screen_border=theme["Green"],
-            this_screen_border=theme["Overlay2"],
-            other_current_screen_border=theme["Green"],
+            this_screen_border=theme["Green"],
+            other_current_screen_border=theme["Overlay2"],
             other_screen_border=theme["Overlay2"],
             disable_drag=True,
             **icon_font,
@@ -657,7 +663,7 @@ def init_widget_list():
             text_closed="󰞗",
             text_open="󰞔",
             font="Symbols Nerd Font Bold",
-            foreground=theme["Base"],
+            foreground=theme["Text"],
             widgets=[
                 default_sep_widget,
                 widget.Volume(
@@ -682,17 +688,17 @@ def init_widget_list():
 					# backlight_name=ls /sys/class/backlight
                     **decor_group,
                 ),
-                widget.Wlan(
-                    format=" \uf1eb {percent:2.0%} ",
-                    disconnected_message=" \ufaa9 ",
-                    foreground=theme["Teal"],
-                    mouse_callbacks={
-                        "Button1": lazy.group["scratchpad"].dropdown_toggle(
-                            "speedometer"
-                        )
-                    },
-                    **decor_group,
-                ),
+                # widget.Wlan(
+                #     format=" \uf1eb {percent:2.0%} ",
+                #     disconnected_message=" \ufaa9 ",
+                #     foreground=theme["Teal"],
+                #     mouse_callbacks={
+                #         "Button1": lazy.group["scratchpad"].dropdown_toggle(
+                #             "speedometer"
+                #         )
+                #     },
+                #     **decor_group,
+                # ),
                 widget.CPU(
                     format=" \ue266  {load_percent:.0f}% ",
                     mouse_callbacks={
@@ -725,17 +731,18 @@ def init_widget_list():
         default_sep_widget,
         # widget.Systray(),
         widget.Sep(
-            foreground=decor_color,
+			foreground=bar_background,
+            # foreground=decor_color,
             # background=bar_background,
-            linewidth=5,
+            linewidth=2,
             **decor_group,
         ),
-        widget.BatteryIcon(
-            theme_path=home / ".config/qtile/battery-icons/",
-            update_interval=10,
-            scale=1.4,
-            **decor_group,
-        ),
+#         widget.BatteryIcon(
+#             theme_path=home / ".config/qtile/battery-icons/",
+#             update_interval=10,
+#             scale=1.4,
+#             **decor_group,
+#         ),
         widget.StatusNotifier(
             icon_theme="Papirus",
             icon_size=20,
@@ -835,7 +842,7 @@ dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
 follow_mouse_focus = True
 bring_front_click = True
-cursor_warp = warp
+cursor_warp = False
 floating_layout = layout.Floating(
     border_width=3,
     border_focus=theme["Mauve"],
