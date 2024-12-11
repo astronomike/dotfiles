@@ -32,3 +32,5 @@ export PGPLOT_FONT=$PGPLOT_DIR/grfont.dat
 
 export TEMPO2=$PSRHOME/tempo2
 export PSRCAT_FILE=$PSRHOME/psrcat/psrcat.db
+
+eval $(ssh-agent)
