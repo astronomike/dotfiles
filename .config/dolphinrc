@@ -15,8 +15,9 @@ UsePermissionsFormat=NumericFormat
 
 [General]
 GlobalViewProps=false
-LockPanels=false
 RememberOpenedTabs=false
+ShowFullPath=true
+ShowSelectionToggle=false
 ShowSpaceInfo=false
 SortingChoice=CaseInsensitiveSorting
 UseTabForSwitchingSplitView=true
@@ -25,7 +26,8 @@ ViewPropsTimestamp=2024,3,20,21,5,56.137
 
 [IconsMode]
 IconSize=48
-PreviewSize=96
+MaximumTextLines=4
+PreviewSize=112
 
 [KFileDialog Settings]
 Places Icons Auto-resize=false
@@ -51,6 +53,7 @@ Plugins=appimagethumbnail,audiothumbnail,comicbookthumbnail,cursorthumbnail,djvu
 [ViewPropertiesDialog]
 1366x768 screen: Height=360
 1366x768 screen: Width=379
+1440x900 screen: Window-Maximized=true
 1536x960 screen: Height=688
 1536x960 screen: Width=371
 2 screens: Height=687
