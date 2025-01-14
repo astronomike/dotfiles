@@ -23,6 +23,9 @@ if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
 fi
 export MOZ_USE_XINPUT2=1
  
+#ssh
+eval $(ssh-agent)
+
 #psrchive stuff
 export PSRHOME="$HOME/Packages/pulsar"
 export PATH=${PATH}:$PSRHOME/bin
@@ -33,4 +36,6 @@ export PGPLOT_FONT=$PGPLOT_DIR/grfont.dat
 export TEMPO2=$PSRHOME/tempo2
 export PSRCAT_FILE=$PSRHOME/psrcat/psrcat.db
 
-eval $(ssh-agent)
+#ruby gems
+export GEM_HOME="$(gem env user_gemhome)"
+export PATH="$PATH:$GEM_HOME/bin"

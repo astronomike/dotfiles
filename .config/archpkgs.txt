@@ -131,7 +131,11 @@
 - ruby-fusuma, ruby-fusuma-plugin-sendkey (aur)
     Like xdotool and libinput-gestures, but works on wayland (x11 too). 
     Config location: ~/.config/fusuma/config.yml
-    Add to startup script: fusuma -d 
+    For daemon mode add to startup script: fusuma -c <config-path> -d 
+	Note that its a ruby gem, so there are some installation shenanigans. Instead of installing 
+	a gem with sudo (not recommended online by anyone), install ruby-build, and then follow the
+	readme in https://github.com/rbenv. Then can install by 'gem install fusuma', not with aur 
+	or sudo. 
 
 - slock
 	Screen locking tool for X11. 

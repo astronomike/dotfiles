@@ -34,6 +34,7 @@ source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 # aliases
 alias ls='ls --color=auto'
 alias qconfig="$EDITOR $HOME/.config/qtile/config.py"
+alias hconfig="$EDITOR $HOME/.config/hypr/hyprland.conf"
 alias qxephyr="SCREEN_SIZE=1080x720 $HOME/Packages/qtile/scripts/xephyr"
 alias qlog="tail -100 $HOME/.local/share/qtile/qtile.log"
 alias quitxephyr="qtile cmd-obj -o cmd -f shutdown"
@@ -41,6 +42,9 @@ alias kill-picom="pkill -e picom"
 alias start-picom="picom -b --experimental-backends"
 alias restart-picom="pkill -e picom && picom -b --experimental-backends"
 alias pconfig="$EDITOR $HOME/.config/picom/picom.conf"
+alias asusmuxI="supergfxctl -m Integrated"
+alias asusmuxH="supergfxctl -m Hybrid"
+alias asusmuxD="supergfxctl -m AsusMuxDgpu"
 
 # git alias for dotfiles management
 alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
@@ -50,6 +54,9 @@ alias gits="git status"
 
 # starship prompt
 eval "$(starship init zsh)"
+
+# ruby gems management
+# eval "$(rbenv init -)"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
