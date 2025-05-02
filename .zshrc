@@ -32,6 +32,7 @@ source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 #fi
  
 # aliases
+alias ssh-astro='ssh msarkis@146.232.219.10'
 alias ls='ls --color=auto'
 alias qconfig="$EDITOR $HOME/.config/qtile/config.py"
 alias hconfig="$EDITOR $HOME/.config/hypr/hyprland.conf"
