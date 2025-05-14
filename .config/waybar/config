@@ -44,14 +44,15 @@
     "hyprland/workspaces": {
        "format": "<span font='13'>{icon}</span>", 
        "disable-scroll": true,
-       "sort-by": "id",
+       "sort-by": "number",
+       "show-special": true,
        "active-only": false,
        "persistent-workspaces": {
-		"eDP-1": [1,2,3,4,5,6,7,8,9],
-		"eDP-2": [1,2,3,4,5,6,7,8,9],
-		"HDMI-A-1": [1,2,3,4,5,6,7,8,9],
-		"DP-2": [1,2,3,4,5,6,7,8,9],
-		"DP-1": [10,11],
+		"eDP-1": [1,2,3,4,5,6,7,8,9,"hidden"],
+		"eDP-2": [1,2,3,4,5,6,7,8,9,"hidden"],
+		"HDMI-A-1": [1,2,3,4,5,6,7,8,9,"hidden"],
+		"DP-2": [1,2,3,4,5,6,7,8,9,"hidden"],
+		"DP-1": [10,11]
        },
        "format-icons": {
         "1":        "\ue795",
@@ -64,7 +65,8 @@
         "8":    "\uf1b6",
         "9":    "\uF025",
         "10":       " i ",
-        "11":       " ii "
+        "11":       " ii ",
+        "hidden":   "\udb81\uded0"
        }
    },
 

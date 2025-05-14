@@ -2,7 +2,7 @@
 
 @define-color bar-background @mantle;
 @define-color bar-accent-primary @sapphire;
-@define-color bar-accent-secondary @green;
+@define-color bar-accent-secondary @peach;
 @define-color transparent rgba(0, 0, 0, 0);
 
 * {
@@ -77,6 +77,12 @@ tooltip label {
 }
 
 #workspaces button.persistent {
+    /* occupied but not focused*/
+    color: @text;
+    background: @bar-background;
+}
+
+#workspaces button.special {
     /* occupied but not focused*/
     color: @text;
     background: @bar-background;
