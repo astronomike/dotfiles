@@ -1,8 +1,8 @@
 @import "mocha.css";
 
 @define-color bar-background @mantle;
-@define-color bar-accent-primary @sapphire;
-@define-color bar-accent-secondary @peach;
+@define-color bar-accent-primary @sky;
+@define-color bar-accent-secondary @green;
 @define-color transparent rgba(0, 0, 0, 0);
 
 * {
@@ -13,7 +13,7 @@
 
 window#waybar {
  /*   background: @transparent; */
-    background: alpha(@bar-background,0.3);
+    background: alpha(@bar-background,0.0);
     color: @text;
 }
 
@@ -42,7 +42,7 @@ tooltip label {
 #apps-windows { 
     border: 2px solid @bar-accent-primary;
     border-radius: 7px 7px 7px 7px;
-    background: @bar-background;
+    background: alpha(@bar-background,1.0);
     margin: 0px 0px 0px 10px;
 }
 
