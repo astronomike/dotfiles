@@ -16,6 +16,9 @@
 	Custom prompt.
 	Config location: ~/.config/starship.toml
 
+- bluez, blueman, bluez-obex
+	Bluetooth functionality and gui (bluez-obex for transferring files)
+
 - powerline-{vim,common,fonts}, python-powerline
 	Nice status line for vim (or prompt for bash).
 	Config location: ~/.config/powerline
