@@ -1,7 +1,7 @@
 add_newline = true
 
 format = """
-[| $username](green)$directory$python$package$conda$git_status$git_branch
+[| $username](green)$hostname$directory$python$package$conda$git_status$git_branch
 [  ➜  ](green) """
 
 right_format = "$time$character$status"
@@ -56,3 +56,6 @@ time_format = "%T, %v "
 disabled = false
 utc_time_offset = "+2"
 
+[hostname]
+ssh_only = false
+format = '[$ssh_symbol$hostname: ]($style)'

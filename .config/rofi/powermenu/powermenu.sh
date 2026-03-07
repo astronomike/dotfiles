@@ -16,9 +16,10 @@ user=`whoami`
 # Options
 shutdown='  Shutdown'
 reboot='  Reboot'
-lock='  Lock'
 suspend='⏾  Suspend'
+hibernate='⏾  Hibernate'
 logout='󰍃  Logout'
+lock='  Lock'
 yes='  Yes'
 no='  No'
 
@@ -49,7 +50,7 @@ confirm_exit() {
 
 # Pass variables to rofi dmenu
 run_rofi() {
-	echo -e "$shutdown\n$reboot\n$suspend\n$logout\n$lock" | rofi_cmd
+	echo -e "$shutdown\n$reboot\n$suspend\n$hibernate\n$logout\n$lock" | rofi_cmd
 }
 
 # For shutdown and reboot commands, a check is done if the session is broken (which leads to an authentication prompt by systemctl). If a password would be required, it sets the script to ask for a password and then asks for it with sudo -A.
@@ -86,6 +87,12 @@ run_cmd() {
 			else 
 				sudo -A systemctl suspend  
 			fi
+		elif [[ $1 == '--hibernate' ]]; then
+			if [ "$active_login" == "true" ]; then
+				systemctl hibernate
+			else 
+				sudo -A systemctl hibernate  
+			fi
 		elif [[ $1 == '--logout' ]]; then
 			sh ~/.local/scripts/logout.sh
 			if [[ "$DESKTOP_SESSION" == 'openbox' ]]; then
@@ -97,7 +104,7 @@ run_cmd() {
 			elif [[ "$DESKTOP_SESSION" == 'plasma' ]]; then
 				qdbus org.kde.ksmserver /KSMServer logout 0 0 0
 			elif [[ "$DESKTOP_SESSION" == 'hyprland' ]]; then
-				hyprctl dispatch exit
+			    hyprctl dispatch exit
 			elif [[ "$DESKTOP_SESSION" == 'wayfire' ]]; then
 				wayland-logout
 			elif [[ "$DESKTOP_SESSION" == 'qtile' ]] || [[ "$DESKTOP_SESSION" == 'qtile-wayland' ]]; then
@@ -122,6 +129,15 @@ case "${chosen}" in
     $reboot)
 		run_cmd --reboot
         ;;
+    $suspend)
+		run_cmd --suspend
+        ;;
+    $hibernate)
+		run_cmd --hibernate
+        ;;
+    $logout)
+		run_cmd --logout
+        ;;
     $lock)
 		if [[ -x '/usr/bin/betterlockscreen' ]]; then
 			betterlockscreen -l
@@ -129,12 +145,8 @@ case "${chosen}" in
 			i3lock
 		elif [[ -x '/usr/bin/slock' ]]; then
 			slock
+		elif [[ -x '/usr/bin/hyprlock' ]]; then
+			hyprlock
 		fi
-        ;;
-    $suspend)
-		run_cmd --suspend
-        ;;
-    $logout)
-		run_cmd --logout
         ;;
 esac

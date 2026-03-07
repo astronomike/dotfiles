@@ -1,8 +1,9 @@
 @import "mocha.css";
 
 @define-color bar-background @mantle;
+@define-color bar-background #181818;
 @define-color bar-accent-primary @sky;
-@define-color bar-accent-secondary @green;
+@define-color bar-accent-secondary @lavender;
 @define-color transparent rgba(0, 0, 0, 0);
 
 * {
@@ -12,8 +13,8 @@
 }
 
 window#waybar {
- /*   background: @transparent; */
-    background: alpha(@bar-background,0.0);
+    /*   background: @transparent; */
+    background: alpha(@bar-background, 1);
     color: @text;
 }
 
@@ -27,7 +28,7 @@ tooltip {
 
 tooltip label {
     color: @text;
-	background: @bar-background;
+    background: @bar-background;
     padding: 0px 8px 0px 8px;
 }
 
@@ -35,14 +36,34 @@ tooltip label {
 /* dimensions: up-left up-right low-right low-left or top right bottom left*/
 
 /* Default settings for most modules */
-#apps-windows, #separator, #tray, #system, #window, #submap, #taskbar, #custom-menu, #custom-gfx, #custom-overview, #idle_inhibitor, #cpu, #memory, #network, #pulseaudio, #pulseaudio-slider, #backlight, #backlight-slider, #battery, #clock, #custom-power {
+#apps-windows,
+#separator,
+#tray,
+#system,
+#window,
+#submap,
+#taskbar,
+#custom-menu,
+#custom-gfx,
+#custom-overview,
+#idle_inhibitor,
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#pulseaudio-slider,
+#backlight,
+#backlight-slider,
+#battery,
+#clock,
+#custom-power {
     margin: 2px 0px 2px 0px;
 }
 
-#apps-windows { 
-    border: 2px solid @bar-accent-primary;
+#apps-windows {
+    border: 0px solid @bar-accent-primary;
     border-radius: 7px 7px 7px 7px;
-    background: alpha(@bar-background,1.0);
+    background: alpha(@bar-background, 1);
     margin: 0px 0px 0px 10px;
 }
 
@@ -68,9 +89,9 @@ tooltip label {
     border: 0px;
     border-radius: 7px;
     box-shadow: 0px 2px @surface1;
-	text-shadow: none;
+    text-shadow: none;
     margin: 5px 3px 5px 3px;
-    padding: 0px 4px 0px 4px;  
+    padding: 0px 4px 0px 4px;
     transition: all 0.25s ease;
     /* animation: gradient_f 20s ease-in infinite;
     transition: all 0.2s cubic-bezier(.55,-0.68,.48,1.682); */
@@ -95,7 +116,7 @@ tooltip label {
 }
 
 #workspaces button.visible {
-	background: @overlay0;
+    background: @overlay0;
 }
 
 #workspaces button:hover {
@@ -117,9 +138,9 @@ tooltip label {
 
 #workspaces button.active {
     /* focused */
-	color: @bar-background;
+    color: @bar-background;
     background: @bar-accent-secondary;
-	box-shadow: 1px 1px @overlay0;
+    box-shadow: 1px 1px @overlay0;
 }
 
 #taskbar {
@@ -139,7 +160,7 @@ tooltip label {
 }
 
 #taskbar button.active {
-    background: #53c240;   
+    background: #53c240;
 }
 
 #taskbar button.minimized {
@@ -148,7 +169,7 @@ tooltip label {
 
 #tray {
     background-color: @bar-background;
-    border: 2px solid @bar-accent-primary;
+    border: 0px solid @bar-accent-primary;
     border-radius: 7px 7px 7px 7px;
     margin: 0px 0px 0px 0px;
     padding: 0px 10px 0px 10px;
@@ -179,7 +200,7 @@ tooltip label {
 }
 
 #system {
-    border: 2px solid @bar-accent-primary;
+    border: 0px solid @bar-accent-primary;
     border-radius: 7px 7px 7px 7px;
     background: @bar-background;
     margin: 0px 10px 0px 5px;
@@ -239,7 +260,7 @@ tooltip label {
 #bluetooth {
     color: @blue;
     padding: 0px 5px 0px 5px;
-} 
+}
 
 #pulseaudio {
     color: @text;
@@ -310,7 +331,8 @@ tooltip label {
     padding: 0px 5px 0px 5px;
 }
 
-#battery.charging, #battery.plugged {
+#battery.charging,
+#battery.plugged {
     color: @green;
     background-color: @bar-background;
 }
@@ -337,7 +359,7 @@ tooltip label {
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: alternate;
-} 
+}
 
 #clock {
     padding: 0px 5px 0px 5px;
@@ -347,4 +369,3 @@ tooltip label {
     padding: 0px 10px 0px 5px;
     color: @red;
 }
-

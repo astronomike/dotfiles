@@ -35,14 +35,14 @@
         "on-click": "sh $HOME/.config/rofi/apps/apps.sh",
         "tooltip": false
     },
-    
+
     "custom/separator": {
         "format": "<span font='13'> | </span>",
         "tooltip": false
     },
 
     "hyprland/workspaces": {
-       "format": "<span font='13'>{icon}</span>", 
+       "format": "<span font='13'>{icon}</span>",
        "disable-scroll": false,
        "sort-by": "number",
        "show-special": true,
@@ -91,6 +91,7 @@
 
     "group/system": {
         "modules": [
+            "custom/separator",
             "hyprland/submap",
             "idle_inhibitor",
             "custom/overview",
@@ -103,7 +104,7 @@
         ],
         "orientation": "horizontal"
     },
-    
+
     "group/vitals": {
         "orientation": "horizontal",
         "drawer": {
@@ -124,7 +125,7 @@
 		"tooltip": true,
 		"tooltip-format": "Show workspace overview"
 	},
-    
+
     "hyprland/submap": {
         "format": "<span font='13'>󰌐</span>",
         "always-on": false,
@@ -229,7 +230,7 @@
         },
         "interval": 30
     },
-    
+
     "group/group-backlight": {
         "orientation": "horizontal",
         "drawer": {
@@ -254,8 +255,8 @@
         "min": 0,
         "max": 100,
         "orientation": "horizontal"
-    },    
-    
+    },
+
     "custom/power": {
         "format": "<span font='13'></span>",
         "on-click": "sh $HOME/.config/rofi/powermenu/powermenu.sh",
