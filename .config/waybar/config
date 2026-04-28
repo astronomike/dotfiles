@@ -1,7 +1,6 @@
 {
-    "layer": "top",
-    "position": "top",
     "mode": "dock",
+    "position": "top",
     "height": 42,
     "exclusive": true,
     "passthrough": false,
@@ -96,6 +95,7 @@
             "idle_inhibitor",
             "custom/overview",
             "group/vitals",
+			"wireplumber",
             "group/group-audio",
             "group/group-backlight",
             "battery",
@@ -171,6 +171,23 @@
         "format-disconnected": " Disconnected",
         "interval": 5
     },
+
+	 "wireplumber": {
+	     "format": "{icon} {volume}%",
+         "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", " "]
+         },
+	     "format-muted": "",
+	     "on-click": "pavucontrol",
+	     "max-volume": 100,
+	     "scroll-step": 1
+	 },
 
     "group/group-audio": {
         "orientation": "horizontal",
