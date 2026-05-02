@@ -21,10 +21,11 @@
     "group/apps-windows": {
         "modules": [
             "custom/menu",
-            "custom/separator",
-            "hyprland/workspaces",
-            "custom/separator",
+            /* uncomment the below if only one bar is to be used */
+/*            "custom/separator", */
+/*            "hyprland/workspaces",  */
             "hyprland/window"
+/*            "custom/separator", */
         ],
         "orientation": "horizontal"
     },

@@ -1,0 +1,85 @@
+@import "mocha.css";
+
+@define-color bar-background @mantle;
+@define-color bar-background #181818;
+@define-color bar-accent-primary @sky;
+@define-color bar-accent-secondary @lavender;
+@define-color transparent rgba(0, 0, 0, 0);
+
+* {
+    font-family: "Ubuntu Nerd Font";
+    font-weight: normal;
+    font-size: 14px;
+}
+
+window#waybar {
+    /*   background: @transparent; */
+    background: alpha(@bar-background, 1);
+    color: @text;
+}
+
+/* Modules below */
+/* dimensions: up-left up-right low-right low-left or top right bottom left*/
+
+#workspaces {
+    padding: 0px 0px 0px 0px;
+}
+
+/* box around each workspace icon */
+#workspaces button {
+    border: 0px;
+    border-radius: 7px;
+    box-shadow: 0px 2px @surface1;
+    text-shadow: none;
+    margin: 5px 5px 5px 5px;
+    padding: 0px 2px 0px 2px;
+    transition: all 0.25s ease;
+    /* animation: gradient_f 20s ease-in infinite;
+    transition: all 0.2s cubic-bezier(.55,-0.68,.48,1.682); */
+}
+
+#workspaces button.persistent {
+    /* occupied but not focused*/
+    color: @text;
+    background: @bar-background;
+}
+
+#workspaces button.special {
+    /* occupied but not focused*/
+    color: @text;
+    background: @bar-background;
+}
+
+#workspaces button.empty {
+    /* empty persistent */
+    color: @surface1;
+    background: @bar-background;
+}
+
+#workspaces button.visible {
+    background: @overlay0;
+}
+
+#workspaces button:hover {
+    /* on mouse hover */
+    color: @bar-background;
+    background: @bar-accent-primary;
+}
+
+#workspaces button.urgent {
+    color: @bar-background;
+    background: @yellow;
+}
+
+#workspaces button.hosting-monitor {
+    box-shadow: 0px 0px;
+    border: 1px;
+    border-color: @overlay0;
+}
+
+#workspaces button.active {
+    /* focused */
+    color: @bar-background;
+    background: @bar-accent-secondary;
+    box-shadow: 1px 1px @overlay0;
+}

@@ -50,6 +50,7 @@ tooltip label {
 #cpu,
 #memory,
 #network,
+#wireplumber,
 #pulseaudio,
 #pulseaudio-slider,
 #backlight,
@@ -64,7 +65,8 @@ tooltip label {
     border: 0px solid @bar-accent-primary;
     border-radius: 7px 7px 7px 7px;
     background: alpha(@bar-background, 1);
-    margin: 0px 0px 0px 10px;
+/*    margin: 0px 0px 0px 10px; */
+    margin: 0px 0px 0px 2px; 
 }
 
 #custom-menu {

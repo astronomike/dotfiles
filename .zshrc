@@ -32,7 +32,7 @@ source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 #fi
  
 # aliases
-source $XDG_CONFIG_HOME/.zsh_alias_ssh
+source ~/.zsh_alias_ssh
 alias rsync-copy='rsync -avPxH --no-g'
 alias ls='ls --color=auto'
 alias qconfig="$EDITOR $HOME/.config/qtile/config.py"
