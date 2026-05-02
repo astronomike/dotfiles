@@ -313,7 +313,8 @@ white = "#BAC2DE"
 yellow = "#F9E2AF"
 
 [colors.primary]
-background = "#11111b"
+# background = "#11111b"
+background = "#181818"
 bright_foreground = "#CDD6F4"
 dim_foreground = "#CDD6F4"
 foreground = "#CDD6F4"
@@ -357,6 +358,6 @@ family = "Ubuntu Mono"
 style = "Regular"
 
 [window]
-opacity = 0.95
+opacity = 0.975
 blur = true
 padding = { x = 6, y = 6 } 

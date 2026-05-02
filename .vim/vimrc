@@ -28,6 +28,8 @@ set splitright			" split new vertical window to right
 set timeoutlen=1000 ttimeoutlen=0  " remove check delay, for after <esc> key 
 set ww=b,s,<,>,[,]		" wrap to next/prev line (space, BS, arrows)
 " set nostartofline	 	" move cursor to start of line for some commands
+set clipboard=unnamedplus " use system clipboard instead of primary cut 
+" buffer
  
 syntax enable     " syntax highlighting if available
 

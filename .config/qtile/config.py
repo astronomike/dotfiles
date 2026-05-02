@@ -64,7 +64,8 @@ file_manager = "dolphin"
 default_margin = 6  # window gaps
 bar_size = 52
 bar_fontsize = 20
-bar_margin = int(default_margin / 2)  # smaller gap for bar
+# bar_margin = int(default_margin / 2)  # smaller gap for bar
+bar_margin = 0
 
 volume_mod = 5
 brightness_mod = 5
@@ -168,7 +169,7 @@ def autostop():
 
 @hook.subscribe.screen_change
 def restart_on_randr(_):
-	qtile.cmd_reload_config()
+	qtile.reload_config()
 
 ##########################################################
 # Keybindings
@@ -184,12 +185,7 @@ keys = [
     Key([mod], "period", lazy.next_screen(), desc="Next monitor"),
     # Move windows in layouts
     Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window left"),
-    Key(
-        [mod, "shift"],
-        "l",
-        lazy.layout.shuffle_right(),
-        desc="Move window right",
-    ),
+    Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window right",),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
     # Grow windows
@@ -471,19 +467,19 @@ layouts = [
         border_focus_stack=[theme["Green"], theme["Lavender"]],
         border_normal=theme["Overlay0"],
         border_focus=theme["Sapphire"],
-        border_on_single=True,
+        border_on_single=False,
     ),
     layout.Max(
         margin=[
             0,
-            -default_margin,
-            -default_margin,
-            -default_margin,
+            0,
+            0,
+            0,
         ],
         border_width=3,
-        border_on_single=True,
         border_normal=theme["Overlay0"],
         border_focus=theme["Sapphire"],
+        border_on_single=False,
     ),
     layout.Floating(
         border_width=3,
@@ -502,16 +498,16 @@ layouts = [
         ],
     ),
     # Try more layouts by unleashing below layouts.
-    layout.Stack(
-        num_stacks=1,
-        margin=default_margin,
-        border_width=3,
-        border_focus=theme["Sapphire"],
-        border_focus_stack=theme["Green"],
-        border_normal=theme["Overlay0"],
-        border_normal_stack=theme["Maroon"],
-        border_on_single=True,
-    ),
+    # layout.Stack(
+    #     num_stacks=1,
+    #     margin=default_margin,
+    #     border_width=3,
+    #     border_focus=theme["Sapphire"],
+    #     border_focus_stack=theme["Green"],
+    #     border_normal=theme["Overlay0"],
+    #     border_normal_stack=theme["Maroon"],
+    #     border_on_single=False,
+    # ),
     # layout.Bsp(),
     # layout.Matrix(),
     layout.MonadTall(
@@ -521,7 +517,7 @@ layouts = [
         border_focus_stack=[theme["Green"], theme["Lavender"]],
         border_normal=theme["Overlay0"],
         border_focus=theme["Sapphire"],
-        border_on_single=True,
+        border_on_single=False,
     ),
     # layout.MonadWide(),
     # layout.RatioTile(),
@@ -572,7 +568,7 @@ decor_group = {
     ],
     "padding": default_widget_padding,
 }
-decor_group.update({"decorations":[],"padding":default_widget_padding})
+decor_group.update({"decorations":[],"padding":default_widget_padding+2})
 
 decor_group_statusnotifier = decor_group.copy()
 decor_group_statusnotifier["padding"] = default_widget_padding + 4
@@ -593,7 +589,7 @@ def init_widget_list():
 		default_sep_widget,
         widget.TextBox(
             foreground=theme["Sapphire"],
-            fmt=" \uf303 ",
+            fmt="\uf303",
             mouse_callbacks={"Button1": lazy.spawn(rofi["apps"])},
             **icon_font,
             **decor_group,
@@ -638,9 +634,9 @@ def init_widget_list():
         ),
         widget.CurrentScreen(
             active_color=theme["Green"],
-            active_text="  󱎴  ",
+            active_text="󱎴",
             inactive_color=theme["Red"],
-            inactive_text="  󰶐  ",
+            inactive_text="󰶐",
             **icon_font,
             **decor_group,
         ),
@@ -758,7 +754,7 @@ def init_widget_list():
             **decor_group,
         ),
         widget.TextBox(
-            fmt=" \uf011  ",
+            fmt="\uf011",
             foreground=Colors.mocha["Red"],
             mouse_callbacks={"Button1": lazy.spawn(rofi["powermenu"])},
             **icon_font,
@@ -810,7 +806,7 @@ screens = [
     Screen(
         top=bar.Bar(
             widgets=init_secondary_widget_list(),
-            size=bar_size + 4,
+            size=bar_size,
             background=bar_background,
             #margin=[bar_margin, bar_margin, default_margin, bar_margin],  # [N E S W]
 			margin=0,

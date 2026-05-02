@@ -1,7 +1,7 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 unsetopt beep
 bindkey -v
 # End of lines configured by zsh-newuser-install
@@ -32,7 +32,8 @@ source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 #fi
  
 # aliases
-alias ssh-astro='ssh msarkis@146.232.219.10'
+source $XDG_CONFIG_HOME/.zsh_alias_ssh
+alias rsync-copy='rsync -avPxH --no-g'
 alias ls='ls --color=auto'
 alias qconfig="$EDITOR $HOME/.config/qtile/config.py"
 alias hconfig="$EDITOR $HOME/.config/hypr/hyprland.conf"
@@ -61,17 +62,17 @@ eval "$(starship init zsh)"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/michael/Packages/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/michael/Packages/miniforge3/etc/profile.d/conda.sh" ]; then
-        . "/home/michael/Packages/miniforge3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/michael/Packages/miniforge3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+# __conda_setup="$('/home/michael/Packages/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/home/michael/Packages/miniforge3/etc/profile.d/conda.sh" ]; then
+#         . "/home/michael/Packages/miniforge3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/home/michael/Packages/miniforge3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
 # <<< conda initialize <<<
 
 alias conda-a="conda activate"

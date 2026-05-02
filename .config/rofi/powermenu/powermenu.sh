@@ -94,20 +94,19 @@ run_cmd() {
 				sudo -A systemctl hibernate  
 			fi
 		elif [[ $1 == '--logout' ]]; then
-			sh ~/.local/scripts/logout.sh
-			if [[ "$DESKTOP_SESSION" == 'openbox' ]]; then
+			if [[ "$XDG_SESSION_DESKTOP" == 'openbox' ]]; then
 				openbox --exit
-			elif [[ "$DESKTOP_SESSION" == 'bspwm' ]]; then
+			elif [[ "$XDG_SESSION_DESKTOP" == 'bspwm' ]]; then
 				bspc quit
-			elif [[ "$DESKTOP_SESSION" == 'i3' ]]; then
+			elif [[ "$XDG_SESSION_DESKTOP" == 'i3' ]]; then
 				i3-msg exit
-			elif [[ "$DESKTOP_SESSION" == 'plasma' ]]; then
+			elif [[ "$XDG_SESSION_DESKTOP" == 'plasma' ]]; then
 				qdbus org.kde.ksmserver /KSMServer logout 0 0 0
-			elif [[ "$DESKTOP_SESSION" == 'hyprland' ]]; then
-			    hyprctl dispatch exit
-			elif [[ "$DESKTOP_SESSION" == 'wayfire' ]]; then
+			elif [[ "$XDG_SESSION_DESKTOP" == 'Hyprland' ]]; then
+			    hyprshutdown || hyprctl dispatch exit
+			elif [[ "$XDG_SESSION_DESKTOP" == 'Wayfire' ]]; then
 				wayland-logout
-			elif [[ "$DESKTOP_SESSION" == 'qtile' ]] || [[ "$DESKTOP_SESSION" == 'qtile-wayland' ]]; then
+			elif [[ "$XDG_SESSION_DESKTOP" == 'Qtile' ]] || [[ "$XDG_SESSION_DESKTOP" == 'qtile-wayland' ]]; then
 				qtile cmd-obj -o cmd -f shutdown
 			fi
 		fi
