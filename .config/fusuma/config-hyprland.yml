@@ -1,13 +1,13 @@
-swipe:
-  4:
-    right:
-      sendkey: "LEFTCTRL+LEFTSHIFT+TAB"
-    left:
-      sendkey: "LEFTCTRL+TAB"
-    up:
-      sendkey: "LEFTCTRL+T"
-    down:
-      sendkey: "LEFTCTRL+W"
+# swipe:
+#   4:
+#     right:
+#       sendkey: "LEFTCTRL+LEFTSHIFT+TAB"
+#     left:
+#       sendkey: "LEFTCTRL+TAB"
+#     up:
+#       sendkey: "LEFTCTRL+T"
+#     down:
+#       sendkey: "LEFTCTRL+W"
 hold:
   3:
     sendkey: "LEFTALT+LEFT"
