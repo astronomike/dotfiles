@@ -39,8 +39,8 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("blueman-applet")
     hl.exec_cmd("bluetoothctl connect C0:BC:68:26:93:A9")     --Logi K250 keyboard
     hl.exec_cmd("pactl load-module module-switch-on-connect") --for bluetooth headphones
-    hl.exec_cmd("hyprctl setcursor x_cursor_theme 24")
-    hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-theme cursor_theme")
+    hl.exec_cmd("hyprctl setcursor "..qs.hypr_cursor_theme.." 26")
+    hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-theme "..qs.hypr_cursor_theme)
     hl.exec_cmd("wayscriber --daemon --no-tray")
     hl.exec_cmd("copyq --start-server ")
     hl.exec_cmd("hypridle")
@@ -87,7 +87,7 @@ hl.config({
     scrolling = {
         direction = "right",
         column_width = 0.9,
-        focus_fit_method = 0,
+        focus_fit_method = 1,
         fullscreen_on_one_column = true,
     },
     input = {

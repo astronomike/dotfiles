@@ -36,7 +36,7 @@ source ~/.zsh_alias_ssh
 alias rsync-copy='rsync -avPxH --no-g'
 alias ls='ls --color=auto'
 alias qconfig="$EDITOR $HOME/.config/qtile/config.py"
-alias hconfig="$EDITOR $HOME/.config/hypr/hyprland.conf"
+alias hconfig="$EDITOR $HOME/.config/hypr/hyprland.lua"
 alias qxephyr="SCREEN_SIZE=1080x720 $HOME/Packages/qtile/scripts/xephyr"
 alias qlog="tail -100 $HOME/.local/share/qtile/qtile.log"
 alias quitxephyr="qtile cmd-obj -o cmd -f shutdown"

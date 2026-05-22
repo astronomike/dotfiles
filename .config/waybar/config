@@ -1,5 +1,5 @@
 {
-    "mode": "dock",
+    "layer": "top",
     "position": "top",
     "height": 42,
     "exclusive": true,

@@ -50,7 +50,7 @@ hl.bind(qs.mainMod .. " + CTRL + R", hl.dsp.exec_cmd("hyprctl reload"))
 hl.bind(qs.mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(qs.mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }))
 --hl.bind(qs.mainMod .. " + CTRL + T", hl.dsp.workspaceopt("allfloat"))
-hl.bind(qs.mainMod .. " + CTRL + P", hl.dsp.layout("pseudo"))
+--hl.bind(qs.mainMod .. " + CTRL + P", hl.dsp.layout("pseudo"))
 hl.bind(qs.mainMod .. " + S", hl.dsp.workspace.toggle_special("sysmonitor"))
 hl.bind(qs.mainMod .. " + C", hl.dsp.workspace.toggle_special("calculator"))
 
@@ -156,8 +156,8 @@ hl.bind("Print", hl.dsp.exec_cmd("sh ~/.local/scripts/wayland-screenshot.sh"))
 
 hl.bind(qs.mainMod .. " + V", hl.dsp.submap("passthrough"),
     { description = "Submap for virtual machine keyboard passthrough." })
-hl.define_submap("passthrough", function()
-    hl.bind(qs.mainMod .. "+ V", hl.dsp.submap("passthrough"))
+    hl.define_submap("passthrough", function()
+    hl.bind(qs.mainMod .. "+ escape", hl.dsp.submap("reset"))
 end)
 
 hl.bind(qs.mainMod .. " + CTRL + G", function()
