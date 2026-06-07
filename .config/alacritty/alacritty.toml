@@ -358,6 +358,6 @@ family = "Ubuntu Mono"
 style = "Regular"
 
 [window]
-opacity = 0.975
+opacity = 0.95
 blur = true
 padding = { x = 6, y = 6 } 

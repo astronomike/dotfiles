@@ -3,6 +3,7 @@ local config_dir = os.getenv("XDG_CONFIG_HOME").."/"
 local colors = require("hyprtheme")
 local binds = require("hyprbinds")
 local qs = require("quicksettings")
+local plugins = require("hyprplugins")
 
 -- -----------------------
 -- ENVIRONMENT VARIABLES
@@ -27,7 +28,8 @@ hl.env("AQ_DRM_DEVICES", "/dev/dri/card2:/dev/dri/card1")
 hl.on("hyprland.start", function()
     hl.exec_cmd("waybar -c "..config_dir.."waybar/config -s "..config_dir.."waybar/style.css") --horizontal main bar
     if qs.workspace_orientation == "vertical" then
-        hl.exec_cmd("waybar -c "..config_dir.."waybar/config-vert -s "..config_dir.."waybar/style-vert.css") --vertical bar
+        hl.exec_cmd("qs -nd")
+        -- hl.exec_cmd("waybar -c "..config_dir.."waybar/config-vert -s "..config_dir.."waybar/style-vert.css") --vertical bar 
     end
     hl.exec_cmd("awww-daemon")
     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
@@ -47,12 +49,11 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("hyprsunset")
 end)
 
-
 -- -----------------------
 -- MONITORS
 -- -----------------------
-hl.monitor({ output = "eDP-1", mode = "1920x1200", position = "0x0", scale = "1.333333" })
-hl.monitor({ output = "eDP-2", mode = "1920x1200@90", position = "0x0", scale = "1.333333" })
+hl.monitor({ output = "eDP-1", mode = "1920x1200", position = "0x0", scale = "1.333333" }) --asus dGPU
+hl.monitor({ output = "eDP-2", mode = "1920x1200@90", position = "0x0", scale = "1.333333" }) --asus iGPU
 hl.monitor({
     output = "desc:Samsung Electric Company C24F390 HFAR300143",
     mode = "1920x1080@60",
@@ -74,6 +75,12 @@ hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" 
 --hl.monitor({ output = "", reserved = "42,0,0,0" }) -- Syntax might vary: check wiki for 'addreserved'
 
 -- -----------------------
+-- DEVICES
+-- -----------------------
+hl.device( { name = "wacom-intuos-bt-s-pen", output = "current" } )
+-- hl.config( { input = { tablettool = { pressure_range_min = 0.25 } } } ) -- currently bugged in 0.55, fix when fixed
+
+-- -----------------------
 -- CONFIGURATION BLOCKS
 -- -----------------------
 hl.config({
@@ -86,8 +93,8 @@ hl.config({
     },
     scrolling = {
         direction = "right",
-        column_width = 0.9,
-        focus_fit_method = 1,
+        column_width = 0.95,
+        focus_fit_method = 0,
         fullscreen_on_one_column = true,
     },
     input = {
@@ -269,7 +276,10 @@ hl.window_rule({ name = "copyq_float", match = { title = "(.*)(CopyQ)" }, float 
 hl.window_rule({ name = "copyq_size", match = { title = "(.*)(CopyQ)" }, size = {"(monitor_w*0.5)", "(monitor_h*0.5)"} })
 
 -- Zoom popup fix
-hl.window_rule({ name = "zoom_focus", match = { title = "^menu window", class = "^Zoom Workplace" }, stay_focused = true })
+-- hl.window_rule({ name = "zoom_focus", match = { title = "annotate_toolbar", class = "zoom" }, stay_focused = true })
+hl.window_rule({ name = "zoom_annotate", match = { title = "annotate_toolbar", class = "zoom" }, stay_focused = true })
+hl.window_rule({ name = "zoom_annotate", match = { title = "annotate_toolbar", class = "zoom" }, no_initial_focus = true }) --fixes zoom stupid popups
+hl.window_rule({ name = "zoom", match = { class = "zoom" }, float = true})
 
 -- VirtualBox rules
 hl.window_rule({ name = "vb_opaque", match = { title = "(.*)(Oracle VirtualBox)(.*)" }, opaque = true })

@@ -8,8 +8,8 @@ local c = theme_file[qs.theme]
 local colors = {
     text       = c.text,
     background = c.mantle,
-    accent1    = c.pink,
-    accent2    = c.pink,
+    accent1    = c.text,
+    accent2    = c.blue,
     grey       = c.surface2,
     gray       = c.surface2,
 }

@@ -1,6 +1,6 @@
 local config_dir = os.getenv("XDG_CONFIG_HOME").."/"
 
-qs = require("quicksettings")
+local qs = require("quicksettings")
 
 -- The following are for keybinds and gestures to get the right directions based on vertical/horizontal workspace orientation
 local ws
@@ -74,7 +74,7 @@ hl.bind(qs.mainMod .. " + M", hl.dsp.window.fullscreen({ mode = "maximized", act
 hl.bind(qs.mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 
 -- Special
-hl.bind(qs.mainMod .. " + X", hl.dsp.window.move({ workspace = "special:hidden", silent = true }))
+hl.bind(qs.mainMod .. " + X", hl.dsp.window.move({ workspace = "special:hidden", follow = false }))
 hl.bind(qs.mainMod .. " + SHIFT + X", hl.dsp.workspace.toggle_special("hidden"))
 
 -- Move/Resize
@@ -119,6 +119,19 @@ hl.bind(qs.mainMod .. " + SHIFT + mouse_down", hl.dsp.focus({ direction = "l"}))
 hl.bind(qs.mainMod .. " + space", hl.dsp.focus({ direction = "right" }))
 hl.bind(qs.mainMod .. " + space", hl.dsp.window.alter_zorder({ mode = "top" }))
 
+-- Window "bookmarks", for quick setting and switching 
+local bookmarked_win = nil
+hl.bind("SUPER + CTRL + B", function()
+	local active_win = hl.get_active_window()
+	bookmarked_win = active_win and active_win.address or nil
+end)
+
+hl.bind("SUPER + CTRL + G", function()
+	if bookmarked_win then
+		hl.dispatch(hl.dsp.focus({ window = "address:" .. bookmarked_win }))
+	end
+end)
+
 -- -- Monitors
 hl.bind("CTRL + ALT + LEFT", hl.dsp.workspace.move({ monitor = "l" }))
 hl.bind("CTRL + ALT + RIGHT", hl.dsp.workspace.move({ monitor = "r" }))
@@ -129,10 +142,11 @@ hl.bind(qs.mainMod .. " + period", hl.dsp.focus({ monitor = "+1" }))
 
 -- Groups
 hl.bind(qs.mainMod .. " + G", hl.dsp.group.toggle())
-hl.bind(qs.mainMod .. " + SHIFT + G", hl.dsp.group.next())
+-- hl.bind(qs.mainMod .. " + SHIFT + G", hl.dsp.group.next())
 
 -- Waybar
 hl.bind(qs.mainMod .. " + Z", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
+hl.bind(qs.mainMod .. " + Z", hl.dsp.exec_cmd("qs ipc call barvert toggleVisible"))
 hl.bind(qs.mainMod .. " + SHIFT + Z", hl.dsp.exec_cmd("killall -SIGUSR2 waybar"))
 
 -- -- Utilities
@@ -160,18 +174,17 @@ hl.bind(qs.mainMod .. " + V", hl.dsp.submap("passthrough"),
     hl.bind(qs.mainMod .. "+ escape", hl.dsp.submap("reset"))
 end)
 
-hl.bind(qs.mainMod .. " + CTRL + G", function()
-    -- Toggle gaps_in beween 0 and 3 (equivalent to  {3, 3, 3, 3} )
+-- Toggle gaps
+hl.bind(qs.mainMod .. " + SHIFT + G", function()
+    local gaps_out_current = hl.get_config("general.gaps_out")
 
-    local gapsInValueTable = hl.get_config("general.gaps_in")
-
-    if gapsInValueTable.top == qs.gaps_in then
+    if gaps_out_current.top == qs.gaps_out then
         hl.config({
-            general = {gaps_in = 0}
+            general = {gaps_out = 0, gaps_in = 0,}
         })
     else
         hl.config({
-            general = {gaps_in = 3}
+            general = {gaps_out = qs.gaps_out, gaps_in = qs.gaps_in}
         })
     end
 end)

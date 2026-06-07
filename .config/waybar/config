@@ -4,7 +4,7 @@
     "height": 42,
     "exclusive": true,
     "passthrough": false,
-    "reload_style_on_change": true,
+    "reload_style_on_change": false,
     "margin-top":0,
     "margin-bottom":0,
     "margin-left":0,
@@ -66,6 +66,7 @@
         "9": "\uF025",
         "10": " i ",
         "11": " ii ",
+        "calculator": "f0a9a",
         "hidden": "\udb81\uded0"
        }
    },
