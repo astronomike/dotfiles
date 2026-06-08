@@ -47,6 +47,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("copyq --start-server ")
     hl.exec_cmd("hypridle")
     hl.exec_cmd("hyprsunset")
+    hl.exec_cmd("hyprpm reload")
 end)
 
 -- -----------------------

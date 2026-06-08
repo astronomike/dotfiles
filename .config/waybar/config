@@ -1,7 +1,7 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 42,
+    "height": 40,
     "exclusive": true,
     "passthrough": false,
     "reload_style_on_change": false,
@@ -96,10 +96,10 @@
             "hyprland/submap",
             "idle_inhibitor",
             "custom/overview",
-            "group/vitals",
-			"wireplumber",
-            "group/group-audio",
-            "group/group-backlight",
+            /* "group/vitals", */
+			/* "wireplumber", */
+            /* "group/group-audio", */
+            /* "group/group-backlight", */
             "battery",
             "clock",
             "custom/power"
