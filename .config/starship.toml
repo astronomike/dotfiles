@@ -7,9 +7,9 @@ format = """
 right_format = "$time$character$status"
 
 [character]
-success_symbol = "[<](bold green)"
-error_symbol = "[<](bold red)"
-vimcmd_symbol = "[CMD](bold white)"
+success_symbol = "[ <](bold green)"
+error_symbol = "[ <](bold red)"
+vimcmd_symbol = "[ CMD](bold white)"
 
 [status]
 format = "[$symbol $status]($style)"
@@ -52,7 +52,7 @@ style = "yellow"
 
 [time]
 format = "[$time](white)"
-time_format = "%T, %v "
+time_format = "%T (%a %e %b %Y)"
 disabled = false
 utc_time_offset = "+2"
 
