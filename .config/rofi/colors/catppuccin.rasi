@@ -9,7 +9,7 @@
 * {
     accent-primary:         @blue;
     accent-secondary:       @flamingo;
-    background:             @crust;
+    background:             #181818;
     background-alt:         @surface0;
     foreground:             @text;
     floating:               @mauve;

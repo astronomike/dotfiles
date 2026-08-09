@@ -19,6 +19,7 @@ runtime! archlinux.vim
 
 " Custom settings
 set laststatus=2
+set autochdir			" always change working directory to same as open file
 set number        		" display linenumbers 
 set relativenumber  	" relative numbers
 set tabstop=4 	  		" tabs
@@ -44,6 +45,7 @@ nnoremap <A-Down> :m+==<CR>
 vnoremap ( "zygvc(<C-r>z)<Esc>
 vnoremap [ "zygvc[<C-r>z]<Esc>
 vnoremap { "zygvc(<C-r>z}<Esc>
+vnoremap " "zygvc"<C-r>z"<Esc>
 " tab management
 nnoremap <C-Left> :tabprevious<CR>
 nnoremap <C-Right> :tabnext<CR>

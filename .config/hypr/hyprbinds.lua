@@ -13,7 +13,7 @@ if qs.workspace_orientation == "vertical" then
     ws_plus = "DOWN"
     ws_minus = "UP"
 else
-    ws = "orizontal"
+    ws = "horizontal"
     ws_alt = "vertical"
     ws_plus = "UP"
     ws_minus = "DOWN"
@@ -24,22 +24,21 @@ end
 -- -----------------------
 hl.gesture({ fingers = 3, direction = ws, action = "workspace" })
 hl.gesture({ fingers = 3, direction = ws_alt, action = "scroll_move" })
-hl.gesture({ fingers = 3, direction = "pinch", action = "fullscreen" })
--- gestures below need fixing, not sure if bug or what 
+hl.gesture({ fingers = 3, direction = "pinch", action = "fullscreen" }) 
 hl.gesture({ fingers = 4, direction = "up", action = function ()
-    hl.dsp.send_shortcut({mods = "CTRL", key = "T", window = "activewindow"})
-end
+    hl.dispatch(hl.dsp.send_shortcut({mods = "CTRL", key = "T", window = "activewindow"}))
+end 
 })
 hl.gesture({ fingers = 4, direction = "down", action = function ()
-    hl.dsp.send_shortcut({mods = "CTRL", key = "W", window = "activewindow"})
+    hl.dispatch(hl.dsp.send_shortcut({mods = "CTRL", key = "W", window = "activewindow"}))
 end
 })
 hl.gesture({ fingers = 4, direction = "left", action = function ()
-    hl.dsp.send_shortcut({mods = "CTRL", key = "TAB", window = "activewindow"})
+    hl.dispatch(hl.dsp.send_shortcut({mods = "CTRL", key = "TAB", window = "activewindow"}))
 end
 })
 hl.gesture({ fingers = 4, direction = "right", action = function ()
-    hl.dsp.send_shortcut({mods = "CTRL + SHIFT", key = "TAB", window = "activewindow"})
+    hl.dispatch(hl.dsp.send_shortcut({mods = "CTRL + SHIFT", key = "TAB", window = "activewindow"}))
 end
 })
 
@@ -60,7 +59,7 @@ hl.bind(qs.mainMod .. " + B", hl.dsp.exec_cmd("firefox"))
 hl.bind(qs.mainMod .. " + D", hl.dsp.exec_cmd(qs.fileManager))
 hl.bind(qs.mainMod .. " + E", hl.dsp.exec_cmd("emacsclient -c -a ''"))
 hl.bind(qs.mainMod .. " + I", hl.dsp.exec_cmd("copyq toggle"))
-hl.bind(qs.mainMod .. " + W", hl.dsp.exec_cmd("pkill -SIGUSR1 wayscriber"))
+hl.bind(qs.mainMod .. " + W", hl.dsp.exec_cmd("wayscriber --daemon-toggle"))
 
 -- Rofi
 hl.bind(qs.mainMod .. " + R", hl.dsp.exec_cmd(config_dir.."rofi/run/run.sh"))
@@ -70,7 +69,10 @@ hl.bind(qs.mainMod .. " + O", hl.dsp.exec_cmd("sh "..config_dir.."rofi/filebrows
 hl.bind("ALT + TAB", hl.dsp.exec_cmd("sh "..config_dir.."rofi/window/window.sh"))
 
 -- Window actions
-hl.bind(qs.mainMod .. " + M", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+-- hl.bind(qs.mainMod .. " + M", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+hl.bind("SUPER + M", function()
+	hl.dispatch(hl.dsp.layout("colresize +conf"))
+end, { description = "Toggle active window to maximized (scrolling) workaround until maximize toggle works" })
 hl.bind(qs.mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 
 -- Special
@@ -91,6 +93,11 @@ for i = 1, 10 do
     hl.bind(qs.mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
     hl.bind(qs.mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
+
+hl.bind(qs.mainMod .. " + " .. "MINUS", hl.dsp.focus({ workspace = "11" }))
+hl.bind(qs.mainMod .. " + SHIFT + " .. "MINUS", hl.dsp.window.move({ workspace = "11" }))
+hl.bind(qs.mainMod .. " + " .. "EQUAL", hl.dsp.focus({ workspace = "12" }))
+hl.bind(qs.mainMod .. " + SHIFT + " .. "EQUAL", hl.dsp.window.move({ workspace = "12" }))
 hl.bind(qs.mainMod .. " + " .. ws_plus, hl.dsp.focus({ workspace = "r+1" }))
 hl.bind(qs.mainMod .. " + " .. ws_minus, hl.dsp.focus({ workspace = "r-1" }))
 hl.bind(qs.mainMod .. " + SHIFT + " .. ws_plus, hl.dsp.window.move({ workspace = "r+1" }))
@@ -229,5 +236,4 @@ local function toggle_gamemode()
     end
 end
 
--- Bind the function to a key combination (e.g., SUPER + M)
 hl.bind(qs.mainMod.." + F1", toggle_gamemode)

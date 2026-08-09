@@ -95,7 +95,9 @@ hl.config({
     scrolling = {
         direction = "right",
         column_width = 0.95,
+		explicit_column_widths = "0.8,0.95,1",
         focus_fit_method = 0,
+		follow_min_visible = 0.2,
         fullscreen_on_one_column = true,
     },
     input = {
@@ -180,7 +182,7 @@ hl.config({
         enabled = true,
     },
     gestures = {
-        workspace_swipe_forever = true,
+        workspace_swipe_forever = false,
         workspace_swipe_create_new = true,
         workspace_swipe_use_r = false,
     },
@@ -205,10 +207,12 @@ hl.config({
 -- -----------------------
 -- Define custom bezier
 hl.curve("myBezier", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.05 } } })
+hl.curve( "spring", { type = "spring", mass = 0.6, stiffness = 550, dampening = 50 })
 
 hl.animation({ leaf = "windows", enabled = true, speed = qs.animation_fast_speed, bezier = "myBezier" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = qs.animation_fast_speed, bezier = "default" })
-hl.animation({ leaf = "windowsIn", enabled = true, speed = qs.animation_fast_speed, bezier = "default", style = "popin 70%" })
+hl.animation({ leaf = "windowsOut", enabled = true, speed = qs.animation_fast_speed, spring = "spring" })
+-- hl.animation({ leaf = "windowsIn", enabled = true, speed = qs.animation_fast_speed, bezier = "default", style = "popin 70%" })
+hl.animation({ leaf = "windowsIn", enabled = true, speed = qs.animation_fast_speed, spring = "spring", style = "popin 50%" })
 hl.animation({ leaf = "border", enabled = true, speed = qs.animation_fast_speed, bezier = "default" })
 hl.animation({ leaf = "borderangle", enabled = true, speed = qs.animation_fast_speed, bezier = "default" })
 hl.animation({ leaf = "fade", enabled = true, speed = qs.animation_fast_speed, bezier = "default" })
@@ -245,6 +249,8 @@ hl.workspace_rule({ workspace = "7", persistent = false })
 hl.workspace_rule({ workspace = "8", persistent = false })
 hl.workspace_rule({ workspace = "9", persistent = false })
 hl.workspace_rule({ workspace = "10", persistent = false })
+hl.workspace_rule({ workspace = "11", persistent = false })
+hl.workspace_rule({ workspace = "12", persistent = false })
 
 -- Special workspaces
 hl.workspace_rule({ workspace = "special:sysmonitor", on_created_empty = "alacritty -e btop", gaps_out = 60 })
@@ -260,13 +266,15 @@ hl.workspace_rule({ workspace = "f[1]s[false]", gaps_out = 0, gaps_in = 0, borde
 hl.window_rule({ name = "ws_firefox", match = { class = "firefox" }, workspace = "3" })
 hl.window_rule({ name = "ws_code", match = { class = "code" }, workspace = "4" })
 hl.window_rule({ name = "ws_zotero", match = { class = "Zotero" }, workspace = "5" })
-hl.window_rule({ name = "ws_obsidian", match = { class = "obsidian" }, workspace = "6" })
+hl.window_rule({ name = "ws_obsidian", match = { class = "obsidian" }, workspace = "5" })
 hl.window_rule({ name = "ws_ferdium", match = { class = "ferdium" }, workspace = "7" })
+hl.window_rule({ name = "ws_slack", match = { class = "slack" }, workspace = "7" })
 hl.window_rule({ name = "ws_steam", match = { class = "steam" }, workspace = "8" })
 hl.window_rule({ name = "ws_heroic", match = { class = "heroic" }, workspace = "8" })
 hl.window_rule({ name = "ws_spotify", match = { class = "Spotify" }, workspace = "9" })
 hl.window_rule({ name = "ws_elisa", match = { class = "org.kde.elisa" }, workspace = "9" })
 hl.window_rule({ name = "ws_lumo", match = { class = "WebApp-Lumo3764" }, workspace = "10" })
+hl.window_rule({ name = "overleaf", match = { class = "WebApp-Overleaf9196" }, workspace = "11" })
 
 -- Title based rules
 hl.window_rule({ name = "progress_float", match = { title = "^Progress" }, float = true })
@@ -278,9 +286,9 @@ hl.window_rule({ name = "copyq_size", match = { title = "(.*)(CopyQ)" }, size = 
 
 -- Zoom popup fix
 -- hl.window_rule({ name = "zoom_focus", match = { title = "annotate_toolbar", class = "zoom" }, stay_focused = true })
-hl.window_rule({ name = "zoom_annotate", match = { title = "annotate_toolbar", class = "zoom" }, stay_focused = true })
-hl.window_rule({ name = "zoom_annotate", match = { title = "annotate_toolbar", class = "zoom" }, no_initial_focus = true }) --fixes zoom stupid popups
-hl.window_rule({ name = "zoom", match = { class = "zoom" }, float = true})
+hl.window_rule({ name = "zoom_annotate", match = { title = "annotate_toolbar", class = "Zoom" }, stay_focused = true }) -- note Zoom for wayland, zoom for xwayland
+hl.window_rule({ name = "zoom_annotate", match = { title = "annotate_toolbar", class = "Zoom" }, no_initial_focus = true }) --fixes zoom stupid popups
+hl.window_rule({ name = "zoom", match = { class = "Zoom" }, float = true})
 
 -- VirtualBox rules
 hl.window_rule({ name = "vb_opaque", match = { title = "(.*)(Oracle VirtualBox)(.*)" }, opaque = true })

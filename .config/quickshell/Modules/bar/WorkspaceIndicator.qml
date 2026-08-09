@@ -27,10 +27,12 @@ Column {
         "\uf1b6",               // 8
         "\uF025",               // 9
         "\udb82\udf7b",         // 0
+		"\udb80\udfea",			// 11
+		"\udb80\udf74"			// 12
     ]
 
     Repeater {
-        model: 10  // Show workspaces 1-10. Each one gets an "index", starts at 0
+        model: 12  // Show workspaces 1-10. Each one gets an "index", starts at 0
 
         // container box for each icon
         Rectangle {
