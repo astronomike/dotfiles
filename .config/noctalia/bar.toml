@@ -1,0 +1,7 @@
+[widget.launcher]
+glyph = "\uf303" # unicode not working for some reason
+custom_image = "/home/michael/.config/noctalia/icons8-arch-linux.svg"
+font_family = "Ubuntu Nerd Font"
+scale = 1.5
+icon_color = "#1793d1"
+enabled = true

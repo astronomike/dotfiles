@@ -243,3 +243,5 @@ This creates the directory ~/Private, which will (when mounted) contain the sens
 	
 -> For ssh passphrases to be cached and thus remembered for the login session, you can use ssh-agent (which is part of the openssh package). This also needs a configuration option, set in ~/.ssh/config as     AddKeysToAgent yes
 Then, add `eval $(ssh-agent)` to a startup or login script (or .zprofile or something) to have it fork in the background. It will ask for the passphrase first time you need it, then cache it so it won't ask each following time you invoke ssh (including through git and things)  
+
+-> For customising keyboard buttons: keyd package allows lots of customisation. Edit /etc/keyd/default.conf with remappings etc., also man keyd is useful for this. Suggested: rightcontrol = compose, this changes right control key to open the context menu (like a mouse right click). Can also change caps lock to be escape when oneshot, and control when held down, for example. 

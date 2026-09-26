@@ -2,7 +2,8 @@ local config_dir = os.getenv("XDG_CONFIG_HOME").."/"
 
 local qs = require("quicksettings")
 
--- The following are for keybinds and gestures to get the right directions based on vertical/horizontal workspace orientation
+local noctalia_ipc = "noctalia msg "
+
 local ws
 local ws_alt
 local ws_plus
@@ -52,6 +53,7 @@ hl.bind(qs.mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }))
 --hl.bind(qs.mainMod .. " + CTRL + P", hl.dsp.layout("pseudo"))
 hl.bind(qs.mainMod .. " + S", hl.dsp.workspace.toggle_special("sysmonitor"))
 hl.bind(qs.mainMod .. " + C", hl.dsp.workspace.toggle_special("calculator"))
+hl.bind(qs.mainMod .. " + SHIFT + C", hl.dsp.workspace.toggle_special("calendar"))
 
 -- Launchers
 hl.bind(qs.mainMod .. " + Return", hl.dsp.exec_cmd(qs.terminal))
@@ -66,7 +68,8 @@ hl.bind(qs.mainMod .. " + R", hl.dsp.exec_cmd(config_dir.."rofi/run/run.sh"))
 hl.bind(qs.mainMod .. " + A", hl.dsp.exec_cmd("sh "..config_dir.."rofi/apps/apps.sh"))
 hl.bind(qs.mainMod .. " + P", hl.dsp.exec_cmd("sh "..config_dir.."rofi/powermenu/powermenu.sh"))
 hl.bind(qs.mainMod .. " + O", hl.dsp.exec_cmd("sh "..config_dir.."rofi/filebrowser/filebrowser.sh"))
-hl.bind("ALT + TAB", hl.dsp.exec_cmd("sh "..config_dir.."rofi/window/window.sh"))
+-- hl.bind("ALT + TAB", hl.dsp.exec_cmd("sh "..config_dir.."rofi/window/window.sh"))
+hl.bind("ALT + TAB", hl.dsp.exec_cmd(noctalia_ipc .. "window-switcher"))
 
 -- Window actions
 -- hl.bind(qs.mainMod .. " + M", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
@@ -102,15 +105,15 @@ hl.bind(qs.mainMod .. " + " .. ws_plus, hl.dsp.focus({ workspace = "r+1" }))
 hl.bind(qs.mainMod .. " + " .. ws_minus, hl.dsp.focus({ workspace = "r-1" }))
 hl.bind(qs.mainMod .. " + SHIFT + " .. ws_plus, hl.dsp.window.move({ workspace = "r+1" }))
 hl.bind(qs.mainMod .. " + SHIFT + " .. ws_minus, hl.dsp.window.move({ workspace = "r-1" }))
-hl.bind(qs.mainMod .. " + CTRL + " .. ws_plus, hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(qs.mainMod .. " + CTRL + " .. ws_minus, hl.dsp.focus({ workspace = "e-1" }))
-hl.bind(qs.mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "m+1" }))
-hl.bind(qs.mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "m-1" }))
+hl.bind(qs.mainMod .. " + CTRL + " .. ws_plus, hl.dsp.focus({ workspace = "m+1" }))
+hl.bind(qs.mainMod .. " + CTRL + " .. ws_minus, hl.dsp.focus({ workspace = "m-1" }))
+hl.bind(qs.mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "m-1" }))
+hl.bind(qs.mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "m+1" }))
 
 -- Intra-workspace Nav + Window Focus 
 hl.bind(qs.mainMod .. " + TAB", hl.dsp.focus({ workspace = "previous_per_monitor" }))
-hl.bind(qs.mainMod .. " + LEFT", hl.dsp.focus({ direction = "l"}))
-hl.bind(qs.mainMod .. " + RIGHT", hl.dsp.focus({ direction = "r"}))
+hl.bind(qs.mainMod .. " + LEFT", hl.dsp.layout("focus l"))
+hl.bind(qs.mainMod .. " + RIGHT", hl.dsp.layout("focus r"))
 hl.bind(qs.mainMod .. " + H", hl.dsp.focus({ direction = "l"}))
 hl.bind(qs.mainMod .. " + J", hl.dsp.focus({ direction = "d"}))
 hl.bind(qs.mainMod .. " + K", hl.dsp.focus({ direction = "u"}))
@@ -121,9 +124,9 @@ hl.bind(qs.mainMod .. " + SHIFT + H", hl.dsp.window.move({ direction = "left" })
 hl.bind(qs.mainMod .. " + SHIFT + L", hl.dsp.window.move({ direction = "right" }))
 hl.bind(qs.mainMod .. " + SHIFT + J", hl.dsp.window.move({ direction = "down" }))
 hl.bind(qs.mainMod .. " + SHIFT + K", hl.dsp.window.move({ direction = "up" }))
-hl.bind(qs.mainMod .. " + SHIFT + mouse_up", hl.dsp.focus({ direction = "r"}))
-hl.bind(qs.mainMod .. " + SHIFT + mouse_down", hl.dsp.focus({ direction = "l"}))
-hl.bind(qs.mainMod .. " + space", hl.dsp.focus({ direction = "right" }))
+hl.bind(qs.mainMod .. " + SHIFT + mouse_up", hl.dsp.focus({ direction = "l"}))
+hl.bind(qs.mainMod .. " + SHIFT + mouse_down", hl.dsp.focus({ direction = "r"}))
+hl.bind(qs.mainMod .. " + space", hl.dsp.window.cycle_next({ }))
 hl.bind(qs.mainMod .. " + space", hl.dsp.window.alter_zorder({ mode = "top" }))
 
 -- Window "bookmarks", for quick setting and switching 
@@ -154,6 +157,7 @@ hl.bind(qs.mainMod .. " + G", hl.dsp.group.toggle())
 -- Waybar
 hl.bind(qs.mainMod .. " + Z", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
 hl.bind(qs.mainMod .. " + Z", hl.dsp.exec_cmd("qs ipc call barvert toggleVisible"))
+hl.bind(qs.mainMod .. " + Z", hl.dsp.exec_cmd(noctalia_ipc.."bar-toggle"))
 hl.bind(qs.mainMod .. " + SHIFT + Z", hl.dsp.exec_cmd("killall -SIGUSR2 waybar"))
 
 -- -- Utilities

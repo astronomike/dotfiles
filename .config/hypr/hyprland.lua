@@ -26,27 +26,29 @@ hl.env("AQ_DRM_DEVICES", "/dev/dri/card2:/dev/dri/card1")
 -- Autostart
 -- -----------------------
 hl.on("hyprland.start", function()
-    hl.exec_cmd("waybar -c "..config_dir.."waybar/config -s "..config_dir.."waybar/style.css") --horizontal main bar
-    if qs.workspace_orientation == "vertical" then
-        hl.exec_cmd("qs -nd")
-        -- hl.exec_cmd("waybar -c "..config_dir.."waybar/config-vert -s "..config_dir.."waybar/style-vert.css") --vertical bar 
-    end
-    hl.exec_cmd("awww-daemon")
     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
     hl.exec_cmd("/usr/lib/polkit-kde-authentication-agent-1")
-    hl.exec_cmd("nm-applet --indicator")
-    hl.exec_cmd("sleep 2.0 & /usr/bin/pcloud") --pcloud looks for internet before its connected, sleep removes "no internet" notifs
-    hl.exec_cmd("/usr/bin/dunst")
+    if qs.workspace_orientation == "vertical" then
+        hl.exec_cmd("sleep 2 && qs -nd")
+        -- hl.exec_cmd("waybar -c "..config_dir.."waybar/config-vert -s "..config_dir.."waybar/style-vert.css") --vertical bar 
+    end
+	hl.exec_cmd("noctalia")
+    -- the following are all kind of deprecated by noctalia
+    -- hl.exec_cmd("waybar -c "..config_dir.."waybar/config -s "..config_dir.."waybar/style.css") --horizontal main bar
+    -- hl.exec_cmd("awww-daemon")
+    -- hl.exec_cmd("nm-applet --indicator")
+    -- hl.exec_cmd("/usr/bin/dunst")
+    -- hl.exec_cmd("hyprsunset")
+    -- hl.exec_cmd("blueman-applet")
+    hl.exec_cmd("hypridle")
+    hl.exec_cmd("copyq --start-server ")
+    hl.exec_cmd("sleep 5 && /usr/bin/pcloud") --pcloud looks for internet before its connected, sleep removes "no internet" notifs
     hl.exec_cmd("fusuma -d -c "..config_dir.."fusuma/config-hyprland.yml")
-    hl.exec_cmd("blueman-applet")
-    hl.exec_cmd("bluetoothctl connect C0:BC:68:26:93:A9")     --Logi K250 keyboard
     hl.exec_cmd("pactl load-module module-switch-on-connect") --for bluetooth headphones
+--     hl.exec_cmd("bluetoothctl connect C0:BC:68:26:93:A9")     --Logi K250 keyboard
     hl.exec_cmd("hyprctl setcursor "..qs.hypr_cursor_theme.." 26")
     hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-theme "..qs.hypr_cursor_theme)
     hl.exec_cmd("wayscriber --daemon --no-tray")
-    hl.exec_cmd("copyq --start-server ")
-    hl.exec_cmd("hypridle")
-    hl.exec_cmd("hyprsunset")
     hl.exec_cmd("hyprpm reload")
 end)
 
@@ -102,7 +104,7 @@ hl.config({
     },
     input = {
         kb_layout = "us",
-        kb_options = "caps:swapescape",
+        -- kb_options = "caps:swapescape", -- currently handled by keyd, with other kb things
         follow_mouse = 1,
         sensitivity = 0,
         numlock_by_default = true,
@@ -254,7 +256,8 @@ hl.workspace_rule({ workspace = "12", persistent = false })
 
 -- Special workspaces
 hl.workspace_rule({ workspace = "special:sysmonitor", on_created_empty = "alacritty -e btop", gaps_out = 60 })
-hl.workspace_rule({ workspace = "special:calculator", on_created_empty = "kcalc", gaps_out = 120 })
+hl.workspace_rule({ workspace = "special:calculator", on_created_empty = "kcalc", gaps_out = 140 })
+hl.workspace_rule({ workspace = "special:calendar", on_created_empty = "alacritty --hold --option font.size=26 -e cal -3m --columns=3", gaps_out = 340 })
 hl.workspace_rule({ workspace = "special:hidden", gaps_out = 120 })
 
 -- Workspace styling
@@ -264,17 +267,20 @@ hl.workspace_rule({ workspace = "f[1]s[false]", gaps_out = 0, gaps_in = 0, borde
 
 -- Class based workspaces
 hl.window_rule({ name = "ws_firefox", match = { class = "firefox" }, workspace = "3" })
-hl.window_rule({ name = "ws_code", match = { class = "code" }, workspace = "4" })
+hl.window_rule({ name = "ws_code", match = { class = "com.microsoft.VSCode" }, workspace = "4" })
 hl.window_rule({ name = "ws_zotero", match = { class = "Zotero" }, workspace = "5" })
-hl.window_rule({ name = "ws_obsidian", match = { class = "obsidian" }, workspace = "5" })
+hl.window_rule({ name = "ws_obsidian", match = { class = "md.obsidian.Obsidian" }, workspace = "5" })
+hl.window_rule({ name = "ws_virtualbox_machine", match = { class = "VirtualBox Machine" }, workspace = "6" })
+hl.window_rule({ name = "ws_virtualbox", match = { class = "VirtualBox Manager" }, workspace = "6" })
 hl.window_rule({ name = "ws_ferdium", match = { class = "ferdium" }, workspace = "7" })
 hl.window_rule({ name = "ws_slack", match = { class = "slack" }, workspace = "7" })
+hl.window_rule({ name = "ws_wechat", match = { class = "wechat" }, workspace = "7" })
 hl.window_rule({ name = "ws_steam", match = { class = "steam" }, workspace = "8" })
 hl.window_rule({ name = "ws_heroic", match = { class = "heroic" }, workspace = "8" })
 hl.window_rule({ name = "ws_spotify", match = { class = "Spotify" }, workspace = "9" })
 hl.window_rule({ name = "ws_elisa", match = { class = "org.kde.elisa" }, workspace = "9" })
 hl.window_rule({ name = "ws_lumo", match = { class = "WebApp-Lumo3764" }, workspace = "10" })
-hl.window_rule({ name = "overleaf", match = { class = "WebApp-Overleaf9196" }, workspace = "11" })
+hl.window_rule({ name = "ws_overleaf", match = { class = "WebApp-Overleaf9196" }, workspace = "11" })
 
 -- Title based rules
 hl.window_rule({ name = "progress_float", match = { title = "^Progress" }, float = true })
