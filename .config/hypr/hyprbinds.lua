@@ -65,10 +65,13 @@ hl.bind(qs.mainMod .. " + W", hl.dsp.exec_cmd("wayscriber --daemon-toggle"))
 
 -- Rofi
 hl.bind(qs.mainMod .. " + R", hl.dsp.exec_cmd(config_dir.."rofi/run/run.sh"))
-hl.bind(qs.mainMod .. " + A", hl.dsp.exec_cmd("sh "..config_dir.."rofi/apps/apps.sh"))
-hl.bind(qs.mainMod .. " + P", hl.dsp.exec_cmd("sh "..config_dir.."rofi/powermenu/powermenu.sh"))
-hl.bind(qs.mainMod .. " + O", hl.dsp.exec_cmd("sh "..config_dir.."rofi/filebrowser/filebrowser.sh"))
+hl.bind(qs.mainMod .. " + P", hl.dsp.exec_cmd(config_dir.."rofi/powermenu/powermenu.sh"))
+hl.bind(qs.mainMod .. " + O", hl.dsp.exec_cmd(config_dir.."rofi/filebrowser/filebrowser.sh"))
+-- hl.bind(qs.mainMod .. " + A", hl.dsp.exec_cmd("sh "..config_dir.."rofi/apps/apps.sh"))
 -- hl.bind("ALT + TAB", hl.dsp.exec_cmd("sh "..config_dir.."rofi/window/window.sh"))
+
+-- Noctalia
+hl.bind(qs.mainMod .. " + A", hl.dsp.exec_cmd(noctalia_ipc .. "panel-toggle launcher"))
 hl.bind("ALT + TAB", hl.dsp.exec_cmd(noctalia_ipc .. "window-switcher"))
 
 -- Window actions

@@ -44,7 +44,7 @@ nnoremap <A-Down> :m+==<CR>
 " poor man's surround
 vnoremap ( "zygvc(<C-r>z)<Esc>
 vnoremap [ "zygvc[<C-r>z]<Esc>
-vnoremap { "zygvc(<C-r>z}<Esc>
+vnoremap { "zygvc{<C-r>z}<Esc>
 vnoremap " "zygvc"<C-r>z"<Esc>
 " tab management
 nnoremap <C-Left> :tabprevious<CR>

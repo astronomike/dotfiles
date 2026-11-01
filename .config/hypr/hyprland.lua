@@ -255,13 +255,16 @@ hl.workspace_rule({ workspace = "11", persistent = false })
 hl.workspace_rule({ workspace = "12", persistent = false })
 
 -- Special workspaces
-hl.workspace_rule({ workspace = "special:sysmonitor", on_created_empty = "alacritty -e btop", gaps_out = 60 })
-hl.workspace_rule({ workspace = "special:calculator", on_created_empty = "kcalc", gaps_out = 140 })
-hl.workspace_rule({ workspace = "special:calendar", on_created_empty = "alacritty --hold --option font.size=26 -e cal -3m --columns=3", gaps_out = 340 })
 hl.workspace_rule({ workspace = "special:hidden", gaps_out = 120 })
+hl.workspace_rule({ workspace = "special:sysmonitor", gaps_out = 80 })
+hl.workspace_rule({ workspace = "special:calculator", gaps_out = 80 })
+local workspace_programs = {
+    ["special:sysmonitor"] = { "alacritty -e btop", { float = false } },
+    ["special:calculator"] = { "kcalc", { float = false } },
+}
 
 -- Workspace styling
-hl.window_rule({ name = "border_float1", match = { float = true }, border_color = colors.mauve })
+hl.window_rule({ name = "border_float1", match = { float = true }, border_color = colors.floating })
 hl.workspace_rule({ workspace = "w[vt1]s[false]", border_size = 0, no_rounding = true }) --no borders on workspaces with only one visible (v) tiled (t) window (ignore special workspaces)
 hl.workspace_rule({ workspace = "f[1]s[false]", gaps_out = 0, gaps_in = 0, border_size = 0, no_rounding = true }) --no gaps for workspaces with maximised windows
 
@@ -318,4 +321,20 @@ hl.window_rule({ name = "open_size", match = { title = "(Open)(.*)" }, size = {"
 hl.layer_rule({ name = "rofi_dim", match = { namespace = "rofi" }, dim_around = true })
 hl.layer_rule({ name = "waybar_blur", match = { namespace = "waybar" }, blur = true })
 hl.layer_rule({ name = "selection_no_anim", match = { namespace = "selection" }, no_anim = true })
+
+-- Special workspaces open apps on startup (function from wiki)
+hl.on("workspace.created", function(ws)
+    if not ws.is_empty then return end
+
+    local program = workspace_programs[ws.name]
+    if program == nil then return end
+
+    local cmd, rules = table.unpack(program)
+    -- shallow-copy the rules table so we can add the workspace to it
+    local rules2 = {}
+    for k, v in pairs(rules) do rules2[k] = v end
+    rules2.workspace = ws.name .. " silent"
+    -- run it!
+    hl.exec_cmd(cmd, rules2)
+end)
 

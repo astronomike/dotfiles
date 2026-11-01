@@ -12,5 +12,6 @@ local colors = {
     accent2    = c.blue,
     grey       = c.surface2,
     gray       = c.surface2,
+	floating   = c.mauve,
 }
 return colors

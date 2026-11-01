@@ -84,5 +84,7 @@ alias conda-d="conda deactivate"
 
 path=('/home/michael/.juliaup/bin' $path)
 export PATH
+# Tab completion for juliaup and julia channel selection
+[ -f "/home/michael/.julia/juliaup/completions/zsh.zsh" ] && source "/home/michael/.julia/juliaup/completions/zsh.zsh"
 
 # <<< juliaup initialize <<<
