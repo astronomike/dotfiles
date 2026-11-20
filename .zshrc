@@ -20,6 +20,11 @@ promptinit
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+# This should go after zsh-vi-mode, otherwise it's overwritten
+function zvm_after_init() {
+  source <(fzf --zsh)
+}
+
 
 # set env variables
 # export EDITOR=vim 

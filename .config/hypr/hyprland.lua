@@ -20,7 +20,7 @@ hl.env("DOOMDIR", config_dir.."doom")
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_TYPE", "wayland")
 hl.env("XDG_SESSION_DESKTOP", "Hyprland")
-hl.env("AQ_DRM_DEVICES", "/dev/dri/card2:/dev/dri/card1")
+-- hl.env("AQ_DRM_DEVICES", "/dev/dri/card2:/dev/dri/card1")
 
 -- -----------------------
 -- Autostart
@@ -28,10 +28,10 @@ hl.env("AQ_DRM_DEVICES", "/dev/dri/card2:/dev/dri/card1")
 hl.on("hyprland.start", function()
     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
     hl.exec_cmd("/usr/lib/polkit-kde-authentication-agent-1")
-    if qs.workspace_orientation == "vertical" then
-        hl.exec_cmd("sleep 2 && qs -nd")
-        -- hl.exec_cmd("waybar -c "..config_dir.."waybar/config-vert -s "..config_dir.."waybar/style-vert.css") --vertical bar 
-    end
+    -- if qs.workspace_orientation == "vertical" then
+    --     hl.exec_cmd("sleep 2 && qs -nd")
+    --     -- hl.exec_cmd("waybar -c "..config_dir.."waybar/config-vert -s "..config_dir.."waybar/style-vert.css") --vertical bar 
+    -- end
 	hl.exec_cmd("noctalia")
     -- the following are all kind of deprecated by noctalia
     -- hl.exec_cmd("waybar -c "..config_dir.."waybar/config -s "..config_dir.."waybar/style.css") --horizontal main bar
@@ -46,7 +46,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("fusuma -d -c "..config_dir.."fusuma/config-hyprland.yml")
     hl.exec_cmd("pactl load-module module-switch-on-connect") --for bluetooth headphones
 --     hl.exec_cmd("bluetoothctl connect C0:BC:68:26:93:A9")     --Logi K250 keyboard
-    hl.exec_cmd("hyprctl setcursor "..qs.hypr_cursor_theme.." 26")
+    hl.exec_cmd("hyprctl setcursor "..qs.hypr_cursor_theme.." 24")
     hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-theme "..qs.hypr_cursor_theme)
     hl.exec_cmd("wayscriber --daemon --no-tray")
     hl.exec_cmd("hyprpm reload")
@@ -56,7 +56,7 @@ end)
 -- MONITORS
 -- -----------------------
 hl.monitor({ output = "eDP-1", mode = "1920x1200", position = "0x0", scale = "1.333333" }) --asus dGPU
-hl.monitor({ output = "eDP-2", mode = "1920x1200@90", position = "0x0", scale = "1.333333" }) --asus iGPU
+hl.monitor({ output = "eDP-2", mode = "1920x1200@90", position = "0x0", scale = "1.333333" , disabled = true}) --asus iGPU
 hl.monitor({
     output = "desc:Samsung Electric Company C24F390 HFAR300143",
     mode = "1920x1080@60",
@@ -186,7 +186,7 @@ hl.config({
     gestures = {
         workspace_swipe_forever = false,
         workspace_swipe_create_new = true,
-        workspace_swipe_use_r = false,
+        workspace_swipe_use_r = true,
     },
     binds = {
         allow_workspace_cycles = true,
@@ -201,8 +201,11 @@ hl.config({
     xwayland = {
         force_zero_scaling = true,
     },
+	-- sometimes games with custom cursors be funny, not sure this even helps
+	-- cursor = {
+	-- 	no_hardware_cursors = 1,
+	-- },
 })
-
 
 -- -----------------------
 -- CURVES & ANIMATIONS
@@ -241,18 +244,18 @@ hl.animation({ leaf = "layersOut", enabled = true, speed = qs.animation_slow_spe
 -- WORKSPACE RULES
 -- -----------------------
 -- Standard workspaces
-hl.workspace_rule({ workspace = "1", persistent = false, default = true })
-hl.workspace_rule({ workspace = "2", persistent = false })
-hl.workspace_rule({ workspace = "3", persistent = false })
-hl.workspace_rule({ workspace = "4", persistent = false })
-hl.workspace_rule({ workspace = "5", persistent = false })
-hl.workspace_rule({ workspace = "6", persistent = false })
-hl.workspace_rule({ workspace = "7", persistent = false })
-hl.workspace_rule({ workspace = "8", persistent = false })
-hl.workspace_rule({ workspace = "9", persistent = false })
-hl.workspace_rule({ workspace = "10", persistent = false })
-hl.workspace_rule({ workspace = "11", persistent = false })
-hl.workspace_rule({ workspace = "12", persistent = false })
+hl.workspace_rule({ workspace = "1", default_name = "\u{e795}", persistent = false, monitor = 0, default = true })
+hl.workspace_rule({ workspace = "2", default_name = "\u{f07c}", persistent = false, monitor = 1, default = true })
+hl.workspace_rule({ workspace = "3", default_name = "\u{f269}", persistent = false })
+hl.workspace_rule({ workspace = "4", default_name = "\u{e780}", persistent = false })
+hl.workspace_rule({ workspace = "5", default_name = "\u{f02d}", persistent = false })
+hl.workspace_rule({ workspace = "6", default_name = "\u{e70f}", persistent = false })
+hl.workspace_rule({ workspace = "7", default_name = "\u{f01ee}", persistent = false })
+hl.workspace_rule({ workspace = "8", default_name = "\u{f1b6}", persistent = false })
+hl.workspace_rule({ workspace = "9", default_name = "\u{F025}", persistent = false })
+hl.workspace_rule({ workspace = "10", default_name = "\u{f0b79}", persistent = false })
+hl.workspace_rule({ workspace = "11", default_name = "\u{f03ec}", persistent = false })
+hl.workspace_rule({ workspace = "12", default_name = "\u{f32e}", persistent = false })
 
 -- Special workspaces
 hl.workspace_rule({ workspace = "special:hidden", gaps_out = 120 })
@@ -279,6 +282,7 @@ hl.window_rule({ name = "ws_ferdium", match = { class = "ferdium" }, workspace =
 hl.window_rule({ name = "ws_slack", match = { class = "slack" }, workspace = "7" })
 hl.window_rule({ name = "ws_wechat", match = { class = "wechat" }, workspace = "7" })
 hl.window_rule({ name = "ws_steam", match = { class = "steam" }, workspace = "8" })
+hl.window_rule({ name = "ws_claude", match = { class = "com.anthropic.Claude" }, workspace = "8" })
 hl.window_rule({ name = "ws_heroic", match = { class = "heroic" }, workspace = "8" })
 hl.window_rule({ name = "ws_spotify", match = { class = "Spotify" }, workspace = "9" })
 hl.window_rule({ name = "ws_elisa", match = { class = "org.kde.elisa" }, workspace = "9" })
@@ -293,10 +297,10 @@ hl.window_rule({ name = "zotero_rounding", match = { class = "^Zotero" }, roundi
 hl.window_rule({ name = "copyq_float", match = { title = "(.*)(CopyQ)" }, float = true })
 hl.window_rule({ name = "copyq_size", match = { title = "(.*)(CopyQ)" }, size = {"(monitor_w*0.5)", "(monitor_h*0.5)"} })
 
--- Zoom popup fix
+-- note Zoom for wayland, zoom for xwayland
+-- Zoom stupid popup fix
 -- hl.window_rule({ name = "zoom_focus", match = { title = "annotate_toolbar", class = "zoom" }, stay_focused = true })
-hl.window_rule({ name = "zoom_annotate", match = { title = "annotate_toolbar", class = "Zoom" }, stay_focused = true }) -- note Zoom for wayland, zoom for xwayland
-hl.window_rule({ name = "zoom_annotate", match = { title = "annotate_toolbar", class = "Zoom" }, no_initial_focus = true }) --fixes zoom stupid popups
+hl.window_rule({ name = "zoom_annotate", match = { title = "annotate_toolbar", class = "Zoom" }, stay_focused = true, no_initial_focus = true }) 
 hl.window_rule({ name = "zoom", match = { class = "Zoom" }, float = true})
 
 -- VirtualBox rules
@@ -311,15 +315,15 @@ hl.window_rule({ name = "sg_blur", match = { class = "(.*)(SourceGit)(.*)" }, no
 
 -- File pickers
 hl.window_rule({ name = "save_float", match = { title = "^Save(.*)$" }, float = true })
-hl.window_rule({ name = "save_size", match = { title = "(Save)(.*)" }, size = {"(monitor_w*0.5)", "(monitor_h*0.7)"} })
+hl.window_rule({ name = "save_size", match = { title = "^Save(.*)$" }, size = {"(monitor_w*0.5)", "(monitor_h*0.7)"} })
 hl.window_rule({ name = "open_float", match = { title = "^Open(.*)$" }, float = true })
-hl.window_rule({ name = "open_size", match = { title = "(Open)(.*)" }, size = {"(monitor_w*0.5)", "(monitor_h*0.7)"} })
+hl.window_rule({ name = "open_size", match = { title = "^Open(.*)$" }, size = {"(monitor_w*0.5)", "(monitor_h*0.7)"} })
 
 -- -----------------------
 -- LAYER RULES
 -- -----------------------
 hl.layer_rule({ name = "rofi_dim", match = { namespace = "rofi" }, dim_around = true })
-hl.layer_rule({ name = "waybar_blur", match = { namespace = "waybar" }, blur = true })
+-- hl.layer_rule({ name = "waybar_blur", match = { namespace = "waybar" }, blur = true })
 hl.layer_rule({ name = "selection_no_anim", match = { namespace = "selection" }, no_anim = true })
 
 -- Special workspaces open apps on startup (function from wiki)
@@ -338,3 +342,22 @@ hl.on("workspace.created", function(ws)
     hl.exec_cmd(cmd, rules2)
 end)
 
+-- Noctalia animation override (let noctalia do their own animations)
+hl.layer_rule({
+  name = "noctalia-no-anim",
+  match = {
+    namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$",
+  },
+  no_anim = true,
+})
+
+-- custom blur for noctalia shell
+hl.layer_rule({
+  name = "noctalia-blur",
+  match = {
+    namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$",
+  },
+  ignore_alpha = 0.5,
+  blur = true,
+  blur_popups = true,
+})

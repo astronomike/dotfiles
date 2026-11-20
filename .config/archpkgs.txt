@@ -245,3 +245,11 @@ This creates the directory ~/Private, which will (when mounted) contain the sens
 Then, add `eval $(ssh-agent)` to a startup or login script (or .zprofile or something) to have it fork in the background. It will ask for the passphrase first time you need it, then cache it so it won't ask each following time you invoke ssh (including through git and things)  
 
 -> For customising keyboard buttons: keyd package allows lots of customisation. Edit /etc/keyd/default.conf with remappings etc., also man keyd is useful for this. Suggested: rightcontrol = compose, this changes right control key to open the context menu (like a mouse right click). Can also change caps lock to be escape when oneshot, and control when held down, for example. 
+-> When tracking config files with git using the bare repo, some files (dolphinrc, looking at you) are annoying in the sense that they update on small gui changes (preview pane sizes etc), which show up in git unneccesarily, but they have some content that I want still there. To fix this, do a little 
+	$ git update-index --assume-unchanged <file>
+to reverse this some day when it's no longer needed, do
+	$ git update-index --no-assume-unchanged <file>
+Can check which are tracked using 
+	$ git ls-files -v | grep "^[h]"
+Final note that currently the config bare repo is aliased with 'config', not 'git'.
+

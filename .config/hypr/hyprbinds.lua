@@ -3,6 +3,7 @@ local config_dir = os.getenv("XDG_CONFIG_HOME").."/"
 local qs = require("quicksettings")
 
 local noctalia_ipc = "noctalia msg "
+local screenshot_command = 'sh -c \'if pgrep -f "noctalia" >/dev/null; then noctalia msg screenshot-annotate; else grim -g "$(slurp)" - | wl-copy; fi\''
 
 local ws
 local ws_alt
@@ -50,10 +51,28 @@ hl.bind(qs.mainMod .. " + CTRL + R", hl.dsp.exec_cmd("hyprctl reload"))
 hl.bind(qs.mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(qs.mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }))
 --hl.bind(qs.mainMod .. " + CTRL + T", hl.dsp.workspaceopt("allfloat"))
---hl.bind(qs.mainMod .. " + CTRL + P", hl.dsp.layout("pseudo"))
+hl.bind(qs.mainMod .. " + CTRL + P", function()
+    local layouts = { "scrolling", "dwindle" }
+    local ws = hl.get_active_special_workspace() or hl.get_active_workspace()
+    if not ws then return end
+
+    local next_layout = "dwindle"
+    for i, l in ipairs(layouts) do
+        if l == ws.tiled_layout then
+            next_layout = layouts[i % #layouts + 1]
+            break
+        end
+    end
+
+    -- numeric ID for normal workspaces (avoids matching on icon names), full name for specials
+    local selector = ws.special and ws.name or tostring(ws.id)
+    hl.workspace_rule({ workspace = selector, layout = next_layout })
+
+    hl.exec_cmd(string.format("notify-send -a hyprconfig 'Layout' '%s: %s -> %s'", selector, tostring(ws.tiled_layout), next_layout))
+end)
 hl.bind(qs.mainMod .. " + S", hl.dsp.workspace.toggle_special("sysmonitor"))
 hl.bind(qs.mainMod .. " + C", hl.dsp.workspace.toggle_special("calculator"))
-hl.bind(qs.mainMod .. " + SHIFT + C", hl.dsp.workspace.toggle_special("calendar"))
+-- hl.bind(qs.mainMod .. " + SHIFT + C", hl.dsp.workspace.toggle_special("calendar"))
 
 -- Launchers
 hl.bind(qs.mainMod .. " + Return", hl.dsp.exec_cmd(qs.terminal))
@@ -76,7 +95,7 @@ hl.bind("ALT + TAB", hl.dsp.exec_cmd(noctalia_ipc .. "window-switcher"))
 
 -- Window actions
 -- hl.bind(qs.mainMod .. " + M", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
-hl.bind("SUPER + M", function()
+hl.bind(qs.mainMod .. " + M", function()
 	hl.dispatch(hl.dsp.layout("colresize +conf"))
 end, { description = "Toggle active window to maximized (scrolling) workaround until maximize toggle works" })
 hl.bind(qs.mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
@@ -88,22 +107,22 @@ hl.bind(qs.mainMod .. " + SHIFT + X", hl.dsp.workspace.toggle_special("hidden"))
 -- Move/Resize
 hl.bind(qs.mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(qs.mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
-hl.bind(qs.mainMod .. " + CTRL + H", hl.dsp.window.resize({ x = -20, y = 0 }))
-hl.bind(qs.mainMod .. " + CTRL + L", hl.dsp.window.resize({ x = 20, y = 0 }))
-hl.bind(qs.mainMod .. " + CTRL + J", hl.dsp.window.resize({ x = 0, y = 20 }))
-hl.bind(qs.mainMod .. " + CTRL + K", hl.dsp.window.resize({ x = 0, y = -20 }))
+hl.bind(qs.mainMod .. " + CTRL + H", hl.dsp.window.resize({ x = -20, y = 0, relative = true }))
+hl.bind(qs.mainMod .. " + CTRL + L", hl.dsp.window.resize({ x = 20, y = 0, relative = true }))
+hl.bind(qs.mainMod .. " + CTRL + J", hl.dsp.window.resize({ x = 0, y = 20, relative = true }))
+hl.bind(qs.mainMod .. " + CTRL + K", hl.dsp.window.resize({ x = 0, y = -20, relative = true }))
 
 -- Inter-workspace Nav
-for i = 1, 10 do
-    local key = i % 10
-    hl.bind(qs.mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
-    hl.bind(qs.mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
-end
+-- for i = 1, 10 do
+--     local key = i % 10
+--     hl.bind(qs.mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
+--     hl.bind(qs.mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+-- end
 
-hl.bind(qs.mainMod .. " + " .. "MINUS", hl.dsp.focus({ workspace = "11" }))
-hl.bind(qs.mainMod .. " + SHIFT + " .. "MINUS", hl.dsp.window.move({ workspace = "11" }))
-hl.bind(qs.mainMod .. " + " .. "EQUAL", hl.dsp.focus({ workspace = "12" }))
-hl.bind(qs.mainMod .. " + SHIFT + " .. "EQUAL", hl.dsp.window.move({ workspace = "12" }))
+-- hl.bind(qs.mainMod .. " + " .. "MINUS", hl.dsp.focus({ workspace = "11" }))
+-- hl.bind(qs.mainMod .. " + SHIFT + " .. "MINUS", hl.dsp.window.move({ workspace = "11" }))
+-- hl.bind(qs.mainMod .. " + " .. "EQUAL", hl.dsp.focus({ workspace = "12" }))
+-- hl.bind(qs.mainMod .. " + SHIFT + " .. "EQUAL", hl.dsp.window.move({ workspace = "12" }))
 hl.bind(qs.mainMod .. " + " .. ws_plus, hl.dsp.focus({ workspace = "r+1" }))
 hl.bind(qs.mainMod .. " + " .. ws_minus, hl.dsp.focus({ workspace = "r-1" }))
 hl.bind(qs.mainMod .. " + SHIFT + " .. ws_plus, hl.dsp.window.move({ workspace = "r+1" }))
@@ -158,10 +177,10 @@ hl.bind(qs.mainMod .. " + G", hl.dsp.group.toggle())
 -- hl.bind(qs.mainMod .. " + SHIFT + G", hl.dsp.group.next())
 
 -- Waybar
-hl.bind(qs.mainMod .. " + Z", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
-hl.bind(qs.mainMod .. " + Z", hl.dsp.exec_cmd("qs ipc call barvert toggleVisible"))
+-- hl.bind(qs.mainMod .. " + Z", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
+-- hl.bind(qs.mainMod .. " + Z", hl.dsp.exec_cmd("qs ipc call barvert toggleVisible"))
 hl.bind(qs.mainMod .. " + Z", hl.dsp.exec_cmd(noctalia_ipc.."bar-toggle"))
-hl.bind(qs.mainMod .. " + SHIFT + Z", hl.dsp.exec_cmd("killall -SIGUSR2 waybar"))
+-- hl.bind(qs.mainMod .. " + SHIFT + Z", hl.dsp.exec_cmd("killall -SIGUSR2 waybar"))
 
 -- -- Utilities
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl -e1 set +10%"), { locked = true, repeating = true })
@@ -171,7 +190,8 @@ hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pamixer -d 5"), { locked = true
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
-hl.bind("Print", hl.dsp.exec_cmd("sh ~/.local/scripts/wayland-screenshot.sh"))
+-- hl.bind("Print", hl.dsp.exec_cmd("sh ~/.local/scripts/wayland-screenshot.sh"))
+hl.bind("Print", function() hl.dispatch(hl.dsp.exec_cmd(screenshot_command)) end)
 
 -- -- Power
 -- hl.bind(qs.mainMod .. " + F12", hl.dsp.exec_cmd("hyprlock"))
@@ -185,7 +205,7 @@ hl.bind("Print", hl.dsp.exec_cmd("sh ~/.local/scripts/wayland-screenshot.sh"))
 hl.bind(qs.mainMod .. " + V", hl.dsp.submap("passthrough"),
     { description = "Submap for virtual machine keyboard passthrough." })
     hl.define_submap("passthrough", function()
-    hl.bind(qs.mainMod .. "+ escape", hl.dsp.submap("reset"))
+    hl.bind(qs.mainMod .. " + escape", hl.dsp.submap("reset"))
 end)
 
 -- Toggle gaps
@@ -223,7 +243,7 @@ local function toggle_gamemode()
                 border_size = 0,
             }
         })
-        hl.dsp.exec_cmd("notify-send 'Gamemode On'")
+        hl.exec_cmd("notify-send -a hyprconfig 'Gamemode On'")
     else
         -- Restore default settings
         hl.config({
@@ -239,8 +259,40 @@ local function toggle_gamemode()
                 border_size = qs.border_size,
             }
         })
-        hl.dsp.exec_cmd("notify-send 'Gamemode Off'")
+        hl.exec_cmd("notify-send -a hyprconfig 'Gamemode Off'")
     end
 end
 
 hl.bind(qs.mainMod.." + F1", toggle_gamemode)
+
+-- Persistent workspaces that follow you between monitors until they hold windows
+local function is_free(id)
+    local w = hl.get_workspace(id)
+    -- if the workspace doesn't exist yet, Hyprland creates it on the current monitor anyway
+    return w ~= nil and w.windows == 0 and not w.visible
+end
+
+local function goto_ws(id)
+    return function()
+        hl.dispatch(hl.dsp.focus({ workspace = id, on_current_monitor = is_free(id) }))
+    end
+end
+
+local function move_to_ws(id)
+    return function()
+        if is_free(id) then
+            local mon = hl.get_active_monitor()
+            if mon then
+                hl.dispatch(hl.dsp.workspace.move({ workspace = id, monitor = mon.name }))
+            end
+        end
+        hl.dispatch(hl.dsp.window.move({ workspace = id }))
+    end
+end
+
+local extra_keys = { [11] = "MINUS", [12] = "EQUAL" }
+for i = 1, 12 do
+    local key = extra_keys[i] or tostring(i % 10)
+    hl.bind(qs.mainMod .. " + " .. key, goto_ws(i))
+    hl.bind(qs.mainMod .. " + SHIFT + " .. key, move_to_ws(i))
+end
